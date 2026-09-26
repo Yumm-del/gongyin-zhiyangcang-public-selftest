@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>工银智养仓 · 手机银行适配判断</title>
+<style>
+:root{--red:#D00F1B;--red2:#A50C15;--navy:#12335B;--ink:#243244;--mut:#65758A;--line:#D8E0E9;--bg:#F4F6F9;--blue:#2466A8;--green:#4A7C69;--amber:#B8893E;--lr:#FBF0F1;--lb:#EDF4FB;--lg:#EEF4F1;--la:#FAF4E9;--r:4px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--ink)}body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:15px;line-height:1.7}#app{max-width:430px;min-height:100vh;margin:auto;background:#fff;box-shadow:0 0 40px rgba(18,51,91,.08);display:flex;flex-direction:column}header{padding:12px 20px 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:5}.brand{display:flex;align-items:center;gap:8px}.logo{width:20px;height:20px;background:var(--red);border-radius:2px;position:relative}.logo:after{content:"";position:absolute;inset:5px 4px;border-left:2px solid #fff;border-bottom:2px solid #fff}.brand b{font-size:14.5px}.brand i{font-style:normal;font-size:10px;color:var(--red);font-weight:700;border:1px solid var(--red);padding:0 4px;border-radius:2px}.brand span{margin-left:auto;font-size:11px;color:var(--mut)}.bar{height:2.5px;background:#E2E7EC;margin-top:10px}.bar i{display:block;height:100%;background:var(--red);width:12.5%;transition:.35s}main{flex:1;padding:22px 20px 28px}.pane{display:none;animation:in .3s ease}.pane.on{display:block}@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}h1{font-size:21px;line-height:1.5;margin:0 0 10px}h1:after{content:"";display:block;width:44px;height:2.5px;background:var(--red);margin-top:10px}h2{font-size:18px;line-height:1.55;margin:0 0 9px}h3{font-size:14px;color:var(--navy);border-left:3px solid var(--red);padding-left:8px;margin:22px 0 8px}p{margin:0 0 12px}.lead{font-size:15px}.mut,.small{color:var(--mut)}.small{color:var(--mut)}.small{font-size:12.5px}.card{border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:0 0 13px}.card h4{margin:0 0 5px;font-size:13.5px;color:var(--navy)}.blue{background:var(--lb);border-color:#C7DCF0}.green{background:var(--lg);border-color:#CFE0D8}.amber{background:var(--la);border-color:#EBDCBF}.red{background:var(--lr);border-color:#EFCDD1}.tag{display:inline-block;border:1px solid;padding:2px 8px;border-radius:2px;font-size:11px;font-weight:700}.tag.a{color:var(--green);border-color:var(--green);background:#fff}.tag.b{color:var(--amber);border-color:var(--amber);background:#fff}.gate{display:flex;gap:9px;align-items:center;margin-bottom:16px}.n{width:25px;height:25px;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;border-radius:2px}.gate span{font-size:12px;color:var(--mut);font-weight:700;letter-spacing:.5px}.opts{display:flex;flex-direction:column;gap:8px;margin:12px 0 22px}.opt{font:inherit;font-size:14px;text-align:left;background:#fff;border:1px solid var(--line);padding:12px;border-radius:var(--r);cursor:pointer;display:flex;gap:9px;align-items:center;position:relative}.opt:before{content:"";width:14px;height:14px;border:1.5px solid #AAB6C4;border-radius:50%;flex:none}.opt.sel{border-color:var(--navy);background:var(--lb)}.opt.sel:before{content:"";border:0;background:var(--navy)}.opt.sel:after{content:"";position:absolute;left:17px;top:50%;width:4px;height:7px;border-right:1.7px solid #fff;border-bottom:1.7px solid #fff;transform:translateY(-65%) rotate(45deg)}.opt i{display:block;font-style:normal;font-size:12px;color:var(--mut);margin-top:2px}.btn{width:100%;border:0;border-radius:var(--r);background:var(--red);color:#fff;padding:14px;font:700 15px inherit;cursor:pointer}.btn:hover{background:var(--red2)}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:10px}.foot{padding:0 20px 26px}.formula{font-family:Consolas,monospace;font-size:12px;padding:10px 11px;background:#F7F9FC;border:1px solid var(--line);border-radius:var(--r);line-height:1.75}.ok{color:var(--green);font-weight:700}.warn{color:var(--amber);font-weight:700}.stop{color:var(--red);font-weight:700}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini{border:1px solid var(--line);padding:11px;border-radius:var(--r);font-size:12.5px}.mini b{display:block;color:var(--navy);margin-bottom:5px}.crm{border-top:3px solid var(--navy)}.customer{border-top:3px solid var(--red)}.timeline{padding-left:15px;border-left:2px solid var(--line)}.timeline div{margin:0 0 14px;position:relative}.timeline div:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red);position:absolute;left:-20px;top:8px}.disc{font-size:11px;color:var(--mut);border-top:1px solid var(--line);margin-top:19px;padding-top:10px}.notice{font-size:12.5px;padding:10px 11px;background:#F7F9FC;border-left:3px solid var(--blue);margin:12px 0 14px}.result{padding:18px 15px;border:1px solid #CFE0D8;border-top:3px solid var(--green);background:var(--lg);text-align:center;margin-bottom:15px}.result h2{color:var(--green);margin:5px 0}.result.stopr{border-color:#EFCDD1;border-top-color:var(--red);background:var(--lr)}.result.stopr h2{color:var(--red)}
+.t0in{width:100%;border:2px solid var(--red);border-radius:var(--r);padding:13px 12px;font:700 18px "DIN Alternate","Microsoft YaHei",sans-serif;color:var(--navy);background:#fff;outline:none}.t0in:focus{box-shadow:0 0 0 3px rgba(208,15,27,.12)}
+.btn.navy{background:var(--navy)}.btn.navy:hover{background:#0D2846}
+.metricgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}.metric{border:1px solid var(--line);border-radius:var(--r);padding:9px 7px;background:#fff}.metric b{display:block;font-size:12px;color:var(--navy);line-height:1.4}.metric span{display:block;font-size:11px;color:var(--mut);line-height:1.4;margin-top:3px}.bartrack{display:flex;height:11px;border-radius:6px;overflow:hidden;background:#E2E7EC;margin:10px 0 6px}.barcover{background:var(--green)}.bargap{background:var(--amber)}.barzero{background:var(--line)}.subrow{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--mut)}
+.portal{margin-left:auto;border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:2px;padding:2px 6px;font:700 11px inherit;cursor:pointer}.portal+span{margin-left:0}
+.opt.chk:before{border-radius:3px}.opt.chk.sel{border-color:#93B8A8;background:var(--lg)}.opt.chk.sel:before{content:"";border:0;background:var(--green)}
+</style>
+</head>
+<body><div id="app"><header><div class="brand"><div class="logo"></div><b>ICBC 工银智养仓</b><i>原型演示</i><button id="portalBtn" class="portal" hidden onclick="set(6,'双端分流')">切换端口</button><span id="step">养老金专区</span></div><div class="bar"><i id="bar"></i></div></header><main id="main"></main><div class="foot" id="foot"></div></div>
+<script src="engine.js"></script>
+<script>
+"use strict";
+/* 税额内核（BRACKETS / LIMIT / RANGES / taxOf / rateOf / breakdown / saving / selfTest）
+   全部来自 engine.js，与 index.html 共用同一份。本页禁止内联副本 —— 内联即意味着
+   「相同 T0 在两版下必须得到相同税额」这句话失去可验证性。 */
+const S={screen:0,
+  /* U1 授权范围：三项均可独立勾选，未授权项不参与结论 */
+  auth:{t0:false, paid:false, record:false},
+  /* U2 用户可改的判断输入 */
+  t0:null, t0Mode:'unknown', paidAmount:null, // paidAmount 为本年度已缴金额
+  flow:{reserve:null, spend:null, lock:null, understand:null},
+  gap:'need', category:null, humanChannel:'',
+  gapGoal:null, gapCover:null, returnToCustomer:false,
+  crmTaskRecorded:false};
+const main=document.querySelector('#main'),foot=document.querySelector('#foot'),bar=document.querySelector('#bar'),step=document.querySelector('#step'),portalBtn=document.querySelector('#portalBtn');
+const money=n=>Number(n).toLocaleString('zh-CN');
+function set(n,label){
+  S.screen=n;
+  bar.style.width=((n+1)/10*100)+'%';
+  step.textContent=label;
+  render();
+  /* 仅在跨页面时回到顶部；同页输入与勾选仍保留当前位置。 */
+  window.scrollTo(0,0);
+}
+function opt(key,value,text,sub){return `<button class="opt ${S[key]===value?'sel':''}" onclick="choose('${key}','${value}')"><span>${text}<i>${sub||''}</i></span></button>`}
+function choose(key,value){S[key]=value;render()}
+function next(){set(Math.min(S.screen+1,9),labels[Math.min(S.screen+1,9)])}
+function prev(){set(Math.max(S.screen-1,0),labels[Math.max(S.screen-1,0)])}
+const labels=['养老金专区','授权确认','税率适配','流动性安全','养老缺口','类别说明','双端分流','客户结果','CRM 工作台','年度复核'];
+
+/* ---------- 结论取数：一切数字从这里来，不在页面里写死 ---------- */
+/* 授权与模式共同决定数据等级：全授权 + 具体值 = A；缺失任一项则降级 */
+function dataLevel(){
+  const a=S.auth;
+  if (a.t0 && a.paid && a.record && S.t0Mode==='exact' && S.paidAmount!==null) return 'A';
+  if (S.t0Mode==='exact' || S.t0Mode==='range') return 'B';
+  return 'C';
+}
+function levelText(){
+  const L=dataLevel();
+  if (L==='A') return {tag:'a', name:'A 级 · 已授权核验', note:'三项必要数据均已授权核验'};
+  if (L==='B') return {tag:'b', name:'B 级 · 部分核验', note:'部分数据未授权或未确认，结果会明确标注边界'};
+  return {tag:'c', name:'C 级 · 证据不足', note:'关键数据未确认，仅说明判断路径'};
+}
+/* 核心：当前 T0 下的税额结果。未授权 T0 或不知道时返回 null，不虚构数字。 */
+function availableLimit(){return S.auth.paid ? Math.max(0,LIMIT-(S.paidAmount||0)) : LIMIT;}
+function setPaidAmount(v){S.paidAmount=Math.min(LIMIT,Math.max(0,Number(v)||0));render();}
+function result(){
+  if (S.t0Mode==='unknown') return null;
+  if (S.t0Mode==='range') return null;          // 区间模式只给档位，不给精确税额
+  if (!(S.t0 > 0)) return null;
+  return saving(S.t0, availableLimit());
+}
+/* 区间模式下取该区间的税额跨度，用于展示「结论区间宽度」 */
+function rangeSpan(){
+  if (S.t0Mode!=='range') return null;
+  const r=RANGES.find(x=>x.key===S.rangeKey) || RANGES[1];
+  const lo = r.key==='r0' ? 36001 : (RANGES[RANGES.indexOf(r)-1] || {hi:0}).hi + 1;
+  const hi = r.hi || 1200000;
+  const limit=availableLimit();
+  return {label:r.label, lo:saving(lo,limit).save, hi:saving(hi,limit).save, loT0:lo, hiT0:hi};
+}
+function setT0(v){ S.t0=v; S.t0Mode='exact'; render(); }
+function setMode(m){ S.t0Mode=m; render(); }
+function setRange(k){ S.rangeKey=k; S.t0Mode='range'; render(); }
+function toggleAuth(k){
+  S.auth[k]=!S.auth[k];
+  if (k==='t0' && !S.auth.t0) S.t0Mode='exact';
+  render();
+}
+function revokeAll(){ S.auth={t0:false,paid:false,record:false}; S.paidAmount=null; render(); }
+function flowOpt(key,value,text,sub){return `<button class="opt ${S.flow[key]===value?'sel':''}" onclick="chooseFlow('${key}','${value}')"><span>${text}<i>${sub||''}</i></span></button>`}
+function chooseFlow(key,value){S.flow[key]=value;render()}
+function chooseHuman(channel){S.humanChannel=channel;render()}
+function setGapInput(key,value){S[key]=Math.max(0,Number(value)||0);render()}
+function openFromCustomer(screen,label){S.returnToCustomer=true;set(screen,label)}
+function returnToCustomer(){S.returnToCustomer=false;set(7,'客户结果')}
+function recordCrmTask(){S.crmTaskRecorded=true;render()}
+function flowHits(){const f=S.flow,h=[];if(f.reserve==='stop')h.push('应急金覆盖不足 3 个月');if(f.spend==='yes')h.push('未来 12 个月有需提前预留的集中支出');if(f.lock==='no')h.push('暂不能接受资金锁定至退休');if(f.understand==='no')h.push('尚未理解领取条件');return h}
+function flowComplete(){return Object.values(S.flow).every(v=>v!==null)}
+function taxSaving(){ const r=result(); return r ? Math.round(r.save) : null; }
+/* 结论层级：门二停止 -> stop；税优有限但仍可参与 -> low；其余 -> go */
+function verdict(){
+  if (!flowComplete()) return 'incomplete';
+  if (flowHits().length) return 'stop';
+  const r=result();
+  if (r && r.save < 600) return 'low';
+  return 'go';
+}
+function render(){portalBtn.hidden=S.screen<6;const pages=[entry,consent,tax,liquidity,gap,allocation,dual,customerResult,crmResult,review];pages[S.screen]();}
+function nav(primary='继续'){foot.innerHTML=`<button class="btn" onclick="next()">${primary}</button>${S.returnToCustomer?'<button class="btn ghost" onclick="returnToCustomer()">← 返回 C 端结果页</button>':(S.screen?'<button class="btn ghost" onclick="prev()">← 上一步</button>':'')}`}
+function entry(){main.innerHTML=`<h1>养老金融专区</h1><p class="lead">您已完成公众自测。进入完整判断前，请先确认本次服务的边界。</p><div class="card blue"><h4>从公众自测到完整判断</h4><p class="small">公众自测只使用您自行填写的信息；手机银行将在授权后核验必要数据，并按同一套四道门重新计算。</p></div><div class="card amber"><h4>开始时不会预设您的任何信息</h4><p class="small">授权、T0、应急金和生活计划均由您主动确认。未完成必要信息时，系统只提示补充，不会默认给出“可以参与”。</p></div><div class="card blue"><h4>本次会完成什么</h4><p class="small">税率适配 → 流动性安全 → 养老缺口 → 产品类别说明与综合结论。</p></div><div class="notice">每一道门都可以停止推荐。低税率不会被一票否决；流动性不足时，系统会优先给出“暂缓”。</div><p class="disc">这是参赛项目原型，不连接真实工行系统或个人数据。</p>`;foot.innerHTML='<button class="btn" onclick="next()">开始完整判断</button>'}
+function consent(){const a=S.auth;const L=levelText();main.innerHTML=`<div class="gate"><b class="n">01</b><span>授权与数据确认</span></div><h2>只核验完成判断所必需的信息</h2><p class="mut">三项均可独立选择，随时可以撤销。未授权的信息不参与本次结论。</p>
+<div class="card blue"><span class="tag ${L.tag}">${L.name}</span><h4 style="margin-top:10px">勾选本次授权核验的数据</h4><div class="opts authbox">
+<button class="opt chk ${a.t0?'sel':''}" onclick="toggleAuth('t0')"><span>缴存前全年应纳税所得额 T0<i>${a.t0?'已授权 · 税额按此精确计算':'未授权 · 不计算税额，只说明判断路径'}</i></span></button>
+<button class="opt chk ${a.paid?'sel':''}" onclick="toggleAuth('paid')"><span>已缴个人养老金金额<i>${a.paid?'已授权 · 用于计算剩余可缴额度':'未授权 · 不校验剩余额度'}</i></span></button>
+<button class="opt chk ${a.record?'sel':''}" onclick="toggleAuth('record')"><span>基础养老权益记录<i>${a.record?'已授权 · 缺口结论可给出具体金额':'未授权 · 缺口只给区间并标注证据不足'}</i></span></button>
+</div>${a.paid?`<div class="card green" style="margin:10px 0 0"><h4>确认本年度已缴金额</h4><p class="small">系统用已缴金额计算剩余可缴额度；未确认时，不把 12,000 元当作默认可缴金额。</p><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><input class="t0in" type="number" min="0" max="12000" step="100" value="${S.paidAmount??''}" oninput="setPaidAmount(this.value)" placeholder="例如 3000"><span class="small mut" style="white-space:nowrap">元 / 年</span></div></div>`:''}</div>
+<div class="card ${L.tag==='a'?'green':'amber'}"><h4>本次数据等级：${L.name.split(' · ')[1]}</h4><p class="small">${L.note}${a.t0?'':'　T0 未授权，本页后续不展示任何税额数字。'}</p></div>
+<div class="notice">数据完整度影响结论精度，不降低保护标准；相同 T0 在手动输入与授权核验下必须得到相同税额。本页可随时撤销授权。</div>`;foot.innerHTML=`<button class="btn" onclick="next()">确认并继续</button><button class="btn ghost" onclick="revokeAll()">撤销本次全部授权</button>${S.screen?'<button class="btn ghost" onclick="prev()">← 上一步</button>':''}`}
+function tax(){const r=result();const L=levelText();let body;
+  if(!S.auth.t0 && S.t0Mode==='unknown'){
+    body=`<div class="card red"><h4 class="stop">T0 未授权，本次不计算税额</h4><p class="small">这不是拒绝判断，而是不虚构数字。返回上一页勾选「缴存前全年应纳税所得额」后即可精确测算。</p></div><div class="card blue"><h4>判断路径仍然完整</h4><p class="small">即使不计算税额，流动性安全与养老缺口两道门仍按相同标准执行 —— 保护标准不随数据等级变化。</p></div>`;
+  } else if(S.t0Mode==='unknown'){
+    body=`<div class="card amber"><h4>暂时无法确认 T0</h4><p class="small">系统不按猜测的档位给出税额。可改为选择一个收入区间，查看税额大致范围。</p></div>`;
+  } else if(S.t0Mode==='range'){
+    const sp=rangeSpan();
+    body=`<div class="formula">T0 落在 <b>${sp.label}</b> 区间（示例取值 ${money(sp.loT0)} – ${money(sp.hiT0)} 元）<br>按 12,000 元缴存，当期少缴税款约 <b>${money(sp.lo)} – ${money(sp.hi)} 元</b><br>区间宽度的来源：未确认具体金额，无法收敛到单一档位</div><div class="card amber"><h4>这是区间，不是结论</h4><p class="small">要得到确切数字，请选择「填写具体金额」。区间不影响流动性安全与养老缺口的通过标准。</p></div>`;
+  } else if(r){
+    const seg=t=>breakdown(t).filter(x=>x.amt>0).map(x=>`${money(x.amt)} × ${pct(x.rate)}`).join(' + ');
+    body=`<div class="formula">缴存前 T0 = <b>${money(S.t0)}</b> 元　当前最高档 ${pct(r.rb)}<br>${seg(S.t0)} = ${money(r.before)} 元<br>缴存后 T1 = <b>${money(r.t1)}</b> 元<br>${seg(r.t1)} = ${money(r.after)} 元<br><br>当期少缴税款 = ${money(r.before)} − ${money(r.after)} = <b>${money(r.save)} 元</b></div>
+<div class="card ${r.save<600?'amber':'green'}"><h4>${r.save<600?'税优有限，不等于不能参与':'税率适配通过'}</h4><p class="small">${r.save<600?'系统不因低税率停止判断；是否参与仍需看流动性安全与养老缺口。':'继续核验资金安全边界。'}</p></div>
+${r.cross?`<details class="card blue" open><summary style="cursor:pointer;font-weight:700;color:var(--navy)">本例跨档，必须分段计算</summary><p class="small" style="margin:10px 0 0">如果直接用「缴存额 × 最高档」，会算成 ${money(r.naive)} 元，比实际多报 ${money(r.naive-r.save)} 元。系统自动分段，不采用这种算法。</p></details>`:''}`;
+  }
+  main.innerHTML=`<div class="gate"><b class="n">02</b><span>第一道门 · 税率适配</span></div><h2>税优空间需要按 T0 分段计算</h2><p class="mut">T0 是扣除基本减除费用、专项扣除及专项附加扣除后的全年应纳税所得额，不是月薪或税前收入。</p>
+<div class="card blue"><span class="tag ${L.tag}">${L.name}</span><h4 style="margin-top:10px">选择你的 T0 口径</h4><div class="opts" style="margin:10px 0 0">${opt('t0Mode','exact','填写具体金额','最准确：按七档税率表逐段计算')}${opt('t0Mode','range','选择收入区间','不知道确切金额时使用，结论以区间呈现')}${opt('t0Mode','unknown','暂时无法确认','系统不猜档位')}</div>
+${S.t0Mode==='exact'?`<div class="card ${S.auth.t0?'green':'amber'}" style="margin-top:12px"><h4>${S.auth.t0?'已授权核验 T0':'手动填写 T0 · B 级信息'}</h4><p class="small">${S.auth.t0?'系统按授权核验数据精确计算。':'未授权也可自行填写并计算；本次结果标注为 B 级，不当作系统核验数据。'}</p><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><input class="t0in" type="number" min="0" max="5000000" step="1000" value="${S.t0??''}" oninput="setT0(Math.max(0,Number(this.value)||0))" placeholder="例如 180000"><span class="small mut" style="white-space:nowrap">元 / 年</span></div></div>`:''}
+${S.t0Mode==='range'?`<div class="opts" style="margin-top:12px">${RANGES.map(x=>`<button class="opt ${S.rangeKey===x.key?'sel':''}" onclick="setRange('${x.key}')"><span>${x.label}<i>${x.key==='r0'?'落在 3%–10% 区间':'按 12,000 元缴存的税优范围'}</i></span></button>`).join('')}</div>`:''}
+</div>
+${S.auth.paid?`<div class="card ${S.paidAmount===null?'amber':'blue'}"><h4>本年度剩余可缴额度</h4><p class="small">${S.paidAmount===null?'请先在上一页确认已缴金额；确认前不把 12,000 元作为默认本次可缴金额。':`已缴 ${money(S.paidAmount)} 元，本次税优测算按剩余 ${money(availableLimit())} 元计算。`}</p></div>`:''}
+${body}`;
+  nav('进入流动性安全')}
+function liquidity(){main.innerHTML=`<div class="gate"><b class="n">03</b><span>第二道门 · 流动性安全</span></div><h2>先保留安全垫，再谈长期缴存</h2><p class="mut">这是保护门，不是销售门。应急金不足或未来有大额支出时，系统应暂停推荐。</p><div class="opts">${opt('liquid','pass','示例：应急金约 8 个月，无大额支出','满足当前流动性安全边界')}${opt('liquid','stop','切换：应急金仅 1–2 个月','应优先补足安全垫，暂缓缴存')}</div>${S.liquid==='stop'?'<div class="card red"><h4 class="stop">本次停止推荐</h4><p class="small">不再进入产品类别说明；可在应急金补足或计划变化后重新判断。</p></div>':'<div class="card green"><h4 class="ok">流动性安全通过</h4><p class="small">继续评估养老缺口；这不是对未来收益的承诺。</p></div>'}`;nav(S.liquid==='stop'?'查看综合结论':'进入养老缺口')}
+function gap(){if(S.liquid==='stop'){set(6,'服务承接');return}main.innerHTML=`<div class="gate"><b class="n">04</b><span>第三道门 · 养老缺口测算</span></div><h2>不要求您先知道“自己有没有缺口”</h2><p class="mut">系统先根据授权数据形成初步区间，再请您确认少数与生活计划有关的假设；客户只确认事实，不自行判断缺口。</p><div class="card green"><span class="tag a">A 级 · 已授权核验</span><h4 style="margin-top:10px">系统已带入的测算依据</h4><p class="small">基础养老权益记录、当前缴费与收入信息、已建立的养老账户及长期保障信息。</p></div><div class="card blue"><h4>需要您确认的两项生活假设</h4><p class="small">预计退休年龄：60 岁；退休初期生活费：系统按您当前可支配生活水平的 70%–80%生成参考区间。您可修改，系统会重新测算。</p></div><div class="card amber"><h4>初步结果：形成区间性养老缺口提示</h4><p class="small">这是“需要继续评估”的信号，不是假装精确到某一个金额。信息缺失时，系统应提示补充或转人工，而不是给出确定结论。</p></div><div class="card blue"><h4>账户内外不互相替代</h4><p class="small">个人养老金账户是税制支持下的长期账户；账户外是市场化长期保障安排。两者不能互相转换。缺口只是判断依据，不是资金流向；本原型不输出产品代码或发起交易。</p></div>`;nav('确认假设并进入类别说明')}
+function allocation(){main.innerHTML=`<div class="gate"><b class="n">05</b><span>第四道门 · 类别说明与结论</span></div><h2>只在主动了解时说明类别</h2><p class="mut">类别说明以风险测评、期限匹配和完整结论为前提，不等于产品推荐。</p><div class="opts">${opt('category','learn','我想了解可进一步评估的产品类别','继续展示类别说明，不展示产品代码')}${opt('category','skip','我暂不想了解产品类别','保留综合结论，不进入类别展示')}</div>${S.category==='learn'?`<div class="card blue"><h4>可进一步了解的类别</h4><p class="small">个人养老金专区内的储蓄存款、理财产品、公募基金、保险产品等。具体是否适配，仍须经过风险测评与规则校验。</p></div>`:'<div class="card"><h4>已跳过类别说明</h4><p class="small">您可只保存判断结论，之后在养老金专区主动查看。</p></div>'}<div class="result"><span class="tag a">综合结论</span><h2>可以继续了解</h2><p class="small">税率、流动性安全和初步缺口测算均已完成当前示例判断；税优空间不单独决定是否参与。</p></div>`;nav('查看服务承接')}
+function service(){const stop=verdict()==='stop';main.innerHTML=`<div class="gate"><b class="n">06</b><span>客户与客户经理看到不同内容</span></div><h2>同一结论，两种负责任的承接</h2><p class="mut">系统给客户经理的不是营销名单，而是一份服务建议清单。</p><div class="two"><div class="mini customer"><b>客户看到</b>${stop?'<span class="stop">建议暂缓缴存</span><br>先补足安全垫；条件变化后可重新判断。':'<span class="ok">继续完成养老准备</span><br>可查看更准确的税优空间、资金安全边界与类别说明。'}</div><div class="mini crm"><b>客户经理 CRM</b>${stop?'<span class="stop">当前不主动联系</span><br>暂缓原因：流动性安全未通过。':'<span class="ok">按服务优先级跟进</span><br>依据：四道门结论，而非成交概率。'}</div></div><div class="card ${stop?'red':'blue'}"><h4>${stop?'中性说明话术':'服务说明话术'}</h4><p class="small">${stop?'“当前更重要的是保留应急资金。条件变化后，您可主动重新判断；我们不会据此推动缴存或产品。”':'“本次只说明您可以继续完成养老准备。是否缴存、缴多少、是否了解类别，都由您自主决定。”'}</p></div><div class="card"><h4>全过程可复核</h4><p class="small">记录规则版本、数据等级、停止或继续原因、客户主动选择和复核条件；判断层不以成交结果作为考核目标。</p></div>`;nav('进入年度复核')}
+function review(){main.innerHTML=`<div class="gate"><b class="n">07</b><span>模块五 · 年度复核</span></div><h2>一次判断，不等于永久结论</h2><p class="mut">税制、收入、家庭责任、应急金和养老权益都会变化；系统按年度或重大变化主动提醒复核。</p><div class="timeline"><div><b>条件变化</b><br><span class="small">收入与扣除变化、购房育儿、重大支出、应急金变化。</span></div><div><b>重新核验</b><br><span class="small">确认必要数据，保持客户授权可撤销。</span></div><div><b>重新输出</b><br><span class="small">以当期规则和最新事实形成可解释结论。</span></div></div><div class="card green"><h4>本次演示完成</h4><p class="small">四道门对所有信息等级适用同一保护标准；AI 只负责解释已确认的规则和结论，不替代确定性计算。</p></div><p class="disc">模拟演示数据，不构成税务结论、投资建议、产品推荐或销售要约。</p>`;foot.innerHTML='<button class="btn" onclick="set(0,labels[0])">重新演示完整链路</button><button class="btn ghost" onclick="location.href=\'index.html\'">返回公众轻量自测</button>'}
+
+/* U3：四类停止条件独立呈现，任一命中即停止推荐。 */
+function liquidity(){
+  const hits=flowHits();
+  main.innerHTML=`<div class="gate"><b class="n">03</b><span>第二道门 · 流动性安全</span></div><h2>先保留安全垫，再谈长期缴存</h2><p class="mut">四类条件任一触发即暂停推荐。保护标准不因税率或数据等级而降低。</p>
+  <h3>应急金覆盖</h3><div class="opts">${flowOpt('reserve','pass','不少于 3 个月','当前安全垫满足最低边界')}${flowOpt('reserve','stop','不足 3 个月','先补足安全垫，再重新判断')}</div>
+  <h3>未来 12 个月是否有需提前预留的集中支出？</h3><p class="small">例如置业首付或装修、学历教育或职业培训、婚育与照护安排、医疗、一次性还款，以及子女学费等；日常房贷、车贷等固定月供已在应急金覆盖判断中考虑。</p><div class="opts">${flowOpt('spend','no','没有需要集中预留的支出','继续下一项核验')}${flowOpt('spend','yes','有需要集中预留的支出','先预留资金，暂缓锁定')}</div>
+  <h3>锁定期与领取条件</h3><div class="opts">${flowOpt('lock','yes','可以接受资金锁定至退休','继续下一项核验')}${flowOpt('lock','no','暂不能接受锁定','先不建议缴存')}${flowOpt('understand','yes','已理解领取条件','继续判断')}${flowOpt('understand','no','尚未理解领取条件','先完成政策说明，再判断')}</div>
+  ${hits.length?`<div class="card red"><h4 class="stop">本次停止推荐</h4><p class="small">触发原因：${hits.join('；')}。不再进入产品类别说明；条件变化或理解充分后可重新判断。</p></div>`:'<div class="card green"><h4 class="ok">流动性安全通过</h4><p class="small">继续评估养老缺口；这不是对未来收益的承诺。</p></div>'}`;
+  if(!flowComplete()){
+    foot.innerHTML='<button class="btn" disabled style="background:#C9D3DE;cursor:not-allowed">请完成四项流动性确认</button><button class="btn ghost" onclick="prev()">← 上一步</button>';
+  }else{
+    nav(hits.length?'查看综合结论':'进入养老缺口');
+  }
+}
+
+/* U8：清楚说明账户内外的边界，避免被理解成资金配置通道。 */
+function gap(){
+  if(flowHits().length){set(6,'服务承接');return}
+  const hasRecord=S.auth.record;
+  const gapLevel=hasRecord
+    ?'<span class="tag a">A 级 · 已授权权益记录</span><h4 style="margin-top:10px">系统已带入的测算依据</h4><p class="small">基础养老权益记录、当前缴费与收入信息、已建立的养老账户及长期保障信息。</p>'
+    :'<span class="tag b">B / C 级 · 证据不足提示</span><h4 style="margin-top:10px">暂未带入养老权益记录</h4><p class="small">本次不输出个人缺口金额，只提示补充生活目标与养老权益信息；必要时可由客户主动选择人工服务。</p>';
+  main.innerHTML=`<div class="gate"><b class="n">04</b><span>第三道门 · 养老缺口测算</span></div><h2>不要求您先知道“自己有没有缺口”</h2><p class="mut">系统先根据授权数据形成初步区间，再请您确认少数与生活计划有关的假设；客户只确认事实，不自行判断缺口。</p>
+  <div class="card ${hasRecord?'green':'amber'}">${gapLevel}</div>
+  <div class="card blue"><h4>需要您确认的两项生活假设</h4><p class="small">预计退休年龄：60 岁；退休初期生活费：系统按您当前可支配生活水平的 70%–80%生成参考区间。您可修改，系统会重新测算。</p></div>
+  <div class="card amber"><h4>${hasRecord?'初步结果：形成区间性养老缺口提示':'当前结果：暂不形成个人缺口金额'}</h4><p class="small">${hasRecord?'这是“需要继续评估”的信号，不是假装精确到某一个金额。':'信息不足时，系统只提示补充或由客户主动转人工，不用假设数字替代。'} </p></div>
+  <div class="card blue"><h4>账户内外不相互替代</h4><p class="small">个人养老金账户是税制支持下的长期账户；账户外是市场化长期保障安排。两者在资金来源、额度约束和判断逻辑上不同，不能相互替代，账户间资金也不能互相转换。缺口只是判断依据，不是资金流向；本原型不输出产品代码或发起交易。</p></div>`;
+  nav('确认假设并进入类别说明');
+}
+
+/* U6：CRM 输出的是可复核的服务建议，而不是营销线索。 */
+function service(){
+  const hits=flowHits(), stop=hits.length>0;
+  const action=stop?'暂缓联系，等待条件变化':'按服务优先级跟进';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>客户与客户经理看到不同内容</span></div><h2>同一结论，两种负责任的承接</h2><p class="mut">系统给客户经理的不是营销名单，而是一份服务建议清单。</p>
+  <div class="two"><div class="mini customer"><b>客户看到</b>${stop?'<span class="stop">建议暂缓缴存</span><br>先解决资金安全问题；条件变化后可重新判断。':'<span class="ok">可以继续了解</span><br>是否缴存、缴多少、是否了解类别均由您决定。'}</div><div class="mini crm"><b>客户经理 CRM</b><span class="${stop?'stop':'ok'}">${stop?'当前不主动联系':'按服务优先级跟进'}</span><br>依据四道门结论，而非成交概率。</div></div>
+  <div class="card ${stop?'red':'blue'}"><h4>服务建议清单 · 模拟编号 A-****</h4><p class="small">建议动作：${action}<br>判断依据：${reason}<br>复核触发：${trigger}<br>考核口径：本条不计入成交转化。</p></div>
+  <div class="card ${stop?'red':'blue'}"><h4>${stop?'中性说明话术':'服务说明话术'}</h4><p class="small">${stop?'“当前更重要的是保留应急资金。条件变化后，您可主动重新判断；我们不会据此推动缴存或产品。”':'“本次只说明您可以继续完成养老准备。是否缴存、缴多少、是否了解类别，都由您自主决定。”'}</p></div>
+  <div class="card"><h4>全过程可复核</h4><p class="small">记录规则版本、数据等级、停止或继续原因、客户主动选择和复核条件；判断层不以成交结果作为考核目标。</p></div>`;
+  nav('进入年度复核');
+}
+/* 双端呈现：客户得到解释与选择权，客户经理得到受限的服务建议。 */
+function service(){
+  const hits=flowHits(), stop=hits.length>0;
+  const action=stop?'当前不主动联系':'仅在客户主动确认后提供服务';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>客户与客户经理看到不同内容</span></div><h2>同一判断，两套界面与权限</h2><p class="mut">客户看到可理解、可自主决定的结果；客户经理只看到服务边界和下一次复核条件。</p>
+  <h3>客户手机银行看到的内容</h3>
+  <div class="card customer ${stop?'red':'green'}"><span class="tag ${stop?'b':'a'}">您的适配判断结果</span><h4 style="margin-top:10px;font-size:17px;color:${stop?'var(--red)':'var(--green)'}">${stop?'建议暂缓缴存':'可以继续了解'}</h4><p class="small">${stop?'本次触发：'+reason+'。先处理资金安全问题，条件变化后可重新判断。':'当前未触发暂停条件。您可自主选择是否查看税优细节、养老缺口区间和产品类别说明。'}</p><div class="notice">${stop?'您现在可以：保存结果、查看政策说明、条件变化后重新判断。系统不会据此安排营销联系。':'您现在可以：保存结果、查看计算过程；只有您主动点击“了解类别”后，才会进入后续说明。'}</div></div>
+  <h3>客户经理 CRM 看到的内容</h3>
+  <div class="card crm ${stop?'red':'blue'}"><span class="tag ${stop?'b':'a'}">服务建议清单 · 模拟编号 A-****</span><h4 style="margin-top:10px">建议动作：${action}</h4><p class="small"><b>判断依据：</b>${reason}<br><b>复核触发：</b>${trigger}<br><b>可说的话：</b>${stop?'“当前更重要的是保留应急资金；条件变化后可由您主动重新判断。”':'“是否继续、缴存多少、是否了解类别，都由客户自主决定。”'}</p><div class="notice"><b>系统不提供：</b>产品代码、自动下单入口、收益承诺话术、成交转化率排序。</div></div>
+  <div class="card"><h4>为什么两端不同？</h4><p class="small">客户拥有选择权和完整解释；客户经理只能依据合规服务建议承接，且本条不计入成交转化。系统给的不是营销名单。</p></div>
+  <div class="card"><h4>全过程可复核</h4><p class="small">记录规则版本、数据等级、停止或继续原因、客户主动选择和复核条件；判断层不以成交结果作为考核目标。</p></div>`;
+  nav('进入年度复核');
+}
+/* 客户侧摘要：把完整判断的可见结果具体交给客户，而不是只给一句结论。 */
+function service(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const action=stop?'当前不主动联系':'仅在客户主动确认后提供服务';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  const taxText=r?`T0 ${money(S.t0)} 元；预计当期少缴税款 ${money(r.save)} 元${r.cross?'；系统已按跨档规则分段计算':''}`:'未生成税额。'+(S.auth.t0?'请补充或确认具体 T0。':'本次未授权 T0，系统不虚构税额。');
+  const gapText=hasRecord?'已根据基础养老权益记录形成初步缺口区间；仍需结合退休年龄与生活水平假设复核。':'证据不足：未授权基础养老权益记录，不输出个人缺口金额；可补充信息或转人工。';
+  const categoryText=stop?'本次已触发暂停条件，不展示产品类别；待资金安全条件满足后，可由您主动重新判断。':S.category==='learn'?'您主动选择了解类别：可在风险测评后进一步查看储蓄存款、理财、公募基金和保险等类别。不展示产品代码，不自动下单。':'您暂未选择了解产品类别，系统仅保存判断结论。';
+  const human=(!hasRecord || !S.auth.t0)?'建议补充信息或转人工服务':'如需讨论复杂家庭责任、退休目标或保障安排，可主动预约人工服务；否则可继续在线查看。';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>客户与客户经理看到不同内容</span></div><h2>同一判断，两套界面与权限</h2><p class="mut">客户获得完整解释与选择权；客户经理只获得受限的服务建议。</p>
+  <h3>客户手机银行看到的内容</h3>
+  <div class="card customer ${stop?'red':'green'}"><span class="tag ${stop?'b':'a'}">您的个人养老准备摘要</span><h4 style="margin-top:10px;font-size:17px;color:${stop?'var(--red)':'var(--green)'}">${stop?'建议暂缓缴存':'可以继续了解'}</h4><p class="small">${stop?'本次触发：'+reason+'。先处理资金安全问题，条件变化后可重新判断。':'当前未触发暂停条件；是否缴存、缴多少、是否查看类别均由您自主决定。'}</p></div>
+  <div class="card"><h4>① 税优空间</h4><p class="small">${taxText}</p></div>
+  <div class="card ${stop?'red':'green'}"><h4>② 资金安全边界</h4><p class="small">${stop?'触发暂停条件：'+reason+'。在条件消除前，系统不进入产品类别说明。':'应急金、集中支出、锁定期接受度和领取条件均未触发暂停。'}</p></div>
+  <div class="card ${hasRecord?'blue':'amber'}"><h4>③ 养老缺口</h4><p class="small">${gapText}</p></div>
+  <div class="card blue"><h4>④ 账户内与账户外</h4><p class="small"><b>个人养老金账户内：</b>税制支持下的长期账户，每年最高 12,000 元。<br><b>账户外长期保障：</b>使用税后资金，属于市场化安排，没有个人养老金年度额度。<br>两者不能相互替代或转换；养老缺口只用于判断，不代表资金流向。</p></div>
+  <div class="card"><h4>⑤ 产品类别说明</h4><p class="small">${categoryText}</p></div>
+  <div class="card ${(!hasRecord || !S.auth.t0)?'amber':'blue'}"><h4>⑥ 人工服务与网点预约</h4><p class="small">${human}</p><div class="notice">人工服务可通过线上顾问或网点预约发起；只有客户主动选择或信息不足时才出现，不是默认导流。</div></div>
+  <h3>客户经理 CRM 看到的内容</h3>
+  <div class="card crm ${stop?'red':'blue'}"><span class="tag ${stop?'b':'a'}">服务建议清单 · 模拟编号 A-****</span><h4 style="margin-top:10px">建议动作：${action}</h4><p class="small"><b>判断依据：</b>${reason}<br><b>复核触发：</b>${trigger}<br><b>可说的话：</b>${stop?'“当前更重要的是保留应急资金；条件变化后可由您主动重新判断。”':'“是否继续、缴存多少、是否了解类别，都由客户自主决定。”'}</p><div class="notice"><b>系统不提供：</b>产品代码、自动下单入口、收益承诺话术、成交转化率排序。</div></div>
+  <div class="card"><h4>为什么两端不同？</h4><p class="small">客户拥有选择权和完整解释；客户经理只能依据合规服务建议承接，且本条不计入成交转化。系统给的不是营销名单。</p></div>`;
+  nav('进入年度复核');
+}
+/* 结果页把客户关心的六项内容做成可回看、可调整的具体模块。 */
+function service(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const action=stop?'当前不主动联系':'仅在客户主动确认后提供服务';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  const taxState=r?`已计算 · 当期少缴税款约 ${money(r.save)} 元`:'暂不生成税额';
+  const taxDetail=r?`T0 为 ${money(S.t0)} 元，${r.cross?'本次已跨档并分段计算。':'按当前税率档计算。'}`:S.auth.t0?'请补充或确认具体 T0 后计算。':'本次未授权 T0，系统不猜测税额。';
+  const gapState=hasRecord?'已形成初步缺口区间':'证据不足';
+  const gapDetail=hasRecord?'已带入基础养老权益记录；仍需结合退休年龄与生活水平假设确认区间。':'未授权基础养老权益记录，不输出个人缺口金额。';
+  const categoryState=stop?'本次暂停展示':S.category==='learn'?'可进一步了解':'暂不查看';
+  const categoryDetail=stop?'触发资金安全条件后，不进入任何产品类别说明。':S.category==='learn'?'可在完成风险测评后了解储蓄、理财、公募基金、保险等类别；不展示产品代码，也不自动下单。':'您可只保存判断结果，之后再主动查看类别说明。';
+  const humanNeed=!hasRecord || !r;
+  const humanResult=S.humanChannel==='online'?'已选择线上顾问：原型中将由客户主动发起，不自动外呼。':S.humanChannel==='branch'?'已选择网点预约：原型中仅记录意向，不自动生成销售任务。':'';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>客户与客户经理看到不同内容</span></div><h2>客户结果页与 CRM 服务页</h2><p class="mut">客户看到完整结果、依据和下一步选择；客户经理只看到合规服务边界。</p>
+  <h3>客户手机银行｜个人养老准备结果</h3>
+  <div class="result ${stop?'stopr':''}"><span class="tag ${stop?'b':'a'}">本次适配判断</span><h2>${stop?'建议暂缓缴存':'可以继续了解'}</h2><p class="small">${stop?'原因：'+reason+'。':'是否缴存、缴多少、是否了解类别均由您自主决定。'}</p></div>
+  <div class="card ${r?'green':'amber'}"><h4>税优空间与计算状态 · ${taxState}</h4><p class="small">${taxDetail}</p><button class="btn ghost" onclick="set(2,'税率适配')">查看或调整税优计算</button></div>
+  <div class="card ${stop?'red':'green'}"><h4>资金安全边界 · ${stop?'已触发暂停':'当前通过'}</h4><p class="small">${stop?'触发条件：'+reason+'。在条件消除前，系统不会展示产品类别。':'应急金、集中支出、锁定期接受度和领取条件均已完成确认。'}</p><button class="btn ghost" onclick="set(3,'流动性安全')">查看或调整资金安全条件</button></div>
+  <div class="card ${hasRecord?'blue':'amber'}"><h4>养老缺口 · ${gapState}</h4><p class="small">${gapDetail}</p><button class="btn ghost" onclick="set(4,'养老缺口')">查看测算依据与假设</button></div>
+  <div class="card blue"><h4>账户内与账户外 · 不可互换</h4><p class="small"><b>账户内：</b>个人养老金账户，税制支持，年度最高 12,000 元。<br><b>账户外：</b>市场化长期保障安排，使用税后资金，没有个人养老金年度额度。<br>两者在资金来源、额度约束和判断逻辑上不同，不能替代或转换。</p></div>
+  <div class="card ${stop?'amber':'blue'}"><h4>产品类别 · ${categoryState}</h4><p class="small">${categoryDetail}</p>${stop?'':`<button class="btn ghost" onclick="set(5,'类别说明')">查看类别说明</button>`}</div>
+  <div class="card ${humanNeed?'amber':'blue'}"><h4>人工服务路径 · ${humanNeed?'建议补充信息或转人工':'按需选择'}</h4><p class="small">${humanNeed?'数据不足或情况复杂时，建议由客户自主选择人工服务。':'如需讨论退休目标、家庭责任或保障安排，您可主动选择人工服务；无需强制转线下。'}</p><div class="opts" style="margin:10px 0 0"><button class="opt ${S.humanChannel==='online'?'sel':''}" onclick="chooseHuman('online')"><span>线上顾问<i>由客户主动发起远程说明</i></span></button><button class="opt ${S.humanChannel==='branch'?'sel':''}" onclick="chooseHuman('branch')"><span>网点预约<i>由客户主动选择到店时间</i></span></button></div>${humanResult?`<div class="notice">${humanResult}</div>`:''}</div>
+  <h3>客户经理 CRM｜受限服务建议</h3>
+  <div class="card crm ${stop?'red':'blue'}"><span class="tag ${stop?'b':'a'}">服务建议清单 · 模拟编号 A-****</span><h4 style="margin-top:10px">建议动作：${action}</h4><p class="small"><b>判断依据：</b>${reason}<br><b>复核触发：</b>${trigger}<br><b>可说的话：</b>${stop?'“当前更重要的是保留应急资金；条件变化后可由您主动重新判断。”':'“是否继续、缴存多少、是否了解类别，都由客户自主决定。”'}</p><div class="notice"><b>系统不提供：</b>产品代码、自动下单入口、收益承诺话术、成交转化率排序。</div></div>
+  <div class="card"><h4>为什么两端不同？</h4><p class="small">客户拥有结果解释和主动选择权；客户经理只能依据合规服务建议承接，本条不计入成交转化。系统给的不是营销名单。</p></div>`;
+  nav('进入年度复核');
+}
+/* 第四道门之后，同一套判断分别生成 C 端结果页与 B 端服务工作台。 */
+function dual(){
+  main.innerHTML=`<div class="gate"><b class="n">05</b><span>判断完成 · 双端分流</span></div><h2>同一判断，生成不同页面</h2><p class="mut">客户得到完整解释与自主选择；客户经理只得到受限的服务建议，不能把判断结果当营销名单。</p>
+  <div class="card green"><h4>C 端｜客户手机银行结果页</h4><p class="small">展示税优、资金安全、养老缺口、账户内外边界、类别说明和客户可主动选择的人工服务路径。</p></div>
+  <div class="card blue"><h4>B 端｜客户经理 CRM 工作台</h4><p class="small">只展示是否应联系、判断依据、复核触发和合规话术；不展示产品代码、收益承诺或成交转化排序。</p></div>
+  <div class="notice">两个端口是平行入口，可随时切换。CRM 页面仅用于项目演示，客户实际不可见。</div>`;
+  foot.innerHTML='<button class="btn navy" onclick="set(7,\'客户结果\')">进入 C 端客户结果页</button><button class="btn navy" style="margin-top:10px" onclick="set(8,\'CRM 工作台\')">进入 B 端 CRM 工作台</button><button class="btn ghost" onclick="prev()">← 返回第四道门</button>';
+}
+
+function customerResult(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const taxState=r?`已计算 · 当期少缴税款约 ${money(r.save)} 元`:'暂不生成税额';
+  const taxDetail=r?`T0 为 ${money(S.t0)} 元，${r.cross?'本次已跨档并分段计算。':'按当前税率档计算。'}`:S.auth.t0?'请补充或确认具体 T0 后计算。':'本次未授权 T0，系统不猜测税额。';
+  const gapState=hasRecord?'已形成初步缺口区间':'证据不足';
+  const gapDetail=hasRecord?'已带入基础养老权益记录；仍需结合退休年龄与生活水平假设确认区间。':'未授权基础养老权益记录，不输出个人缺口金额。';
+  const categoryState=stop?'本次暂停展示':S.category==='learn'?'可进一步了解':'暂不查看';
+  const categoryDetail=stop?'触发资金安全条件后，不进入任何产品类别说明。':S.category==='learn'?'可在完成风险测评后了解储蓄、理财、公募基金、保险等类别；不展示产品代码，也不自动下单。':'您可只保存判断结果，之后再主动查看类别说明。';
+  const humanNeed=!hasRecord || !r;
+  const humanResult=S.humanChannel==='online'?'已选择线上顾问：由客户主动发起，不自动外呼。':S.humanChannel==='branch'?'已选择网点预约：仅记录客户意向，不自动生成销售任务。':'';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>C 端 · 客户手机银行结果页</span></div><h2>您的个人养老准备结果</h2><p class="mut">以下内容仅对客户本人可见，可回看依据并自主调整。</p>
+  <div class="result ${stop?'stopr':''}"><span class="tag ${stop?'b':'a'}">本次适配判断</span><h2>${stop?'建议暂缓缴存':'可以继续了解'}</h2><p class="small">${stop?'原因：'+hits.join('；')+'。':'是否缴存、缴多少、是否了解类别均由您自主决定。'}</p></div>
+  <div class="card ${r?'green':'amber'}"><h4>税优空间与计算状态 · ${taxState}</h4><p class="small">${taxDetail}</p><button class="btn ghost" onclick="set(2,'税率适配')">查看或调整税优计算</button></div>
+  <div class="card ${stop?'red':'green'}"><h4>资金安全边界 · ${stop?'已触发暂停':'当前通过'}</h4><p class="small">${stop?'触发条件：'+hits.join('；')+'。':'应急金、集中支出、锁定期接受度和领取条件均已完成确认。'}</p><button class="btn ghost" onclick="set(3,'流动性安全')">查看或调整资金安全条件</button></div>
+  <div class="card ${hasRecord?'blue':'amber'}"><h4>养老缺口 · ${gapState}</h4><p class="small">${gapDetail}</p><button class="btn ghost" onclick="set(4,'养老缺口')">查看测算依据与假设</button></div>
+  <div class="card blue"><h4>账户内与账户外 · 不可互换</h4><p class="small"><b>账户内：</b>个人养老金账户，税制支持，年度最高 12,000 元。<br><b>账户外：</b>市场化长期保障安排，使用税后资金，没有个人养老金年度额度。<br>两者在资金来源、额度约束和判断逻辑上不同，不能替代或转换。</p></div>
+  <div class="card ${stop?'amber':'blue'}"><h4>产品类别 · ${categoryState}</h4><p class="small">${categoryDetail}</p>${stop?'':`<button class="btn ghost" onclick="set(5,'类别说明')">查看类别说明</button>`}</div>
+  <div class="card ${humanNeed?'amber':'blue'}"><h4>人工服务路径 · ${humanNeed?'建议补充信息或转人工':'按需选择'}</h4><p class="small">${humanNeed?'数据不足或情况复杂时，建议由客户自主选择人工服务。':'如需讨论退休目标、家庭责任或保障安排，您可主动选择人工服务；无需强制转线下。'}</p><div class="opts" style="margin:10px 0 0"><button class="opt ${S.humanChannel==='online'?'sel':''}" onclick="chooseHuman('online')"><span>线上顾问<i>由客户主动发起远程说明</i></span></button><button class="opt ${S.humanChannel==='branch'?'sel':''}" onclick="chooseHuman('branch')"><span>网点预约<i>由客户主动选择到店时间</i></span></button></div>${humanResult?`<div class="notice">${humanResult}</div>`:''}</div>`;
+  foot.innerHTML='<button class="btn" onclick="set(9,\'年度复核\')">进入年度复核</button><button class="btn ghost" onclick="set(6,\'双端分流\')">切换到 B 端 CRM 工作台</button>';
+}
+
+function crmResult(){
+  const hits=flowHits(), stop=hits.length>0;
+  const action=stop?'当前不主动联系':'仅在客户主动确认后提供服务';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  main.innerHTML=`<div class="gate"><b class="n">07</b><span>B 端 · 客户经理 CRM 工作台</span></div><h2>受限服务建议</h2><p class="mut">仅项目演示：本页面不向客户展示，客户经理也不能据此直接营销或发起交易。</p>
+  <div class="card crm ${stop?'red':'blue'}"><span class="tag ${stop?'b':'a'}">服务建议清单 · 模拟编号 A-****</span><h4 style="margin-top:10px">建议动作：${action}</h4><p class="small"><b>判断依据：</b>${reason}<br><b>复核触发：</b>${trigger}<br><b>可说的话：</b>${stop?'“当前更重要的是保留应急资金；条件变化后可由您主动重新判断。”':'“是否继续、缴存多少、是否了解类别，都由客户自主决定。”'}</p></div>
+  <div class="card blue"><h4>CRM 可查看</h4><p class="small">规则版本、数据等级、停止或继续原因、客户主动选择、复核条件和经合规预检的话术。</p></div>
+  <div class="card red"><h4>CRM 不可查看或操作</h4><p class="small">产品代码、自动下单入口、收益承诺话术、成交转化率排序；本条不计入成交转化。</p></div>
+  <div class="notice">系统给客户经理的不是营销名单，而是一份服务建议清单。</div>`;
+  foot.innerHTML='<button class="btn" onclick="set(6,\'双端分流\')">切换到 C 端客户结果页</button><button class="btn ghost" onclick="set(9,\'年度复核\')">查看年度复核</button>';
+}
+/* C 端结果页：粗略缺口输入、四类产品说明，以及回看后可返回本页。 */
+function customerResult(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const taxState=r?`已计算 · 当期少缴税款约 ${money(r.save)} 元`:'暂不生成税额';
+  const taxDetail=r?`T0 为 ${money(S.t0)} 元，${r.cross?'本次已跨档并分段计算。':'按当前税率档计算。'}`:S.auth.t0?'请补充或确认具体 T0 后计算。':'本次未授权 T0，系统不猜测税额。';
+  const gapReady=S.gapGoal!==null && S.gapGoal>0 && S.gapCover!==null && S.gapCover>=0;
+  const monthlyGap=gapReady?Math.max(0,S.gapGoal-S.gapCover):null;
+  const gapDetail=gapReady?`按您填写的目标生活费 ${money(S.gapGoal)} 元/月、目前可确认养老保障 ${money(S.gapCover)} 元/月，粗略月缺口约为 ${money(monthlyGap)} 元。${hasRecord?'系统可再结合已授权权益记录收敛区间。':'这是手动输入的粗略估算，不替代权益记录核验。'}`:hasRecord?'已带入基础养老权益记录；请补充退休后希望的月生活费与目前可确认的月养老保障，形成粗略差额。':'请补充两个金额形成粗略差额；未授权权益记录时，结果仅作为手动估算。';
+  const categoryState=stop?'本次暂停展示':S.category==='learn'?'已按您的选择展示':'尚未选择了解';
+  const categoryDetail=stop?'触发资金安全条件后，不进入任何产品类别说明。':S.category==='learn'?'以下仅作类别科普，具体适配仍须风险测评。':'您尚未主动选择了解产品类别；可返回第四道门后再决定。';
+  const humanNeed=!hasRecord || !r;
+  const humanResult=S.humanChannel==='online'?'已选择线上顾问：由客户主动发起，不自动外呼。':S.humanChannel==='branch'?'已选择网点预约：仅记录客户意向，不自动生成销售任务。':'';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>C 端 · 客户手机银行结果页</span></div><h2>您的个人养老准备结果</h2><p class="mut">以下内容仅对客户本人可见，可回看依据、补充信息并自主调整。</p>
+  <div class="result ${stop?'stopr':''}"><span class="tag ${stop?'b':'a'}">本次适配判断</span><h2>${stop?'建议暂缓缴存':'可以继续了解'}</h2><p class="small">${stop?'原因：'+hits.join('；')+'。':'是否缴存、缴多少、是否了解类别均由您自主决定。'}</p></div>
+  <div class="card ${r?'green':'amber'}"><h4>税优空间与计算状态 · ${taxState}</h4><p class="small">${taxDetail}</p><button class="btn ghost" onclick="openFromCustomer(2,'税率适配')">查看或调整税优计算</button></div>
+  <div class="card ${stop?'red':'green'}"><h4>资金安全边界 · ${stop?'已触发暂停':'当前通过'}</h4><p class="small">${stop?'触发条件：'+hits.join('；')+'。':'应急金、集中支出、锁定期接受度和领取条件均已完成确认。'}</p><button class="btn ghost" onclick="openFromCustomer(3,'流动性安全')">查看或调整资金安全条件</button></div>
+  <div class="card ${gapReady?'green':(hasRecord?'blue':'amber')}"><h4>养老缺口 · ${gapReady?'已完成粗略估算':'待补充生活目标'}</h4><p class="small">${gapDetail}</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><label class="small">退休后希望的月生活费<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapGoal??''}" onchange="setGapInput('gapGoal',this.value)" placeholder="例如 6000"></label><label class="small">目前可确认月养老保障<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapCover??''}" onchange="setGapInput('gapCover',this.value)" placeholder="例如 4000"></label></div><p class="small" style="margin-top:8px">粗略估算只帮助理解差额，不构成完整退休规划或产品建议。</p><button class="btn ghost" onclick="openFromCustomer(4,'养老缺口')">查看测算依据与假设</button></div>
+  <div class="card blue"><h4>账户内与账户外 · 不可互换</h4><p class="small"><b>账户内：</b>个人养老金账户，税制支持，年度最高 12,000 元。<br><b>账户外：</b>市场化长期保障安排，使用税后资金，没有个人养老金年度额度。<br>两者在资金来源、额度约束和判断逻辑上不同，不能替代或转换。</p></div>
+  <div class="card ${stop?'amber':'blue'}"><h4>产品类别 · ${categoryState}</h4><p class="small">${categoryDetail}</p>${stop?'':S.category==='learn'?`<div class="two" style="margin-top:10px"><div class="mini"><b>储蓄存款</b>波动较低；仍须关注期限与提前支取规则。</div><div class="mini"><b>理财产品</b>净值可能波动；不承诺保本或收益。</div><div class="mini"><b>公募基金</b>长期波动可能更大；须匹配风险承受能力。</div><div class="mini"><b>保险产品</b>侧重长期保障；须理解保障责任与领取条件。</div></div><div class="notice">四类只是可进一步评估的类别，不代表推荐；不会因为税优跳过风险测评，也不会自动下单。</div>`:`<button class="btn ghost" onclick="openFromCustomer(5,'类别说明')">返回第四道门选择是否了解类别</button>`}</div>
+  <div class="card ${humanNeed?'amber':'blue'}"><h4>人工服务路径 · ${humanNeed?'建议补充信息或转人工':'按需选择'}</h4><p class="small">${humanNeed?'数据不足或情况复杂时，建议由客户自主选择人工服务。':'如需讨论退休目标、家庭责任或保障安排，您可主动选择人工服务；无需强制转线下。'}</p><div class="opts" style="margin:10px 0 0"><button class="opt ${S.humanChannel==='online'?'sel':''}" onclick="chooseHuman('online')"><span>线上顾问<i>由客户主动发起远程说明</i></span></button><button class="opt ${S.humanChannel==='branch'?'sel':''}" onclick="chooseHuman('branch')"><span>网点预约<i>由客户主动选择到店时间</i></span></button></div>${humanResult?`<div class="notice">${humanResult}</div>`:''}</div>`;
+  foot.innerHTML='<button class="btn" onclick="set(9,\'年度复核\')">进入年度复核</button><button class="btn ghost" onclick="set(6,\'双端分流\')">切换到 B 端 CRM 工作台</button>';
+}
+/* C 端概览：把结果清单重组成手机银行可快速浏览的养老准备仪表页。 */
+function customerResult(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const gapReady=S.gapGoal!==null && S.gapGoal>0 && S.gapCover!==null && S.gapCover>=0;
+  const monthlyGap=gapReady?Math.max(0,S.gapGoal-S.gapCover):null;
+  const coverPct=gapReady?Math.min(100,Math.round(S.gapCover/S.gapGoal*100)):0;
+  const gapPct=gapReady?Math.min(100-coverPct,Math.round(monthlyGap/S.gapGoal*100)):0;
+  const taxState=r?`约 ${money(r.save)} 元`:'待确认';
+  const gapState=gapReady?`约 ${money(monthlyGap)} 元/月`:hasRecord?'待补充目标':'证据不足';
+  const taxDetail=r?`T0 为 ${money(S.t0)} 元，${r.cross?'已按跨档规则分段计算。':'按当前税率档计算。'}`:S.auth.t0?'请补充具体 T0 后计算。':'未授权 T0，系统不猜测税额。';
+  const gapDetail=gapReady?`目标生活费 ${money(S.gapGoal)} 元/月；已确认养老保障 ${money(S.gapCover)} 元/月；粗略月缺口 ${money(monthlyGap)} 元。${hasRecord?'可再结合已授权权益记录收敛区间。':'本项为手动粗算，不替代权益记录核验。'}`:hasRecord?'已带入基础养老权益记录；补充两项金额后可形成粗略差额。':'请填写两项金额形成粗略差额；未授权权益记录时仅作手动估算。';
+  const categoryReady=!stop && S.category==='learn';
+  const humanNeed=!hasRecord || !r;
+  const humanResult=S.humanChannel==='online'?'已选择线上顾问：由客户主动发起，不自动外呼。':S.humanChannel==='branch'?'已选择网点预约：仅记录客户意向，不自动生成销售任务。':'';
+  main.innerHTML=`<div class="gate"><b class="n">06</b><span>C 端 · 客户手机银行结果页</span></div><h2>我的养老准备概览</h2><p class="mut">以下内容仅对客户本人可见，可回看依据、补充信息并自主调整。</p>
+  <div class="result ${stop?'stopr':''}"><span class="tag ${stop?'b':'a'}">本次适配判断</span><h2>${stop?'建议暂缓缴存':'可以继续了解'}</h2><p class="small">${stop?'原因：'+hits.join('；')+'。':'是否缴存、缴多少、是否了解类别均由您自主决定。'}</p><div class="metricgrid"><div class="metric"><b>${taxState}</b><span>当期税优</span></div><div class="metric"><b>${stop?'需处理':'已通过'}</b><span>资金安全</span></div><div class="metric"><b>${gapState}</b><span>养老缺口</span></div></div></div>
+  <h3>税优与资金安全</h3>
+  <div class="card ${r?'green':'amber'}"><h4>税优空间 · ${r?'已计算':'待确认'}</h4><div class="formula">${r?`缴存前税额 ${money(r.before)} 元 → 缴存后税额 ${money(r.after)} 元<br><b>当期少缴税款约 ${money(r.save)} 元</b>`:taxDetail}</div><button class="btn ghost" onclick="openFromCustomer(2,'税率适配')">查看或调整税优计算</button></div>
+  <div class="card ${stop?'red':'green'}"><h4>资金安全边界 · ${stop?'已触发暂停':'当前通过'}</h4><p class="small">${stop?'触发条件：'+hits.join('；')+'。在条件消除前，系统不展示产品类别。':'应急金、集中支出、锁定期接受度和领取条件均已完成确认。'}</p><button class="btn ghost" onclick="openFromCustomer(3,'流动性安全')">查看或调整资金安全条件</button></div>
+  <h3>养老缺口与账户边界</h3>
+  <div class="card ${gapReady?'green':(hasRecord?'blue':'amber')}"><h4>养老缺口粗略自查（可选）· ${gapReady?'已形成':'待补充'}</h4><p class="small">${gapDetail}</p>${gapReady?`<div class="bartrack"><span class="barcover" style="width:${coverPct}%"></span><span class="bargap" style="width:${gapPct}%"></span>${coverPct+gapPct<100?`<span class="barzero" style="width:${100-coverPct-gapPct}%"></span>`:''}</div><div class="subrow"><span>已确认保障 ${coverPct}%</span><span>粗略缺口 ${gapPct}%</span></div>`:''}<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><label class="small">退休后希望的月生活费<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapGoal??''}" onchange="setGapInput('gapGoal',this.value)" placeholder="例如 6000"></label><label class="small">目前可确认月养老保障<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapCover??''}" onchange="setGapInput('gapCover',this.value)" placeholder="例如 4000"></label></div><p class="small" style="margin-top:8px">仅帮助理解差额，不构成第三道门的正式结论；正式测算还需结合退休年龄、权益记录、资产与保障信息。</p><button class="btn ghost" onclick="openFromCustomer(4,'养老缺口')">查看测算依据与假设</button></div>
+  <div class="two"><div class="mini" style="background:var(--lb)"><b>个人养老金账户内</b>税制支持；年度最高 12,000 元；用于长期养老准备。</div><div class="mini" style="background:var(--la)"><b>账户外长期保障</b>使用税后资金；没有个人养老金年度额度；属于市场化安排。</div></div><p class="small" style="margin:9px 0 0">两者在资金来源、额度约束和判断逻辑上不同，不能替代或转换。</p>
+  <h3>继续了解</h3>
+  <div class="card ${stop?'amber':'blue'}"><h4>产品类别 · ${stop?'本次暂停展示':categoryReady?'已按您的选择展示':'尚未选择了解'}</h4><p class="small">${stop?'触发资金安全条件后，不进入任何产品类别说明。':categoryReady?'以下仅作类别科普，具体适配仍须风险测评。':'您尚未主动选择了解产品类别；可返回第四道门后再决定。'}</p>${stop?'':categoryReady?`<div class="two" style="margin-top:10px"><div class="mini"><b>储蓄存款</b>波动较低；仍须关注期限与提前支取规则。</div><div class="mini"><b>理财产品</b>净值可能波动；不承诺保本或收益。</div><div class="mini"><b>公募基金</b>长期波动可能更大；须匹配风险承受能力。</div><div class="mini"><b>保险产品</b>侧重长期保障；须理解保障责任与领取条件。</div></div><div class="notice">四类只是可进一步评估的类别，不代表推荐；不会因为税优跳过风险测评，也不会自动下单。</div>`:`<button class="btn ghost" onclick="openFromCustomer(5,'类别说明')">返回第四道门选择是否了解类别</button>`}</div>
+  <div class="card ${humanNeed?'amber':'blue'}"><h4>人工服务路径 · ${humanNeed?'建议补充信息或转人工':'按需选择'}</h4><p class="small">${humanNeed?'数据不足或情况复杂时，建议由客户自主选择人工服务。':'如需讨论退休目标、家庭责任或保障安排，您可主动选择人工服务；无需强制转线下。'}</p><div class="opts" style="margin:10px 0 0"><button class="opt ${S.humanChannel==='online'?'sel':''}" onclick="chooseHuman('online')"><span>线上顾问<i>由客户主动发起远程说明</i></span></button><button class="opt ${S.humanChannel==='branch'?'sel':''}" onclick="chooseHuman('branch')"><span>网点预约<i>由客户主动选择到店时间</i></span></button></div>${humanResult?`<div class="notice">${humanResult}</div>`:''}</div>
+  <div class="card blue"><h4>下一次复核</h4><p class="small">收入、扣除、家庭责任、应急金或养老权益变化时，可重新判断；无重大变化时按年度复核。</p></div>`;
+  foot.innerHTML='<button class="btn" onclick="set(9,\'年度复核\')">进入年度复核</button><button class="btn ghost" onclick="set(6,\'双端分流\')">切换到 B 端 CRM 工作台</button>';
+}
+/* B 端工作台：信息更完整，但只服务、不营销。 */
+function crmResult(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const action=stop?'当前不主动联系':'等待客户主动确认服务意愿';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  const level=levelText().name;
+  const taxStatus=r?`已算 · ${money(r.save)} 元`:'待确认';
+  const flowStatus=stop?'暂停':'通过';
+  const gapStatus=hasRecord?'已形成初步区间':'证据不足';
+  const categoryStatus=stop?'不展示':S.category==='learn'?'客户主动了解':'未选择';
+  main.innerHTML=`<div class="gate"><b class="n">07</b><span>B 端 · 客户经理 CRM 工作台</span></div><h2>客户服务工作台</h2><p class="mut">仅项目演示：客户不可见。本页服务于解释、复核和合规承接，不用于成交转化。</p>
+  <div class="card crm ${stop?'red':'blue'}"><span class="tag ${stop?'b':'a'}">服务建议清单 · 客户编号 A-****</span><h4 style="margin-top:10px;font-size:17px">${action}</h4><div class="metricgrid"><div class="metric"><b>${level}</b><span>数据等级</span></div><div class="metric"><b>${stop?'暂停':'可承接'}</b><span>当前状态</span></div><div class="metric"><b>年度 / 条件变化</b><span>下次复核</span></div></div></div>
+  <h3>客户判断摘要</h3>
+  <div class="two"><div class="mini"><b>税优</b>${taxStatus}</div><div class="mini"><b>资金安全</b>${flowStatus}</div><div class="mini"><b>养老缺口</b>${gapStatus}</div><div class="mini"><b>类别意愿</b>${categoryStatus}</div></div>
+  <h3>四道门依据</h3>
+  <div class="card"><p class="small"><b>① 税率适配：</b>${r?`T0 ${money(S.t0)} 元，按确定性规则计算。`:'未生成税额，不以猜测代替计算。'}<br><b>② 流动性安全：</b>${stop?'触发 '+hits.join('；')+'。':'四类停止条件均未触发。'}<br><b>③ 养老缺口：</b>${hasRecord?'已授权基础养老权益记录，仍需核对生活目标假设。':'权益记录未授权，只能提示补充信息。'}<br><b>④ 类别说明：</b>${stop?'不进入类别说明。':S.category==='learn'?'客户主动选择了解类别，仍须风险测评。':'客户未主动选择了解类别。'}</p></div>
+  <h3>服务动作与话术边界</h3>
+  <div class="card ${stop?'red':'blue'}"><h4>建议动作：${action}</h4><p class="small"><b>判断依据：</b>${reason}<br><b>复核触发：</b>${trigger}<br><b>可说的话：</b>${stop?'“当前更重要的是保留应急资金；条件变化后可由您主动重新判断。”':'“是否继续、缴存多少、是否了解类别，都由客户自主决定。”'}</p></div>
+  <div class="card blue"><h4>待办与审计留痕</h4><p class="small">复核任务：${trigger}<br>留痕字段：规则版本、授权状态、数据等级、四道门结论、客户主动选择、生成时间。<br>本条不计入成交转化考核。</p></div>
+  <div class="card red"><h4>本页明确不提供</h4><p class="small">成交概率排序、产品代码、自动下单入口、收益承诺话术、以销售为目的的客户名单。</p></div>
+  <div class="notice">系统给客户经理的不是营销名单，而是一份可复核的服务建议清单。</div>`;
+  foot.innerHTML='<button class="btn navy" onclick="set(6,\'双端分流\')">切换到 C 端客户结果页</button><button class="btn ghost" onclick="set(9,\'年度复核\')">查看年度复核</button>';
+}
+/* B 端互动闭环：话术先合规预检，再生成可复核的服务任务。 */
+function crmResult(){
+  const hits=flowHits(), stop=hits.length>0, r=result(), hasRecord=S.auth.record;
+  const action=stop?'当前不主动联系':'等待客户主动确认服务意愿';
+  const reason=stop?hits.join('；'):'四道门当前均未触发暂停条件';
+  const trigger=stop?'应急金覆盖达到 3 个月、支出计划变化或客户主动申请':'客户主动确认希望继续了解，或年度复核到期';
+  const level=levelText().name;
+  const taxStatus=r?`已算 · ${money(r.save)} 元`:'待确认';
+  const flowStatus=stop?'暂停':'通过';
+  const gapStatus=hasRecord?'已形成初步区间':'证据不足';
+  const categoryStatus=stop?'不展示':S.category==='learn'?'客户主动了解':'未选择';
+  const generatedScript=stop
+    ?`您好，根据您本次确认的信息，当前更适合先保留应急资金并处理近期支出安排，因此暂不建议缴存个人养老金。待资金安全条件变化后，您可自主再次进行判断。`
+    :r?`您好，根据您确认的全年应纳税所得额，${S.auth.paid?`本年度剩余可缴额度为 ${money(availableLimit())} 元，`:'如在年度可缴额度内缴存，'}预计可少缴税款约 ${money(r.save)} 元。这是按现行规则的税额测算，不代表收益承诺；资金用于长期养老准备，领取条件以现行规则为准。${S.category==='learn'?'您已表示希望了解产品类别，后续可在完成风险测评后自主查看类别说明。':''}`
+    :'您好，您当前信息不足以形成税额测算。可先补充必要信息，再由您自主决定是否继续了解个人养老金。';
+  main.innerHTML=`<div class="gate"><b class="n">07</b><span>B 端 · 客户经理 CRM 工作台</span></div><h2>客户服务工作台</h2><p class="mut">仅项目演示：客户不可见。本页服务于解释、复核和合规承接，不用于成交转化。</p>
+  <div class="card crm ${stop?'red':'blue'}"><span class="tag ${stop?'b':'a'}">服务建议清单 · 客户编号 A-****</span><h4 style="margin-top:10px;font-size:17px">${action}</h4><div class="metricgrid"><div class="metric"><b>${level}</b><span>数据等级</span></div><div class="metric"><b>${stop?'暂停':'可承接'}</b><span>当前状态</span></div><div class="metric"><b>年度 / 条件变化</b><span>下次复核</span></div></div></div>
+  <h3>客户授权范围</h3><div class="two"><div class="mini"><b>T0 税额信息</b>${S.auth.t0?'已授权可见':'未授权，不显示具体税额'}</div><div class="mini"><b>已缴金额</b>${S.auth.paid&&S.paidAmount!==null?`已授权 · ${money(S.paidAmount)} 元`:'未授权或未确认'}</div><div class="mini"><b>养老权益记录</b>${hasRecord?'已授权，显示区间提示':'未授权，不显示个人缺口金额'}</div><div class="mini"><b>不可见信息</b>客户完整目标、资产明细及未授权数据</div></div>
+  <h3>客户判断摘要</h3><div class="two"><div class="mini"><b>税优</b>${taxStatus}</div><div class="mini"><b>资金安全</b>${flowStatus}</div><div class="mini"><b>养老缺口</b>${gapStatus}</div><div class="mini"><b>类别意愿</b>${categoryStatus}</div></div>
+  <h3>四道门依据</h3><div class="card"><p class="small"><b>① 税率适配：</b>${r?`T0 ${money(S.t0)} 元，按确定性规则计算。`:'未生成税额，不以猜测代替计算。'}<br><b>② 流动性安全：</b>${stop?'触发 '+hits.join('；')+'。':'四类停止条件均未触发。'}<br><b>③ 养老缺口：</b>${hasRecord?'已授权基础养老权益记录，仍需核对生活目标假设。':'权益记录未授权，只能提示补充信息。'}<br><b>④ 类别说明：</b>${stop?'不进入类别说明。':S.category==='learn'?'客户主动选择了解类别，仍须风险测评。':'客户未主动选择了解类别。'}</p></div>
+  <h3>系统生成服务话术</h3><div class="card blue"><span class="tag a">已通过规则与合规边界校验</span><h4 style="margin-top:10px">基于客户已确认信息自动生成</h4><div class="notice">${generatedScript}</div><p class="small" style="margin-top:10px">系统已排除收益率、保本、保证收益等表述，并已写入长期锁定与领取条件提示。客户经理仅可基于新增事实补充说明，不从空白话术开始撰写。</p></div>
+  <h3>复核任务与审计留痕</h3><div class="card ${S.crmTaskRecorded?'green':'blue'}"><h4>${S.crmTaskRecorded?'复核任务已记录':'待生成复核任务'}</h4><p class="small"><b>触发条件：</b>${trigger}<br><b>留痕字段：</b>规则版本、授权状态、数据等级、四道门结论、客户主动选择、生成时间。<br><b>考核口径：</b>本条不计入成交转化。</p>${S.crmTaskRecorded?'<div class="notice">演示记录已写入：仅用于复核提醒，不生成营销外呼或销售任务。</div>':'<button class="btn ghost" onclick="recordCrmTask()">记录复核任务</button>'}</div>
+  <div class="card red"><h4>本页明确不提供</h4><p class="small">成交概率排序、产品代码、自动下单入口、收益承诺话术、以销售为目的的客户名单。</p></div>`;
+  foot.innerHTML='<button class="btn navy" onclick="set(6,\'双端分流\')">切换到 C 端客户结果页</button><button class="btn ghost" onclick="set(9,\'年度复核\')">查看年度复核</button>';
+}
+render();
+</script></body></html>
