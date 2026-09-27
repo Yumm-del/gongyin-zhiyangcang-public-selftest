@@ -28,7 +28,7 @@ const S={screen:0,
   t0:null, t0Mode:'unknown', paidAmount:null, // paidAmount 为本年度已缴金额
   flow:{reserve:null, spend:null, lock:null, understand:null},
   gap:'need', category:null, humanChannel:'',
-  gapGoal:null, gapCover:null, returnToCustomer:false,
+  gapGoal:null, gapCover:null, gapScenario:'hold', returnToCustomer:false,
   crmTaskRecorded:false};
 const main=document.querySelector('#main'),foot=document.querySelector('#foot'),bar=document.querySelector('#bar'),step=document.querySelector('#step'),portalBtn=document.querySelector('#portalBtn');
 const money=n=>Number(n).toLocaleString('zh-CN');
@@ -91,6 +91,8 @@ function flowOpt(key,value,text,sub){return `<button class="opt ${S.flow[key]===
 function chooseFlow(key,value){S.flow[key]=value;render()}
 function chooseHuman(channel){S.humanChannel=channel;render()}
 function setGapInput(key,value){S[key]=Math.max(0,Number(value)||0);render()}
+/* 仅用于 C 端的准备节奏对照：不引入收益假设，也不把它当作正式缺口结论。 */
+function chooseGapScenario(value){S.gapScenario=value;render()}
 function openFromCustomer(screen,label){S.returnToCustomer=true;set(screen,label)}
 function returnToCustomer(){S.returnToCustomer=false;set(7,'客户结果')}
 function recordCrmTask(){S.crmTaskRecorded=true;render()}
@@ -325,6 +327,9 @@ function customerResult(){
   const monthlyGap=gapReady?Math.max(0,S.gapGoal-S.gapCover):null;
   const coverPct=gapReady?Math.min(100,Math.round(S.gapCover/S.gapGoal*100)):0;
   const gapPct=gapReady?Math.min(100-coverPct,Math.round(monthlyGap/S.gapGoal*100)):0;
+  const scenarioAmount={hold:0,plus500:500,plus1000:1000}[S.gapScenario]||0;
+  const scenarioRemaining=gapReady?Math.max(0,monthlyGap-scenarioAmount):null;
+  const scenarioText=scenarioAmount===0?'保持当前准备':`每月额外预留 ${money(scenarioAmount)} 元`;
   const taxState=r?`约 ${money(r.save)} 元`:'待确认';
   const gapState=gapReady?`约 ${money(monthlyGap)} 元/月`:hasRecord?'待补充目标':'证据不足';
   const taxDetail=r?`T0 为 ${money(S.t0)} 元，${r.cross?'已按跨档规则分段计算。':'按当前税率档计算。'}`:S.auth.t0?'请补充具体 T0 后计算。':'未授权 T0，系统不猜测税额。';
@@ -338,7 +343,7 @@ function customerResult(){
   <div class="card ${r?'green':'amber'}"><h4>税优空间 · ${r?'已计算':'待确认'}</h4><div class="formula">${r?`缴存前税额 ${money(r.before)} 元 → 缴存后税额 ${money(r.after)} 元<br><b>当期少缴税款约 ${money(r.save)} 元</b>`:taxDetail}</div><button class="btn ghost" onclick="openFromCustomer(2,'税率适配')">查看或调整税优计算</button></div>
   <div class="card ${stop?'red':'green'}"><h4>资金安全边界 · ${stop?'已触发暂停':'当前通过'}</h4><p class="small">${stop?'触发条件：'+hits.join('；')+'。在条件消除前，系统不展示产品类别。':'应急金、集中支出、锁定期接受度和领取条件均已完成确认。'}</p><button class="btn ghost" onclick="openFromCustomer(3,'流动性安全')">查看或调整资金安全条件</button></div>
   <h3>养老缺口与账户边界</h3>
-  <div class="card ${gapReady?'green':(hasRecord?'blue':'amber')}"><h4>养老缺口粗略自查（可选）· ${gapReady?'已形成':'待补充'}</h4><p class="small">${gapDetail}</p>${gapReady?`<div class="bartrack"><span class="barcover" style="width:${coverPct}%"></span><span class="bargap" style="width:${gapPct}%"></span>${coverPct+gapPct<100?`<span class="barzero" style="width:${100-coverPct-gapPct}%"></span>`:''}</div><div class="subrow"><span>已确认保障 ${coverPct}%</span><span>粗略缺口 ${gapPct}%</span></div>`:''}<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><label class="small">退休后希望的月生活费<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapGoal??''}" onchange="setGapInput('gapGoal',this.value)" placeholder="例如 6000"></label><label class="small">目前可确认月养老保障<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapCover??''}" onchange="setGapInput('gapCover',this.value)" placeholder="例如 4000"></label></div><p class="small" style="margin-top:8px">仅帮助理解差额，不构成第三道门的正式结论；正式测算还需结合退休年龄、权益记录、资产与保障信息。</p><button class="btn ghost" onclick="openFromCustomer(4,'养老缺口')">查看测算依据与假设</button></div>
+  <div class="card ${gapReady?'green':(hasRecord?'blue':'amber')}"><h4>养老缺口粗略自查（可选）· ${gapReady?'已形成':'待补充'}</h4><p class="small">${gapDetail}</p>${gapReady?`<div class="bartrack"><span class="barcover" style="width:${coverPct}%"></span><span class="bargap" style="width:${gapPct}%"></span>${coverPct+gapPct<100?`<span class="barzero" style="width:${100-coverPct-gapPct}%"></span>`:''}</div><div class="subrow"><span>已确认保障 ${coverPct}%</span><span>粗略缺口 ${gapPct}%</span></div>`:''}<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><label class="small">退休后希望的月生活费<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapGoal??''}" onchange="setGapInput('gapGoal',this.value)" placeholder="例如 6000"></label><label class="small">目前可确认月养老保障<input class="t0in" style="margin-top:4px;font-size:16px;padding:10px" type="number" min="0" value="${S.gapCover??''}" onchange="setGapInput('gapCover',this.value)" placeholder="例如 4000"></label></div>${gapReady?`<h4 style="margin:16px 0 6px">缺口缓解路径（辅助理解）</h4><p class="small">不假设收益率，只比较您现在的月度准备节奏；不等同于退休后的月收入预测。</p><div class="opts" style="margin:9px 0 10px"><button class="opt ${S.gapScenario==='hold'?'sel':''}" onclick="chooseGapScenario('hold')"><span>保持当前准备<i>不新增长期养老预留</i></span></button><button class="opt ${S.gapScenario==='plus500'?'sel':''}" onclick="chooseGapScenario('plus500')"><span>每月额外预留 500 元<i>全年形成 6,000 元长期养老准备</i></span></button><button class="opt ${S.gapScenario==='plus1000'?'sel':''}" onclick="chooseGapScenario('plus1000')"><span>每月额外预留 1,000 元<i>全年形成 12,000 元长期养老准备；账户内仍须看当年剩余额度</i></span></button></div><div class="notice"><b>${scenarioText}</b>：以当前粗略月缺口 ${money(monthlyGap)} 元作为准备目标，尚待安排的月度准备节奏约为 <b>${money(scenarioRemaining)} 元</b>。这是帮助理解“准备速度”的对照，不是收益、养老金金额或产品建议。</div>`:''}<p class="small" style="margin-top:8px">仅帮助理解差额，不构成第三道门的正式结论；正式测算还需结合退休年龄、权益记录、资产与保障信息。</p><button class="btn ghost" onclick="openFromCustomer(4,'养老缺口')">查看测算依据与假设</button></div>
   <div class="two"><div class="mini" style="background:var(--lb)"><b>个人养老金账户内</b>税制支持；年度最高 12,000 元；用于长期养老准备。</div><div class="mini" style="background:var(--la)"><b>账户外长期保障</b>使用税后资金；没有个人养老金年度额度；属于市场化安排。</div></div><p class="small" style="margin:9px 0 0">两者在资金来源、额度约束和判断逻辑上不同，不能替代或转换。</p>
   <h3>继续了解</h3>
   <div class="card ${stop?'amber':'blue'}"><h4>产品类别 · ${stop?'本次暂停展示':categoryReady?'已按您的选择展示':'尚未选择了解'}</h4><p class="small">${stop?'触发资金安全条件后，不进入任何产品类别说明。':categoryReady?'以下仅作类别科普，具体适配仍须风险测评。':'您尚未主动选择了解产品类别；可返回第四道门后再决定。'}</p>${stop?'':categoryReady?`<div class="two" style="margin-top:10px"><div class="mini"><b>储蓄存款</b>波动较低；仍须关注期限与提前支取规则。</div><div class="mini"><b>理财产品</b>净值可能波动；不承诺保本或收益。</div><div class="mini"><b>公募基金</b>长期波动可能更大；须匹配风险承受能力。</div><div class="mini"><b>保险产品</b>侧重长期保障；须理解保障责任与领取条件。</div></div><div class="notice">四类只是可进一步评估的类别，不代表推荐；不会因为税优跳过风险测评，也不会自动下单。</div>`:`<button class="btn ghost" onclick="openFromCustomer(5,'类别说明')">返回第四道门选择是否了解类别</button>`}</div>
