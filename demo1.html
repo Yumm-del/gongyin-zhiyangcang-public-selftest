@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>工银智养仓 · 公众适配自测</title>
+<style>
+:root{
+  /* 工行体系色 —— 全部实测自《封稿精简表格版》PDF */
+  --icbc:#D00F1B;      /* 工行红：品牌标识 + 标题红线（线条色 TOP1，80 次） */
+  --icbc-dk:#A50C15;   /* 深一档，按钮 hover */
+  --navy:#12335B;      /* 深藏青：书中 742 次 */
+  --ink:#243244;       /* 正文色：全书主力，21841 次 */
+  --ink2:#65758A;
+  --gray:#5C6E85;
+  --line:#D8E0E9;
+  --line2:#E2E7EC;
+  --green:#4A7C69;     /* 正向 / 继续 */
+  --amber:#B8893E;     /* 待完善 / 补充 */
+  --blue:#2466A8;      /* 信息 / 中性强调 */
+  --l-red:#FBF0F1;
+  --l-blue:#EDF4FB;
+  --l-green:#EEF4F1;
+  --l-amber:#FAF4E9;
+  --l-gray:#F7F9FC;
+  --bg:#F4F6F9; --card:#fff;
+  --r:4px;             /* 全书通体直角，圆角压到 4px */
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
+  background:var(--bg); color:var(--ink);
+  font-size:15px; line-height:1.78;
+  -webkit-font-smoothing:antialiased;
+}
+#app{max-width:430px;margin:0 auto;min-height:100vh;background:var(--card);
+  box-shadow:0 0 40px rgba(18,51,91,.08);display:flex;flex-direction:column}
+
+/* 顶栏 —— 仿方案书页眉 */
+header{position:sticky;top:0;z-index:20;background:var(--card);
+  border-bottom:1px solid var(--line);padding:13px 20px 9px}
+.brand{display:flex;align-items:center;gap:8px}
+.logo{width:20px;height:20px;border-radius:2px;background:var(--icbc);position:relative;flex:none}
+.logo::after{content:"";position:absolute;inset:5px 4px;
+  border-left:2px solid #fff;border-bottom:2px solid #fff}
+.brand b{font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+.brand i{font-style:normal;font-size:10px;color:var(--icbc);font-weight:700;
+  border:1px solid var(--icbc);border-radius:2px;padding:0 4px;margin-left:1px;
+  line-height:1.5;display:inline-block}
+.brand span{font-size:11px;color:var(--ink2);margin-left:auto;letter-spacing:.2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:88px}
+.bar{height:2.5px;background:var(--line2);margin-top:11px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--icbc);
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
+
+/* 内容 */
+main{flex:1;padding:22px 20px 30px}
+.pane{display:none;animation:in .38s ease both}
+.pane.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+h1{font-size:21px;line-height:1.5;font-weight:700;color:var(--ink);
+  margin:0 0 12px;letter-spacing:-.1px}
+h1::after{content:"";display:block;width:46px;height:2.5px;background:var(--icbc);
+  margin-top:11px}
+h2{font-size:17px;line-height:1.55;font-weight:700;color:var(--ink);margin:0 0 10px}
+h3{font-size:14.5px;font-weight:700;color:var(--navy);margin:22px 0 8px;
+  padding-left:8px;border-left:2.5px solid var(--icbc)}
+p{margin:0 0 12px}
+.lead{font-size:15px;color:var(--ink)}
+.mut{color:var(--ink2);font-size:13.5px;line-height:1.72}
+.small{font-size:12.5px;color:var(--ink2)}
+
+/* 强调 —— 红只做品牌与语义，不作装饰 */
+.hl{color:var(--icbc);font-weight:700}
+.hlb{color:var(--blue);font-weight:700}
+.mark{background:linear-gradient(transparent 62%, #F3D5D8 62%);font-weight:700;color:var(--ink)}
+em{font-style:normal;background:var(--l-blue);padding:1px 5px;border-radius:2px;
+  font-weight:700;color:var(--navy)}
+
+/* 卡片 —— 直角 + 细线，仿方案书卡片 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+  padding:14px 15px;margin:0 0 13px}
+.card.blue{background:var(--l-blue);border-color:#C7DCF0}
+.card.red{background:var(--l-red);border-color:#EFCDD1}
+.card.green{background:var(--l-green);border-color:#CFE0D8}
+.card.amber{background:var(--l-amber);border-color:#EBDCBF}
+.card h4{margin:0 0 6px;font-size:13.5px;font-weight:700;color:var(--navy)}
+.card.red h4{color:var(--icbc)}
+
+/* 人物台词 */
+.say{display:flex;gap:10px;margin:0 0 14px;align-items:flex-start}
+.av{width:32px;height:32px;border-radius:50%;background:var(--l-blue);flex:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--blue)}
+.av.b{background:var(--l-red);color:var(--icbc)}
+.bub{background:var(--l-blue);border-radius:2px 8px 8px 8px;padding:10px 13px;
+  font-size:13.5px;line-height:1.7;flex:1}
+.say.r .bub{background:var(--l-red);border-radius:8px 2px 8px 8px}
+.say.r{flex-direction:row-reverse}
+
+/* 数字 */
+.num{font-family:"DIN Alternate","Bahnschrift",Consolas,monospace;
+  font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:-.5px}
+.big{font-size:32px;color:var(--ink);line-height:1.1;display:block;margin:2px 0 2px}
+.big.b{color:var(--blue)}
+.big.g{color:var(--green)}
+
+/* 算式 */
+.calcbox{background:var(--l-gray);border:1px solid var(--line);border-radius:var(--r);
+  padding:12px 14px;margin:0 0 13px;font-size:13px;overflow-x:auto}
+.calcbox .row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;
+  border-bottom:1px dashed var(--line);min-width:0}
+.calcbox .row:last-child{border-bottom:0;padding-bottom:0}
+.calcbox .row>span:first-child{min-width:0;overflow-wrap:break-word}
+.calcbox .row>span:last-child{flex:none;white-space:nowrap}
+.calcbox .row.tot{border-top:1.5px solid var(--navy);border-bottom:0;
+  margin-top:6px;padding-top:9px;font-weight:700;color:var(--navy)}
+.mono{font-family:Consolas,"Courier New",monospace;font-size:12px;
+  font-variant-numeric:tabular-nums}
+.del{text-decoration:line-through;color:var(--ink2)}
+
+/* 表单 */
+.q{margin:0 0 24px}
+.q>label{display:block;font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.q .hint{font-size:12.5px;color:var(--ink2);margin-bottom:11px;line-height:1.62}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:1px solid var(--line);border-radius:var(--r);padding:12px 13px;
+  width:100%;text-align:left;font-family:inherit;color:inherit;cursor:pointer;font-size:14.5px;line-height:1.5;background:#fff;
+  transition:all .18s ease;display:flex;align-items:center;gap:10px;
+  min-width:0}
+.opt:hover{border-color:#B9C5D0}
+.opt .rd{width:15px;height:15px;border-radius:50%;border:1.5px solid #B9C5D0;flex:none;
+  position:relative;transition:all .18s ease}
+.opt.sel{border-color:var(--icbc);background:var(--l-red)}
+.opt.sel .rd{border-color:var(--icbc);border-width:4.5px}
+.opt .txt{flex:1;min-width:0;overflow-wrap:break-word;word-break:break-word}
+.opt .txt i{display:block;font-style:normal;font-size:12px;color:var(--ink2);margin-top:2px}
+.exactbox{border:1px solid var(--line);border-radius:var(--r);padding:14px;background:var(--l-gray);margin-bottom:16px}
+.t0formula{border:1px solid #C7DCF0;border-radius:var(--r);background:var(--l-blue);padding:13px 14px;margin:0 0 18px}
+.t0formula .formula-title{font-weight:700;color:var(--navy);margin-bottom:8px;font-size:13.5px}
+.t0formula .formula-line{font-size:14px;line-height:1.75;color:var(--ink)}
+.t0formula .formula-result{border-top:1px solid #C7DCF0;margin-top:8px;padding-top:8px;font-weight:700;color:var(--blue)}
+.t0warning{border-left:3px solid var(--icbc);background:var(--l-red);padding:10px 12px;margin:0 0 18px;font-weight:700;color:var(--icbc);font-size:13.5px}
+.exactrow{display:flex;align-items:center;gap:10px;margin-top:10px}
+.exactrow input{min-width:0;flex:1;border:1px solid #B9C5D0;border-radius:var(--r);padding:11px 12px;font:inherit;color:var(--ink);background:#fff}
+.exactrow input:focus{outline:2px solid rgba(208,15,27,.16);border-color:var(--icbc)}
+.exactrow span{white-space:nowrap;color:var(--ink2);font-size:13px}
+.orline{display:flex;align-items:center;gap:10px;color:var(--ink2);font-size:12.5px;margin:16px 0 8px}
+.orline::before,.orline::after{content:"";height:1px;background:var(--line);flex:1}
+.sliderow{margin:0 0 22px}
+.sliderow .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.sliderow .top label{font-size:15px;font-weight:700;color:var(--ink)}
+.sliderow .top .val{font-size:18px;font-weight:700;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;-webkit-appearance:none;height:26px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--icbc) var(--p,50%),#E2E7EC var(--p,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;
+  border-radius:50%;background:#fff;border:2px solid var(--icbc);margin-top:-8px;
+  box-shadow:0 1px 3px rgba(18,51,91,.2);cursor:pointer}
+input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:#E2E7EC}
+input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;
+  background:#fff;border:2px solid var(--icbc);cursor:pointer}
+.scale{display:flex;justify-content:space-between;font-size:11px;color:var(--ink2)}
+
+/* 按钮 —— 工行红为唯一主行动色 */
+.btn{display:block;width:100%;border:0;border-radius:var(--r);padding:14px;
+  font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer;
+  background:var(--icbc);color:#fff;transition:all .18s ease;letter-spacing:.3px}
+.btn:hover{background:var(--icbc-dk)}
+.btn:active{transform:scale(.985)}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--l-gray);border-color:#B9C5D0}
+.btn.blue{background:var(--navy)}
+.btn.blue:hover{background:#0D2846}
+.btn[disabled]{background:#C9D3DE;cursor:not-allowed}
+.btnrow{display:flex;gap:10px;margin-top:8px}
+.btnrow .btn{flex:1}
+.foot{padding:0 20px 26px}
+
+/* 结论页 —— 语义色沿用书中「继续/补充/停止」体系 */
+.verdict{border-radius:var(--r);padding:20px 18px;margin:0 0 18px;text-align:center;
+  border:1px solid;border-top-width:3px}
+.verdict .tag{display:inline-block;font-size:11px;font-weight:700;
+  padding:2px 9px;border-radius:2px;margin-bottom:11px;letter-spacing:.5px;
+  border:1px solid}
+.verdict h2{margin:0 0 8px;font-size:21px}
+.verdict .sub{font-size:13px;line-height:1.7}
+.v-go{background:var(--l-green);border-color:#CFE0D8;border-top-color:var(--green)}
+.v-go .tag{color:var(--green);border-color:var(--green);background:#fff}
+.v-go h2{color:var(--green)}
+.v-less{background:var(--l-amber);border-color:#EBDCBF;border-top-color:var(--amber)}
+.v-less .tag{color:var(--amber);border-color:var(--amber);background:#fff}
+.v-less h2{color:var(--amber)}
+.v-stop{background:var(--l-red);border-color:#EFCDD1;border-top-color:var(--icbc)}
+.v-stop .tag{color:var(--icbc);border-color:var(--icbc);background:#fff}
+.v-stop h2{color:var(--icbc)}
+.v-human{background:var(--l-blue);border-color:#C7DCF0;border-top-color:var(--blue)}
+.v-human .tag{color:var(--blue);border-color:var(--blue);background:#fff}
+.v-human h2{color:var(--blue)}
+
+/* 折叠 */
+.acc{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:0 0 13px}
+.acc>.hd{padding:13px 14px;background:var(--l-gray);cursor:pointer;
+  display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--navy)}
+.acc>.hd::after{content:"";width:6px;height:6px;border-right:1.5px solid var(--ink2);
+  border-bottom:1.5px solid var(--ink2);transform:rotate(45deg);
+  margin-left:auto;transition:transform .22s ease;flex:none;margin-top:-3px}
+.acc.open>.hd::after{transform:rotate(-135deg);margin-top:3px}
+.acc>.bd{display:none;padding:4px 14px 14px;border-top:1px solid var(--line)}
+.acc.open>.bd{display:block}
+
+/* 等级徽 —— 沿用书中「继续/补充/停止」语义色 */
+.lvl{display:inline-block;font-size:12px;
+  padding:3px 9px;border-radius:2px;font-weight:700;border:1px solid}
+.lvl.A{background:var(--l-green);color:var(--green);border-color:#CFE0D8}
+.lvl.B{background:var(--l-amber);color:var(--amber);border-color:#EBDCBF}
+.lvl.C{background:#EFF1F4;color:var(--ink2);border-color:var(--line)}
+
+/* 门步骤 */
+.gatehead{display:flex;align-items:center;gap:9px;margin:0 0 15px}
+.gnum{width:24px;height:24px;border-radius:2px;background:var(--navy);color:#fff;
+  font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.gnum.brk{background:var(--icbc)}
+.gnum.warn{background:var(--amber)}
+.gtitle{font-size:12px;font-weight:700;color:var(--ink2);letter-spacing:.6px}
+
+/* 三支柱条 */
+.pillar{display:flex;gap:6px;margin:14px 0}
+.pillar div{flex:1;border-radius:var(--r);padding:11px 7px;text-align:center;font-size:11.5px;
+  line-height:1.5;border:1px solid}
+.pillar b{display:block;font-size:12px;margin-bottom:3px}
+.p1{background:var(--l-blue);border-color:#C7DCF0;color:var(--navy)}
+.p2{background:var(--l-green);border-color:#CFE0D8;color:var(--green)}
+.p3{background:var(--l-amber);border-color:#EBDCBF;color:var(--amber)}
+
+/* 免责 */
+.disc{font-size:11px;color:var(--ink2);line-height:1.68;
+  border-top:1px solid var(--line);padding-top:11px;margin-top:20px}
+
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(70px);
+  background:rgba(36,50,68,.95);color:#fff;font-size:13px;padding:10px 18px;
+  border-radius:var(--r);opacity:0;transition:all .3s ease;z-index:99;pointer-events:none;
+  max-width:88%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.checkbadge{display:inline-block;font-size:10.5px;background:var(--l-green);color:var(--green);
+  padding:2px 7px;border-radius:2px;font-weight:700;margin-left:6px;
+  border:1px solid #CFE0D8}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="logo"></div>
+      <b>ICBC 工银智养仓</b><i>养老金融</i>
+      <span id="stepTxt">政策了解</span>
+    </div>
+    <div class="bar"><i id="bar"></i></div>
+  </header>
+  <main id="main"></main>
+  <div class="foot" id="foot"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="engine.js"></script>
+<script>
+"use strict";
+
+/* ==========================================================================
+   一、计算引擎 —— 与 engine.py 逐字对应，自检必须全过
+   ========================================================================== */
+/* 计算内核见 engine.js —— 与 app-demo.html 共用同一份，禁止在此内联副本 */
+/* ==========================================================================
+   二、格式化
+   ========================================================================== */
+const yuan = n => {
+  const v = Math.round(n);
+  return v.toLocaleString('zh-CN');
+};
+const pct = r => Math.round(r * 100) + '%';
+
+/* ==========================================================================
+   三、状态
+   ========================================================================== */
+const S = {
+  stepIdx: 0,
+  T0: null,          // 全年应纳税所得额
+  T0Min: null,       // 区间输入下界
+  T0Max: null,       // 区间输入上界，null 表示无明确上界
+  t0Mode: '',        // exact / range / unknown
+  t0Source: '',      // 这个数字怎么来的
+  income: null,      // 税前月收入（用于换算提示）
+  reserve: null,     // 应急金覆盖月数
+  bigCost: null,     // 未来12个月重大支出
+  lock: null,        // 锁定期接受度
+  plan: null,        // 养老安排
+  depth: null,       // 信息深度 A/B/C
+  hasCert: false,
+  gate: {tax:'', flow:'', plan:''},
+  reasons: []
+};
+
+/* 三道门的判断 —— 对应方案书 3.4 模块一/二 */
+function judge(){
+  const s = S.t0Mode === 'exact' ? saving(S.T0, LIMIT) : null;
+  S.reasons = [];
+  const g = {tax:'', flow:'', final:''};
+
+  /* 门一：税优测算 */
+  if (S.t0Mode === 'unknown'){
+    g.tax = 'unknown';
+    S.reasons.push({k:'税优', t:'目前还无法确认应纳税所得额，因此不生成精确减税数字', lv:'amber'});
+  } else if (S.t0Mode === 'range'){
+    const lo = saving(S.T0Min, LIMIT).save;
+    const hi = S.T0Max === null ? LIMIT * .45 : saving(S.T0Max, LIMIT).save;
+    g.tax = 'range';
+    S.reasons.push({k:'税优', t:`按所选区间，缴满 ${yuan(LIMIT)} 元的当期减税额约为 ${yuan(lo)}～${yuan(hi)} 元；是否跨档需要具体金额才能确认`, lv:'blue'});
+  } else if (S.T0 === null || S.T0 <= 0){
+    g.tax = 'none';
+    S.reasons.push({k:'税优', t:'当前没有应纳税所得额，缴费环节没有可抵扣的空间', lv:'red'});
+  } else if (S.T0 <= 36000){
+    g.tax = 'weak';
+    S.reasons.push({k:'税优', t:`处于 ${pct(s.rb)} 档，缴满 ${yuan(LIMIT)} 元当期最多减税 ${yuan(s.save)} 元——税优有限，但仍要看这笔钱锁住对你意味着什么`, lv:'amber'});
+  } else if (s.cross){
+    g.tax = 'cross';
+    S.reasons.push({k:'税优', t:`缴存会让你从 ${pct(s.rb)} 档落到 ${pct(s.ra)} 档，实际减税 ${yuan(s.save)} 元，低于按 ${pct(s.rb)} 直接计算的 ${yuan(s.naive)} 元`, lv:'blue'});
+  } else {
+    g.tax = 'ok';
+    S.reasons.push({k:'税优', t:`处于 ${pct(s.rb)} 档，缴满 ${yuan(LIMIT)} 元当期可减税 ${yuan(s.save)} 元`, lv:'blue'});
+  }
+
+  /* 门二：流动性安全体检 —— 四类暂缓情形 */
+  const flowHits = [];
+  if (S.reserve !== null && S.reserve < 3) flowHits.push('应急储备不足 3 个月');
+  if (S.bigCost === 'yes') flowHits.push('未来 12 个月有明确的大额支出');
+  if (S.lock === 'no') flowHits.push('不能接受资金锁定到退休');
+  if (S.lock === 'unsure') flowHits.push('尚未理解领取条件');
+
+  if (flowHits.length){
+    g.flow = 'stop';
+    flowHits.forEach(h => S.reasons.push({k:'流动性', t:h, lv:'red'}));
+  } else {
+    g.flow = 'pass';
+    S.reasons.push({k:'流动性', t:'应急储备与近期支出均未触发停止条件', lv:'green'});
+  }
+
+  /* 深入自测第三步：养老安排信息不足时转入补充路径，不直接暂缓。 */
+  if (S.plan === 'none'){
+    g.plan = 'incomplete';
+    S.reasons.push({k:'养老安排信息', t:'目前还没有清晰的养老安排，现有信息不足以判断合理缴存金额；进入手机银行后还需补充养老目标和资产信息', lv:'amber'});
+  } else if (S.plan === 'social'){
+    g.plan = 'pass';
+    S.reasons.push({k:'养老安排', t:'已有基本养老保险，补充养老储备尚未开始，可结合长期目标继续评估', lv:'green'});
+  } else {
+    g.plan = 'pass';
+    S.reasons.push({k:'养老安排', t:'已有一定养老储备安排，可纳入整体框架一并判断', lv:'green'});
+  }
+
+  /* 结论 */
+  if (g.flow === 'stop'){
+    g.final = 'stop';
+  } else if (g.tax === 'unknown' || g.tax === 'range' || g.plan === 'incomplete'){
+    g.final = 'human';
+  } else if (g.tax === 'none' || g.tax === 'weak'){
+    g.final = 'less';   /* 无税优或3%档不会被税率一票否决 */
+  } else if (g.tax === 'cross'){
+    g.final = 'less';   /* 跨档：可参与，但继续缴存部分的边际税优会下降 */
+  } else {
+    g.final = 'go';
+  }
+  S.gate = g;
+  return g;
+}
+
+/* ==========================================================================
+   四、视图
+   ========================================================================== */
+const $ = id => document.getElementById(id);
+const main = $('main'), foot = $('foot');
+
+function setScreen(idx, total){
+  S.stepIdx = idx;
+  const p = Math.min(1, idx / total);
+  $('bar').style.width = (p * 100) + '%';
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function stepLabel(t){ $('stepTxt').textContent = t; }
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2100);
+}
+
+/* --------------------------------------------------------------------------
+   场景 1：开场
+   -------------------------------------------------------------------------- */
+const scenes = {
+  /* 2 · 小王的账本：跨档算例，一边算一边讲规则 */
+  case(){
+    setScreen(3, 8);
+    stepLabel('可复算案例');
+    const s = saving(42000, 12000);
+    const rows = breakdown(42000).map(r =>
+      `<div class="row"><span class="mono">${yuan(r.low)} 起，${yuan(r.amt)} × ${pct(r.rate)}</span>
+       <span class="mono">${yuan(r.tax)} 元</span></div>`).join('');
+    const rows2 = breakdown(s.t1).map(r =>
+      `<div class="row"><span class="mono">${yuan(r.low)} 起，${yuan(r.amt)} × ${pct(r.rate)}</span>
+       <span class="mono">${yuan(r.tax)} 元</span></div>`).join('');
+
+    main.innerHTML = `
+      <div class="say">
+        <div class="av">小王</div>
+        <div class="bub">我扣除 60,000 元基本减除费用及其他扣除后，全年应纳税所得额 T0 是 4.2 万。缴 12,000 元的话，
+          是不是 12,000 × 10% ＝ 省 1,200 元？</div>
+      </div>
+
+      <div class="card red">
+        <h4>不对。这是最常见的算错方式</h4>
+        <p style="margin:6px 0 0;font-size:14px">
+          税额是<span class="hl">分段累进</span>算的。缴存把钱从最高档拿走，
+          拿走的部分才按最高档减税——<span class="hl">不是全部都能按 10% 算</span>。</p>
+      </div>
+
+      <h3>缴存前</h3>
+      <div class="calcbox">
+        ${rows}
+        <div class="row tot"><span>应纳税额</span><span class="mono">1,680 元</span></div>
+      </div>
+
+      <div class="card blue">
+        <p class="mut" style="margin:0;font-size:13.5px">
+          <b style="color:var(--navy)">看第二行：</b>只有 6,000 元落在 10% 档，
+          剩下 36,000 元只按 3% 算。</p>
+      </div>
+
+      <h3>缴存 12,000 元后</h3>
+      <div class="calcbox">
+        ${rows2}
+        <div class="row tot"><span>应纳税额</span><span class="mono">900 元</span></div>
+      </div>
+
+      <div class="card green">
+        <h4>真实减税额</h4>
+        <p style="margin:6px 0 0">1,680 − 900 ＝</p>
+        <span class="big g">${yuan(s.save)} 元</span>
+        <p class="mut" style="margin:6px 0 0;font-size:13px">
+          而不是 1,200 元。差额 <b>${yuan(s.naive - s.save)} 元</b>，
+          就是「全额乘最高档」这个算法多算出来的部分。</p>
+      </div>
+
+      <div class="card amber">
+        <h4>还有一件事必须说清楚</h4>
+        <p style="margin:6px 0 0;font-size:13.5px">
+          这 ${yuan(s.save)} 元是<b>当期</b>的。等你领取时，
+          账户里的全部金额（含投资收益）要<span class="hl">按 3% 单独计税</span>。
+          这笔钱在这一进一出之间，才是完整的账。</p>
+      </div>
+
+      <div class="disc">
+        口径：以缴存前全年应纳税所得额为起点，分段计算缴存前后应纳税额，差额为当期减税额。
+        本页数字为模拟案例，不构成税务结论。
+        <span class="checkbadge">已通过自检</span>
+      </div>`;
+
+    foot.innerHTML = `
+      <button class="btn blue" onclick="startDeep()">继续做深入自测 →</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('lightResult')">← 返回初步结果</button>`;
+  },
+};
+
+const f1 = {
+  render(){
+    setScreen(4, 8);
+    stepLabel('深入自测 · 税优测算');
+    main.innerHTML = `
+      <div class="gatehead">
+        <div class="gnum">1</div>
+        <div class="gtitle">深入自测 1/3 · 税优测算</div>
+      </div>
+      <h2>你今年的全年应纳税所得额，大约是多少？</h2>
+      <p class="mut" style="margin-bottom:18px">
+        先确认输入口径。这里的 T0 是完成各项扣除后的余额。</p>
+
+      <div class="t0formula" aria-label="缴存前全年应纳税所得额 T0 的计算公式">
+        <div class="formula-title">什么是 T0？</div>
+        <div class="formula-line">全年综合所得</div>
+        <div class="formula-line">－ 60,000 元基本减除费用</div>
+        <div class="formula-line">－ 五险一金等专项扣除</div>
+        <div class="formula-line">－ 子女教育、住房贷款或租房、赡养老人等专项附加扣除</div>
+        <div class="formula-line">－ 其他依法可扣除项目</div>
+        <div class="formula-result">＝ 缴存前全年应纳税所得额 T0</div>
+      </div>
+      <div class="t0warning">请不要填写税前年收入、月薪或已经缴纳的税额。</div>
+
+      <div class="q">
+        <label for="t0Exact">知道扣除后的 T0，直接填写</label>
+        <div class="hint">可在个人所得税 App 的综合所得年度汇算或申报记录中查看。暂时找不到具体金额时，直接选下方区间即可，不必硬填。</div>
+        <div class="exactbox">
+          <div>填写缴存个人养老金之前的全年应纳税所得额。</div>
+          <div class="exactrow">
+            <input id="t0Exact" type="number" inputmode="numeric" min="0" step="100" placeholder="例如：42000" oninput="f1.setExact(this.value)">
+            <span>元/年</span>
+          </div>
+        </div>
+        <div class="orline">不知道具体金额，可先选区间</div>
+        <div class="opts" id="t0opts" role="radiogroup" aria-label="全年应纳税所得额区间">
+          ${[
+            ['',       '',       '几乎没有或无法确认', '需要补充信息后再判断'],
+            [0,        36000,    '3.6 万元以内',       '预计减税 0～360 元'],
+            [36000,    144000,   '3.6 万～14.4 万',    '预计减税 360～1,200 元'],
+            [144000,   300000,   '14.4 万～30 万',     '预计减税 1,200～2,400 元'],
+            [300000,   420000,   '30 万～42 万',       '预计减税 2,400～3,000 元'],
+            [420000,   660000,   '42 万～66 万',       '预计减税 3,000～3,600 元'],
+            [660000,   '',       '66 万以上',           '预计减税 3,600～5,400 元']
+          ].map(([lo, hi, t, h], i) => `
+            <button type="button" class="opt" role="radio" aria-checked="false" data-lo="${lo}" data-hi="${hi}" data-i="${i}" onclick="f1.pick(this)">
+              <div class="rd"></div>
+              <div class="txt">${t}<i>${h}</i></div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="acc">
+        <div class="hd" onclick="this.parentNode.classList.toggle('open')">
+          为什么不能直接填月薪？
+        </div>
+        <div class="bd">
+          <p class="mut" style="margin:10px 0 0;font-size:13px">
+            同样月薪 1.5 万，有人按 20% 档计税，有人只到 10% 档——
+            差别来自五险一金、专项附加扣除（赡养老人、住房租金、子女教育等）的具体情况。
+            用月薪直接乘税率，是这类测算最常见的错误来源。</p>
+        </div>
+      </div>
+
+      <div class="disc">
+        本步只用于判断缴费环节的抵扣空间，不采集身份信息，不做税务申报；你输入的金额仅用于本次页面测算，不会保存。
+      </div>`;
+
+    foot.innerHTML = `<button class="btn" id="n1" disabled onclick="go('f2')">下一步</button>`;
+  },
+  setExact(value){
+    const n = Number(value);
+    const valid = value !== '' && Number.isFinite(n) && n >= 0;
+    document.querySelectorAll('#t0opts .opt').forEach(o => {
+      o.classList.remove('sel'); o.setAttribute('aria-checked','false');
+    });
+    S.T0 = valid ? n : null;
+    S.T0Min = null; S.T0Max = null;
+    S.t0Mode = valid ? 'exact' : '';
+    S.t0Source = valid ? '手动填写的具体金额' : '';
+    S.depth = valid ? 'B' : null;
+    $('n1').disabled = !valid;
+  },
+  pick(el){
+    el.parentNode.querySelectorAll('.opt').forEach(o => {
+      o.classList.remove('sel'); o.setAttribute('aria-checked','false');
+    });
+    el.classList.add('sel');
+    el.setAttribute('aria-checked','true');
+    $('t0Exact').value = '';
+    const unknown = el.dataset.i === '0';
+    S.T0 = null;
+    S.T0Min = unknown ? null : Number(el.dataset.lo);
+    S.T0Max = unknown || el.dataset.hi === '' ? null : Number(el.dataset.hi);
+    S.t0Mode = unknown ? 'unknown' : 'range';
+    S.t0Source = el.querySelector('.txt').firstChild.textContent.trim();
+    S.depth = 'C';
+    $('n1').disabled = false;
+  }
+};
+
+/* --------------------------------------------------------------------------
+   门二：流动性安全体检
+   -------------------------------------------------------------------------- */
+const f2 = {
+  render(){
+    setScreen(5, 8);
+    stepLabel('深入自测 · 资金安全');
+    const rv = (typeof f2.reserve === 'number' && f2.reserve >= 0) ? f2.reserve : 6;
+    main.innerHTML = `
+      <div class="gatehead">
+        <div class="gnum brk">2</div>
+        <div class="gtitle">深入自测 2/3 · 资金安全</div>
+      </div>
+      <h2>这笔钱锁到退休，<br>你现在扛得住吗？</h2>
+      <p class="mut" style="margin-bottom:20px">
+        这一道门不看你收入多少，只看一件事：
+        万一失业、生病、家里出事，你还有没有腾挪余地。</p>
+
+      <div class="sliderow">
+        <div class="top">
+          <label>应急储备能覆盖几个月支出？</label>
+          <span class="val" id="rvVal">${rv} 个月</span>
+        </div>
+        <input type="range" id="rv" min="0" max="24" step="1" value="${rv}"
+               oninput="f2.onReserve(this.value)">
+        <div class="scale"><span>几乎没有</span><span>12 个月</span><span>24 个月+</span></div>
+        <p class="mut small" style="margin:10px 0 0" id="rvHint"></p>
+      </div>
+
+      <div class="q">
+        <label>未来 12 个月，是否有需要提前预留的集中支出？</label>
+        <div class="hint">例如置业首付或装修、医疗、学历教育或职业培训、婚育与照护安排、一次性还款等；日常房贷、车贷等固定月供已在应急金和稳定结余判断中考虑。</div>
+        <div class="opts">
+          ${[['no','没有需要集中预留的支出'],
+             ['yes','有需要集中预留的支出'],
+             ['unsure','暂时不确定']].map(([v,t])=>`
+            <button type="button" class="opt" aria-pressed="false" data-v="${v}" onclick="f2.pick(this,'big')">
+              <div class="rd"></div><div class="txt">${t}</div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="q">
+        <label>你能接受这笔钱到退休前都取不出来吗？</label>
+        <div class="hint">
+          个人养老金账户封闭运行。除了法定情形，中途不能提前支取——
+          它不是一个「存进去还能应急」的账户。</div>
+        <div class="opts">
+          ${[['yes','能接受，我本来就是为了长期储备'],
+             ['no','不能接受，我需要随时能取'],
+             ['unsure','还不太清楚领取条件']].map(([v,t])=>`
+            <button type="button" class="opt" aria-pressed="false" data-v="${v}" onclick="f2.pick(this,'lock')">
+              <div class="rd"></div><div class="txt">${t}</div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="disc">
+        触发任一停止条件，系统会直接输出「暂缓缴存」并说明原因——
+        这不是拒绝服务，是你此刻真实需要的那个结论。
+      </div>`;
+
+    foot.innerHTML = `
+      <button class="btn" id="n2" disabled onclick="go('f3')">下一步</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('f1')">← 上一步</button>`;
+    f2.onReserve(rv, true);
+    [['big', f2.big], ['lock', f2.lock]].forEach(([key, value]) => {
+      if (value === null || value === undefined) return;
+      const group = key === 'big' ? 0 : 1;
+      const boxes = document.querySelectorAll('#main .q .opts');
+      const el = boxes[group] ? boxes[group].querySelector(`.opt[data-v="${value}"]`) : null;
+      if (el){ el.classList.add('sel'); el.setAttribute('aria-pressed','true'); }
+    });
+    f2.check();
+  },
+  onReserve(v, silent){
+    v = +v; f2.reserve = v; S.reserve = v;
+    $('rvVal').textContent = v + ' 个月';
+    const el = $('rv');
+    el.style.setProperty('--p', (v / 24 * 100) + '%');
+    const hint = $('rvHint');
+    if (v < 3)       hint.innerHTML = '<span style="color:var(--icbc);font-weight:700">低于 3 个月：这一步会触发暂缓。</span>应急储备是长期储备的前提，先把这里补足。';
+    else if (v < 6)  hint.innerHTML = '偏薄。可以参与，但建议先降低缴存额，别把这笔钱一次锁太多。';
+    else             hint.innerHTML = '这一项没问题。';
+    f2.check();
+  },
+  pick(el, key){
+    el.parentNode.querySelectorAll('.opt').forEach(o => { o.classList.remove('sel'); o.setAttribute('aria-pressed','false'); });
+    el.classList.add('sel');
+    el.setAttribute('aria-pressed','true');
+    const v = el.dataset.v;
+    if (key === 'big'){ f2.big = v; S.bigCost = v; }
+    else { f2.lock = v; S.lock = v; }
+    f2.check();
+  },
+  check(){
+    const ok = (f2.big !== null && f2.big !== undefined)
+            && (f2.lock !== null && f2.lock !== undefined);
+    const b = $('n2'); if (b) b.disabled = !ok;
+  }
+};
+
+/* --------------------------------------------------------------------------
+   门三：养老安排
+   -------------------------------------------------------------------------- */
+const f3 = {
+  render(){
+    setScreen(6, 8);
+    stepLabel('深入自测 · 养老安排');
+    main.innerHTML = `
+      <div class="gatehead">
+        <div class="gnum">3</div>
+        <div class="gtitle">深入自测 3/3 · 养老安排信息</div>
+      </div>
+      <h2>你现在有哪些<br>养老安排信息？</h2>
+      <p class="mut" style="margin-bottom:18px">
+        这里仅确认现状，不计算正式养老缺口。缺口测算需要退休目标、现有资产等更多信息。</p>
+
+      <div class="q">
+        <label>目前有做养老方面的储备吗？</label>
+        <div class="hint">包括社保之外的任何长期安排，比如企业年金、商业养老保险、长期理财定投等。</div>
+        <div class="opts">
+          ${[['both','都有，社保之外还有别的长期安排'],
+             ['social','只有社保，其他还没开始'],
+             ['none','应急与养老安排都还没梳理清楚']].map(([v,t])=>`
+            <button type="button" class="opt" aria-pressed="false" data-v="${v}" onclick="f3.pick(this)">
+              <div class="rd"></div><div class="txt">${t}</div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="card blue">
+        <h4>说一下这三者的分工</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13.5px">
+          <b style="color:var(--navy)">社保</b>负责基础保障；
+          <b style="color:var(--navy)">个人养老金</b>是税制支持下的长期账户；
+          <b style="color:var(--navy)">商业养老保险</b>可以承担特定保障或长寿风险。<br><br>
+          任何一方都不是另一方的必然替代。系统也不会把某一类说成「更划算」。</p>
+      </div>
+
+      <div class="disc">
+        本步只记录养老安排现状，不生成养老缺口金额，也不用于推荐任何具体产品。
+      </div>`;
+
+    foot.innerHTML = `
+      <button class="btn" id="n3" disabled onclick="go('result')">查看判断结果</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('f2')">← 上一步</button>`;
+  },
+  pick(el){
+    el.parentNode.querySelectorAll('.opt').forEach(o => { o.classList.remove('sel'); o.setAttribute('aria-pressed','false'); });
+    el.classList.add('sel');
+    el.setAttribute('aria-pressed','true');
+    S.plan = el.dataset.v;
+    $('n3').disabled = false;
+  }
+};
+
+/* --------------------------------------------------------------------------
+   结果页
+   -------------------------------------------------------------------------- */
+const VERDICTS = {
+  go:    {cls:'v-go',    tag:'深入自测结果', title:'可以继续完成银行端判断',  sub:'公开深入自测未触发停止条件。进入手机银行后仍需完成养老缺口与后续判断。'},
+  less:  {cls:'v-less',  tag:'判断结果', title:'可以参与，但建议审慎确定额度', sub:'你可以参与，但不一定适合直接缴满 12,000 元。原因在下面。'},
+  stop:  {cls:'v-stop',  tag:'判断结果', title:'建议暂缓缴存', sub:'这不是拒绝服务。这是基于你当前情况，最诚实的一个结论。'},
+  human: {cls:'v-human', tag:'判断结果', title:'建议补充信息或转人工服务', sub:'现有信息不足以给出可靠结论。补充关键信息后可以重新判断。'}
+};
+
+const result = {
+  render(){
+    setScreen(7, 8);
+    stepLabel('深入自测结果');
+    const g = judge();
+    const isExact = S.t0Mode === 'exact';
+    const isRange = S.t0Mode === 'range';
+    const s = isExact ? saving(S.T0, LIMIT) : null;
+    const rangeLo = isRange ? saving(S.T0Min, LIMIT).save : null;
+    const rangeHi = isRange ? (S.T0Max === null ? LIMIT * .45 : saving(S.T0Max, LIMIT).save) : null;
+    const v = {...VERDICTS[g.final]};
+    if (g.final === 'less' && g.tax === 'weak') {
+      v.title = '税优空间有限，可继续评估长期资金安排';
+      v.sub = '税优有限不等于不适合。是否参与，还需要结合稳定结余、长期资金需求和锁定期接受度判断。';
+    } else if (g.final === 'less' && g.tax === 'none') {
+      v.title = '当前没有税优空间，可继续评估长期资金安排';
+      v.sub = '没有缴费抵扣空间不等于系统替你决定不参与，仍可进入银行端完成后续判断。';
+    }
+
+    /* 置信等级 */
+    const lvl = (S.depth === 'A' || S.depth === 'B' || S.depth === 'C') ? S.depth : 'B';
+    const LVL = {
+      A: {name:'凭证核验', txt:'依据个税年度汇算或纳税申报数据核验的精确数值'},
+      B: {name:'手动精确值', txt:'你手动填写的具体金额，未经凭证核验'},
+      C: {name:'区间估算', txt:'你只提供了大致区间或暂时无法确认金额'}
+    };
+    const lvlName = LVL[lvl].name;
+    const lvlTxt  = LVL[lvl].txt;
+
+    /* 逐档算式 */
+    const rowsB = isExact ? (breakdown(S.T0 || 0).map(r =>
+      `<div class="row"><span class="mono">${yuan(r.low)} 起 ${yuan(r.amt)} × ${pct(r.rate)}</span>
+       <span class="mono">${yuan(r.tax)} 元</span></div>`).join('') ||
+      `<div class="row"><span class="mut">无应纳税所得额</span><span class="mono">0 元</span></div>`) : '';
+    const rowsA = isExact ? (breakdown(s.t1).map(r =>
+      `<div class="row"><span class="mono">${yuan(r.low)} 起 ${yuan(r.amt)} × ${pct(r.rate)}</span>
+       <span class="mono">${yuan(r.tax)} 元</span></div>`).join('') ||
+      `<div class="row"><span class="mut">无应纳税所得额</span><span class="mono">0 元</span></div>`) : '';
+
+    /* 税额区块 —— 暂缓时也要给，否则用户不知道自己在放弃什么 */
+    const taxBlock = isRange ? `
+      <div class="card blue">
+        <h4>你的当期减税范围</h4>
+        <span class="big b">${yuan(rangeLo)}～${yuan(rangeHi)} 元</span>
+        <p class="mut" style="margin:8px 0 0">这是区间估算，不是精确税额。补充具体应纳税所得额后，才能判断是否跨档并生成逐档算式。</p>
+      </div>` : S.t0Mode === 'unknown' ? `
+      <div class="card amber">
+        <h4>暂不生成减税数字</h4>
+        <p class="mut" style="margin:8px 0 0">当前信息不足。请在个人所得税 App 的综合所得年度汇算中查看应纳税所得额后重新测算。</p>
+      </div>` : (g.final === 'stop' || g.final === 'human') ? `
+      <div class="card" style="background:#fafbfd">
+        <h4>你原本的税优空间（仅供参考）</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13.5px">
+          按你填写的金额，缴满 ${yuan(LIMIT)} 元当期可减税
+          <b style="color:var(--navy)">${yuan(s.save)} 元</b>。
+          ${g.final === 'stop'
+            ? '当前暂缓原因来自资金安全或领取条件，请先处理上方提示，再决定是否缴存。'
+            : '但现有信息不足以确认这个数字适用于你，建议补充后再判断。'}
+        </p>
+      </div>` : `
+      <h3>你的当期减税额</h3>
+      <div class="card green">
+        <span class="big g">${yuan(s.save)} 元</span>
+        <p class="mut" style="margin:4px 0 0;font-size:13px">
+          缴存前应纳税额 ${yuan(s.before)} 元 → 缴存后 ${yuan(s.after)} 元</p>
+        ${s.cross ? `<p style="margin:10px 0 0;font-size:13.5px">
+          注意：缴存让你从 <b>${pct(s.rb)}</b> 档落到 <b>${pct(s.ra)}</b> 档，
+          实际减税低于按 ${pct(s.rb)} 直接计算的 ${yuan(s.naive)} 元。</p>` : ''}
+        ${g.final === 'less' ? `<p style="margin:10px 0 0;font-size:13.5px;color:var(--amber)">
+          ${g.tax === 'weak' || g.tax === 'none'
+            ? '12,000 元不是默认答案。税优空间有限时，应先确认资金可以长期安排，再决定是否参与以及缴存多少。'
+            : '不建议仅因税优直接缴满 12,000 元；是否参与以及缴多少，还需要结合长期储蓄需求和流动性承受能力判断。'}</p>` : ''}
+      </div>`;
+
+    /* 暂缓时先强调当前优先事项，再展示税优空间。 */
+    const priorityBlock = g.final === 'stop' ? `
+      <div class="card red">
+        <h4>你现在最优先的事</h4>
+        <p style="margin:8px 0 0;font-size:13.5px">先保留应急资金、处理近期必要支出，或确认自己理解并接受领取条件，再决定是否把钱长期放入账户。当前不需要为了税优马上做决定。</p>
+      </div>` : '';
+
+    main.innerHTML = `
+      <div class="verdict ${v.cls}">
+        <span class="tag">${v.tag}</span>
+        <h2>${v.title}</h2>
+        <p class="sub" style="margin:0">${v.sub}</p>
+      </div>
+
+      <h3>为什么是这个结论</h3>
+      ${S.reasons.map(r => `
+        <div class="card ${r.lv === 'red' ? 'red' : (r.lv === 'green' ? 'green' : (r.lv === 'amber' ? 'amber' : ''))}"
+             style="${r.lv === 'blue' ? 'background:var(--l-blue);border-color:#C7DCF0' : ''}">
+          <h4 style="${r.lv === 'green' ? 'color:var(--green)' : (r.lv === 'amber' ? 'color:var(--amber)' : (r.lv === 'blue' ? 'color:var(--blue)' : ''))}">
+            ${r.k}</h4>
+          <p style="margin:6px 0 0;font-size:13.5px">${r.t}</p>
+        </div>`).join('')}
+
+      ${priorityBlock}
+      ${taxBlock}
+
+      ${isExact ? `<div class="acc" onclick="this.classList.toggle('open')">
+        <div class="hd">查看逐档计算过程（可当场验算）</div>
+        <div class="bd">
+          <p class="mut small" style="margin:10px 0 8px">缴存前 · 应纳税所得额 ${yuan(S.T0 || 0)} 元</p>
+          <div class="calcbox">${rowsB}
+            <div class="row tot"><span>合计</span><span class="mono">${yuan(s.before)} 元</span></div></div>
+          <p class="mut small" style="margin:14px 0 8px">缴存后 · 应纳税所得额 ${yuan(s.t1)} 元</p>
+          <div class="calcbox">${rowsA}
+            <div class="row tot"><span>合计</span><span class="mono">${yuan(s.after)} 元</span></div></div>
+          <p class="mut small" style="margin:14px 0 0">
+            当期减税额 ＝ ${yuan(s.before)} − ${yuan(s.after)} ＝
+            <b style="color:var(--navy)">${yuan(s.save)} 元</b></p>
+        </div>
+      </div>` : `<div class="card" style="background:#fafbfd">
+        <h4>为什么没有逐档算式？</h4>
+        <p class="mut" style="margin:8px 0 0">逐档计算需要具体的应纳税所得额。区间输入只能诚实地给出范围，不能假设一个中间值代替你。</p>
+      </div>`}
+
+      <div class="acc" onclick="this.classList.toggle('open')">
+        <div class="hd">领取环节还要交多少？（很多人低估这一条）</div>
+        <div class="bd">
+          <p class="mut" style="margin:10px 0 0;font-size:13px">
+            领取时，账户内全部金额（含投资收益）按 <b>3%</b> 单独计税，
+            不并入当年综合所得。<br><br>
+            对较高税率人群，缴费与领取环节的税率差可能更明显，但仍需考虑产品收益、费用和锁定期。<br>
+            对 3% 档人群，一进一出基本相抵——这也是为什么这个档位
+            不能把「省税」当作参与理由。</p>
+        </div>
+      </div>
+
+      <h3>这个结论有多可靠</h3>
+      <div class="card" style="background:#fafbfd">
+        <span class="lvl ${lvl}">数据可信度 ${lvl} 级 · ${lvlName}</span>
+        <p class="mut" style="margin:10px 0 0;font-size:13px">
+          本次判断的输入是：${lvlTxt}。</p>
+        <p class="mut" style="margin:8px 0 0;font-size:13px">
+          ${lvl === 'A'
+            ? '已依据凭证核验，结论区间最窄。'
+            : `本次测算<b>未核验</b>个人所得税年度汇算或纳税申报数据。
+               数据完整度决定的是<b>结论区间的宽度</b>，不是结论的松紧——${lvl === 'C'
+                 ? '低完整度不会得到更宽松的结论，只会得到更宽的区间和更明确的标注。'
+                 : '本 Demo 最高为 B 级：它不上传、不保存个税凭证。接入经授权的核验系统后，才可能达到 A 级。'}`}</p>
+        ${lvl !== 'A' ? `
+        <p style="margin:12px 0 0;font-size:13px">
+          <b style="color:var(--navy)">提升精度的路径：</b>
+          本 Demo 可使用准确金额得到更窄的测算结果；未来如接入经授权的核验系统，才能进一步达到 A 级。</p>` : ''}
+      </div>
+
+      <div class="card amber">
+        <h4>下一步</h4>
+        <p style="margin:8px 0 0;font-size:13.5px">
+          ${g.final === 'go'
+            ? '可以进入工行手机银行，在本人授权后核验必要数据，并继续完成养老缺口与后续判断。'
+            : g.final === 'less'
+            ? (g.tax === 'weak' || g.tax === 'none'
+              ? '税优空间有限时，不应仅因抵税直接缴满 12,000 元；可进入银行端继续判断长期资金需求。本 Demo 不会虚构“最优金额”。'
+              : '不建议仅因税优直接缴满 12,000 元；可补充准确金额后重新判断缴存额度。')
+            : g.final === 'stop'
+            ? '先处理上方提示的资金安全或领取条件问题。情况变化后可以重新判断——不需要现在做任何决定。'
+            : '在个人所得税 App 中查看年度汇算数据，补充具体应纳税所得额后重新判断；仍不确定时可转人工咨询。'}</p>
+      </div>
+
+      <div class="card blue">
+        <h4>本次仍不是正式养老缺口测算</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13px">
+          公开深入自测只核对税优、资金安全和养老安排现状，不生成养老缺口金额，也不展示产品类别。</p>
+      </div>
+
+      <div class="disc">
+        本页结论基于模拟演示数据，仅用于说明判断逻辑；你本次输入仅在当前页面使用，不会保存。
+        不构成税务结论、投资建议或销售要约。<br>
+        口径：以缴存前全年应纳税所得额为起点分段计算；缴存限额 ${yuan(LIMIT)} 元/年；
+        领取环节按 3% 单独计税。<span class="checkbadge">计算已通过自检</span>
+      </div>`;
+
+    foot.innerHTML = `
+      <button class="btn blue" onclick="go('handoff')">在工行 App 核验并完成判断 →</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('f3')">← 修改深入自测信息</button>`;
+  }
+};
+
+const LIGHT = {base:null, big:null, lock:null};
+
+const light = {
+  open(){
+    setScreen(1, 8);
+    stepLabel('政策说明');
+    main.innerHTML = `
+      <h1>个人养老金，<br>现在适不适合你？</h1>
+      <p class="lead">先用一分钟了解规则，再回答三个问题。</p>
+
+      <div class="card blue">
+        <h4>① 每年最多缴存 12,000 元</h4>
+        <p class="mut" style="margin:6px 0 0;font-size:13.5px">
+          缴费可在限额内据实扣除，但税优大小取决于个人实际税率，不能直接用最高税率乘以全部缴存额。</p>
+      </div>
+      <div class="card blue">
+        <h4>② 投资环节暂不征收个人所得税</h4>
+        <p class="mut" style="margin:6px 0 0;font-size:13.5px">
+          领取时，账户内全部金额（含投资收益）按 3% 单独计税。</p>
+      </div>
+      <div class="card red">
+        <h4>③ 账户封闭运行</h4>
+        <p class="mut" style="margin:6px 0 0;font-size:13.5px">
+          达到领取基本养老金年龄，或符合其他法定情形时方可领取。税优不能凌驾于当前资金安全之上。</p>
+      </div>
+
+      <div class="card amber">
+        <h4>第一层三问能回答什么？</h4>
+        <p style="margin:6px 0 0;font-size:13.5px">
+          只判断你是否适合继续了解，或是否应当先暂停。三问结束后，你可以自愿补充具体信息做深入自测。</p>
+      </div>
+      <div class="disc">
+        本演示不要求登录，不采集身份信息，也不会保存你的选择。结果仅用于政策科普和初步判断。
+      </div>`;
+    foot.innerHTML = `<button class="btn" onclick="go('quick')">开始三个问题 →</button>`;
+  },
+
+  quick(){
+    setScreen(2, 8);
+    stepLabel('三问自测');
+    main.innerHTML = `
+      <div class="gatehead">
+        <div class="gnum">3</div>
+        <div class="gtitle">三个问题 · 只做初步判断</div>
+      </div>
+
+      <div class="q">
+        <label>1. 扣除日常必要支出后，你目前是否仍有稳定结余？</label>
+        <div class="hint">如有稳定结余，请同时选择大致个税情况。低税率不会被一票否决。</div>
+        <div class="opts">
+          ${[
+            ['no-surplus','目前没有稳定结余','资金安全优先'],
+            ['none','有稳定结余，目前不缴个税或没有应纳税所得额','当前没有缴费抵扣空间'],
+            ['three','有稳定结余，大致在 3% 档','税优空间有限'],
+            ['tenplus','有稳定结余，大致在 10% 及以上','可继续做完整判断'],
+            ['unknown','有稳定结余，但不清楚税率档','不影响保护标准']
+          ].map(([v,t,h]) => `
+            <button type="button" class="opt" data-group="base" onclick="light.pick(this,'base','${v}')">
+              <div class="rd"></div><div class="txt">${t}<i>${h}</i></div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="q">
+        <label>2. 未来 12 个月是否有需要提前预留的集中支出？</label>
+        <div class="hint">例如置业首付或装修、医疗、学历教育或职业培训、婚育与照护安排、一次性还款等；日常房贷、车贷等固定月供已在稳定结余判断中考虑。</div>
+        <div class="opts">
+          ${[['no','没有需要集中预留的支出'],['yes','有需要集中预留的支出'],['unsure','暂时不确定']].map(([v,t]) => `
+            <button type="button" class="opt" data-group="big" onclick="light.pick(this,'big','${v}')">
+              <div class="rd"></div><div class="txt">${t}</div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="q">
+        <label>3. 你是否理解并接受账户封闭运行和领取条件？</label>
+        <div class="opts">
+          ${[
+            ['yes','理解并接受'],
+            ['no','不能接受长期锁定'],
+            ['unsure','还不清楚领取条件']
+          ].map(([v,t]) => `
+            <button type="button" class="opt" data-group="lock" onclick="light.pick(this,'lock','${v}')">
+              <div class="rd"></div><div class="txt">${t}</div>
+            </button>`).join('')}
+        </div>
+      </div>
+
+      <div class="disc">
+        入口信息少，不代表保护标准降低。出现资金安全或领取条件问题时，本次自测只会更早提示暂停。
+      </div>`;
+    foot.innerHTML = `
+      <button class="btn" id="quickNext" disabled onclick="go('lightResult')">查看初步结果</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('open')">← 返回政策说明</button>`;
+    light.restore();
+  },
+
+  pick(el, key, value){
+    LIGHT[key] = value;
+    document.querySelectorAll(`.opt[data-group="${key}"]`).forEach(o => {
+      const on = o === el;
+      o.classList.toggle('sel', on);
+      o.setAttribute('aria-checked', on ? 'true' : 'false');
+    });
+    const next = $('quickNext');
+    if (next) next.disabled = !(LIGHT.base && LIGHT.big && LIGHT.lock);
+  },
+
+  restore(){
+    for (const key of ['base','big','lock']){
+      if (!LIGHT[key]) continue;
+      const el = document.querySelector(`.opt[data-group="${key}"][onclick*="'${LIGHT[key]}'"]`);
+      if (el) light.pick(el, key, LIGHT[key]);
+    }
+  },
+
+  classify(){
+    const stop = [];
+    const info = [];
+    if (LIGHT.base === 'no-surplus') stop.push('目前没有可长期安排的稳定结余');
+    if (LIGHT.big === 'yes') stop.push('未来 12 个月存在必要大额支出');
+    if (LIGHT.lock === 'no') stop.push('目前不能接受账户封闭运行和领取条件');
+    if (LIGHT.big === 'unsure') info.push('近期必要支出仍需确认');
+    if (LIGHT.lock === 'unsure') info.push('领取条件仍需进一步了解');
+    if (LIGHT.base === 'unknown') info.push('目前不清楚大致税率档');
+    const taxLimited = LIGHT.base === 'none' || LIGHT.base === 'three';
+    return {type:stop.length ? 'stop' : (info.length ? 'info' : 'continue'), stop, info, taxLimited};
+  },
+
+  result(){
+    setScreen(3, 8);
+    stepLabel('初步结果');
+    const r = light.classify();
+    const view = r.type === 'stop'
+      ? {cls:'v-stop', title:'建议暂缓，可转人工咨询', sub:'先处理当前资金安全或领取条件问题，不需要为了税优马上做决定。'}
+      : r.type === 'info'
+      ? {cls:'v-human', title:'建议先补充信息', sub:'现有信息还不足以判断是否适合继续，请先确认下列事项。'}
+      : r.taxLimited
+      ? {cls:'v-less', title:'初步可以继续：税优空间有限', sub:'低税率或没有缴费抵扣空间不会被一票否决，是否参与仍需完整判断。'}
+      : {cls:'v-go', title:'初步看可以继续', sub:'本次三问未触发停止条件，可以留在当前页面继续做公开深入自测。'};
+    const reasons = r.type === 'stop' ? r.stop : (r.type === 'info' ? r.info : [
+      r.taxLimited ? '税优空间有限，但税率不是唯一判断条件' : '大致税率条件支持继续了解',
+      '未来 12 个月未发现明确必要大额支出',
+      '已确认理解并接受账户封闭运行和领取条件'
+    ]);
+
+    main.innerHTML = `
+      <div class="verdict ${view.cls}">
+        <span class="tag">轻量自测结果</span>
+        <h2>${view.title}</h2>
+        <p class="sub" style="margin:0">${view.sub}</p>
+      </div>
+
+      <h3>为什么是这个结果</h3>
+      ${reasons.map(t => `<div class="card ${r.type === 'stop' ? 'red' : (r.type === 'info' ? 'amber' : 'green')}">
+        <p style="margin:0;font-size:13.5px">${t}</p></div>`).join('')}
+
+      <div class="card" style="background:#fafbfd">
+        <span class="lvl C">信息完整度 C 级 · 初步筛查</span>
+        <p class="mut" style="margin:10px 0 0;font-size:13px">
+          本次只有三个选择题，没有采集具体 T0、应急金金额、养老资产和退休目标，因此不生成税额、缴存金额或产品类别。</p>
+      </div>
+
+      <div class="card blue">
+        <h4>轻量入口只能更早喊停，不能更宽松地放行</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13px">
+          深入自测仍会检查税优、资金安全和养老安排信息；进入工行手机银行后还需完成正式养老缺口与后续判断。</p>
+      </div>
+
+      <div class="disc">结果仅用于政策科普与初步判断，不构成税务结论、投资建议或销售要约。</div>`;
+    foot.innerHTML = r.type === 'stop' ? `
+      <button class="btn" onclick="go('quick')">查看并修改停止条件</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('case')">查看税额计算示例</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="restart()">条件变化后重新自测</button>` : `
+      <button class="btn" onclick="startDeep()">继续做深入自测 · 约 2 分钟</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('handoff')">我已准备好，去工行 App 完成完整判断</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('case')">先看一个可复算的例子</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('quick')">← 修改三问答案</button>`;
+  },
+
+  handoff(){
+    setScreen(8, 8);
+    stepLabel('进入完整判断');
+    main.innerHTML = `
+      <h2>在工行手机银行<br>继续完整判断</h2>
+      <p class="lead mut">公开深入自测已经完成。下一阶段需要本人重新确认并授权必要信息。</p>
+
+      <div class="card blue">
+        <h4>公众适配自测 · B / C 级</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13.5px">
+          三问筛查为 C 级；手动填写具体 T0 可形成 B 级税优结果，但均未经凭证核验。</p>
+      </div>
+      <div style="text-align:center;color:var(--gray);font-weight:700;margin:8px 0">↓ 本人确认与授权</div>
+      <div class="card green">
+        <h4>手机银行完整判断 · A 级可核验数据</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13.5px">
+          经本人授权并由系统核验的数据可达到 A 级，随后继续完成正式养老缺口与后续判断。</p>
+      </div>
+
+      <div class="card amber">
+        <h4>同一套规则，不同的数据深度</h4>
+        <p style="margin:8px 0 0;font-size:13.5px">
+          公开自测信息不会自动带入手机银行。数据完整度影响结论区间宽度，不影响保护标准；相同 T0 在手动输入和授权核验下必须得到相同税额。</p>
+      </div>
+
+      <div class="card" style="background:#fafbfd">
+        <h4>完整判断继续回答</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13px">
+          税率适配 → 流动性安全 → 养老缺口 → 组合配置与综合结论。只有前三道判断支持继续、且用户主动选择了解时，才进入类别说明。</p>
+      </div>
+
+      <div class="card blue">
+        <h4>前往手机银行后的数据边界</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13px">
+          本次公开自测不会自动带入。进入手机银行后，您可自主授权核验必要信息；如结论变化，以授权确认后重新计算的结果为准。</p>
+      </div>
+
+      <div id="installHint" class="card amber" hidden>
+        <h4>暂未检测到工行 App</h4>
+        <p class="mut" style="margin:8px 0 0;font-size:13px">正式上线时将跳转官方应用商店下载页。下载前，您仍可保留并回看本次网页版预评估；不会强制下载或收集身份信息。</p>
+      </div>
+
+      <div class="disc">当前页面仅说明双 Demo 的衔接关系，未连接真实工行系统或客户数据。</div>`;
+    foot.innerHTML = `
+      <button class="btn" onclick="location.href='app-demo.html'">打开工行手机银行，完成完整判断</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="showInstallHint()">暂未安装工行 App</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="go('result')">暂不下载，保留本次网页版结果</button>
+      <button class="btn ghost" style="margin-top:10px" onclick="restart()">重新开始</button>`;
+  }
+};
+
+function startDeep(){
+  /* 点击“继续”即表示用户愿意沿用刚才两项非敏感选择，进入更深入的手动自测。 */
+  f2.big = LIGHT.big;
+  f2.lock = LIGHT.lock;
+  S.bigCost = LIGHT.big;
+  S.lock = LIGHT.lock;
+  go('f1');
+}
+
+function showInstallHint(){
+  const hint = $('installHint');
+  if (hint) hint.hidden = false;
+}
+
+/* --------------------------------------------------------------------------
+   路由：三问轻量筛查 + 公开深入自测 + 银行端衔接
+   -------------------------------------------------------------------------- */
+const VIEWS = {open:light.open, quick:light.quick, lightResult:light.result,
+               case:scenes.case, f1:f1.render, f2:f2.render, f3:f3.render,
+               result:result.render, handoff:light.handoff};
+
+function go(name){
+  if (name === 'f2'){
+    f2.reserve = (typeof S.reserve === 'number' && S.reserve >= 0) ? S.reserve : 6;
+    f2.big  = (S.bigCost === undefined) ? null : S.bigCost;
+    f2.lock = (S.lock    === undefined) ? null : S.lock;
+  }
+  const v = VIEWS[name];
+  if (typeof v !== 'function'){ console.warn('unknown view', name); return; }
+  v.call(null);
+}
+window.go = go;
+function restart(){
+  Object.assign(S, {stepIdx:0, T0:null, T0Min:null, T0Max:null, t0Mode:'', t0Source:'',
+                    reserve:null, bigCost:null, lock:null, plan:null, depth:null, reasons:[]});
+  f2.big = null; f2.lock = null; f2.reserve = 6;
+  Object.assign(LIGHT, {base:null, big:null, lock:null});
+  go('open');
+}
+/* 暴露给演示/截图脚本 */
+window.S = S; window.saving = saving; window.taxOf = taxOf;
+window.breakdown = breakdown; window.selfTest = selfTest;
+window.restart = restart;
+window.LIGHT = LIGHT; window.light = light;
+window.f1 = f1; window.f2 = f2; window.f3 = f3; window.startDeep = startDeep;
+
+/* 启动：先跑自检，不过就在控制台报警 */
+(function boot(){
+  const bad = selfTest();
+  if (bad.length) console.error('[引擎自检未通过]', bad);
+  go('open');
+})();
+</script>
+</body>
+</html>
