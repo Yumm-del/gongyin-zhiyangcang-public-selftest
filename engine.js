@@ -79,7 +79,11 @@
       t0: t0, deposit: deposit, t1: t1,
       before: before, after: after,
       save: before - after,
-      naive: deposit * rateOf(t0),          // 错误算法：缴存额 × 最高档
+      // 错误算法：缴存额 × 最高档。
+      // T0=0 时 rateOf(0) 返回 3%（下一元收入的边际税率），但那不是"最高档"，
+      // 客户也没有可抵扣的税负——此时 naive 必须是 0，否则界面上会对一个零税负
+      // 客户显示"省 360 元"。（engine.py 用 `t0 and ...` 做了同样的事，parity_test 对照。）
+      naive: t0 > 0 ? deposit * rateOf(t0) : 0,
       cross: rateOf(t1) !== rateOf(t0),     // 是否跨档
       rb: rateOf(t0), ra: rateOf(t1)
     };
