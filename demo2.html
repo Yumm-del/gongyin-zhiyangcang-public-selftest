@@ -133,6 +133,33 @@
     tr:nth-child(even) td { background:#f5f8fb; }
     .footnote { margin-top:25px; padding:18px 0 0; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
     .footnote a { color:var(--navy); }
+    .arm-screen { background:#f4f7fa; border:1px solid var(--line); border-radius:10px; padding:13px; margin:13px 0; font-size:12px; }
+    .arm-screen .sample-entry { padding:9px; background:#fff; border:1px solid #cbd9e7; border-radius:6px; margin-top:9px; color:var(--navy); }
+    .arm-screen .sample-message { background:var(--amber); padding:9px; border-radius:6px; margin-top:9px; }
+    .route { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
+    .route span { padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:#fff; font-size:12px; color:var(--muted); }
+    .route span.done { background:var(--green); color:#267455; border-color:#bddccc; }
+    .customer-layout { display:grid; grid-template-columns:minmax(290px,.85fr) minmax(0,1.15fr); gap:28px; align-items:start; }
+    .phone { max-width:380px; width:100%; margin:0 auto; border:8px solid #203247; border-radius:32px; background:#f5f7fa; padding:13px 17px 24px; box-shadow:var(--shadow); }
+    .phone-top { display:flex; justify-content:space-between; color:#516278; font-size:11px; margin:0 0 20px; }
+    .phone h2 { font-size:19px; color:var(--navy); margin:0 0 17px; }
+    .phone-account { background:linear-gradient(120deg,var(--navy-dark),#34608b); padding:20px; border-radius:12px; color:#fff; }
+    .phone-account p { font-size:12px; margin:0; color:#dbe8f5; }
+    .phone-account strong { display:block; font-size:29px; margin:8px 0 14px; }
+    .phone-account .btn { background:#fff; color:var(--navy); border:0; width:100%; }
+    .phone-card { padding:15px; margin-top:13px; background:#fff; border:1px solid var(--line); border-radius:10px; font-size:13px; }
+    .phone-card p { margin:7px 0 10px; color:var(--muted); font-size:12px; }
+    .phone-card .btn { width:100%; }
+    .phone-message { background:var(--amber); border-color:#ead4b3; }
+    .phone-note { font-size:11px; color:var(--muted); margin:15px 0 0; }
+    .receipt-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:16px 0; }
+    .receipt-item { padding:13px; border:1px solid var(--line); border-radius:9px; background:#f8fbfe; }
+    .receipt-item span { display:block; font-size:12px; color:var(--muted); }
+    .receipt-item b { display:block; color:var(--navy); font-size:14px; margin-top:4px; }
+    .stop-receipt { border:1px solid #e7aeb6; background:var(--red-light); border-radius:10px; padding:16px; margin-top:15px; }
+    .stop-receipt h3 { color:#922331; margin:0 0 9px; }
+    .stop-receipt p { font-size:13px; margin:6px 0; }
+    .future-label { padding:13px 16px; border:1px solid #ead4b3; background:var(--amber); border-radius:9px; font-size:13px; margin-bottom:17px; }
     @media(max-width:980px) {
       .case-layout { grid-template-columns:260px minmax(0,1fr); }
       .case-layout .event-panel { grid-column:1/-1; }
@@ -147,7 +174,7 @@
       .hero { grid-template-columns:1fr; padding:20px 0; }
       .hero-main { padding:26px 22px; }
       .hero-side { display:none; }
-      .grid-3,.grid-2,.case-layout,.service-layout,.compare { grid-template-columns:1fr; }
+      .grid-3,.grid-2,.case-layout,.service-layout,.customer-layout,.compare { grid-template-columns:1fr; }
       .flow-card { min-height:unset; }
       .flow-card:after { display:none; }
       .case-layout .event-panel { grid-column:auto; }
@@ -164,7 +191,7 @@
 <body>
   <div class="shell">
     <header class="mast">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">概念演示 v2</span></div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">概念演示 v2.1</span></div>
       <div class="mast-note">第十七届“工行杯”项目方案演示<br>虚构客户 · 模拟事件 · 非工行生产系统</div>
     </header>
 
@@ -183,9 +210,10 @@
 
     <nav class="tabs" aria-label="演示页面">
       <button class="tab active" data-tab="overview" aria-current="page">01 方案总览</button>
-      <button class="tab" data-tab="case">02 客户与触达回放</button>
-      <button class="tab" data-tab="service">03 客户服务判断</button>
+      <button class="tab" data-tab="customer">02 客户手机端</button>
+      <button class="tab" data-tab="case">03 客户与触达回放</button>
       <button class="tab" data-tab="score">04 增量评价</button>
+      <button class="tab" data-tab="service">05 后续适配原型</button>
     </nav>
 
     <main>
@@ -197,11 +225,18 @@
         </div>
         <div class="headline"><h2>首期三臂，回答两个经营问题</h2><p>固定演示结构；生产试验需银行审批与预注册</p></div>
         <div class="grid-3">
-          <article class="panel arm"><div class="arm-name"><b>A</b><span>现有服务</span></div><p>原账户页、原缴存入口和正常必要服务，不增加主动触达。</p><div class="question">自然首缴基线是什么？</div></article>
-          <article class="panel arm b"><div class="arm-name"><b>B</b><span>页面提示</span></div><p>在A基础上加一条中性“了解首次缴存方式”入口，不主动找人。</p><div class="question">B−A：页面改动创造增量吗？</div></article>
-          <article class="panel arm t"><div class="arm-name"><b>T</b><span>主动触达</span></div><p>在B基础上，经许可、内容审核与频控后，只测试一种主动联系动作。</p><div class="question">T−B：银行主动找人值得吗？</div></article>
+          <article class="panel arm"><div class="arm-name"><b>A</b><span>现有服务</span></div><p>原账户页、原缴存入口和正常必要服务，不增加主动触达。</p><div class="arm-screen"><b>个人养老金账户</b><div class="sample-entry">原有缴存入口</div><p class="muted">无新增说明入口 · 无新增消息</p></div><button class="btn secondary" data-preview="A">体验 A 组页面</button><div class="question">自然首缴基线是什么？</div></article>
+          <article class="panel arm b"><div class="arm-name"><b>B</b><span>页面提示</span></div><p>在A基础上加一条中性“了解首次缴存方式”入口，不主动找人。</p><div class="arm-screen"><b>个人养老金账户</b><div class="sample-entry">原有缴存入口</div><div class="sample-entry">＋ 了解首次缴存方式</div><p class="muted">仅客户访问账户页时可见</p></div><button class="btn secondary" data-preview="B">体验 B 组页面</button><div class="question">B−A：页面改动创造增量吗？</div></article>
+          <article class="panel arm t"><div class="arm-name"><b>T</b><span>主动触达</span></div><p>在B基础上，经许可、内容审核与频控后，只测试一种主动联系动作。</p><div class="arm-screen"><b>与 B 组相同的账户页</b><div class="sample-entry">原有缴存入口 ＋ 中性说明</div><div class="sample-message">＋ 经许可的消息，引导查看账户页</div><p class="muted">客户可以拒绝或撤回</p></div><button class="btn secondary" data-preview="T">体验 T 组页面</button><div class="question">T−B：银行主动找人值得吗？</div></article>
         </div>
+        <div class="panel" style="margin-top:17px"><h2>从客户看到什么，走到账务怎样评价</h2><p>先体验 T 组的发送、送达与客户查看，再体验撤回许可后的停止回执。每一步是独立事件，客户未打开消息也保留原分组。</p><div class="actions"><button class="btn" data-tour="normal">开始：经许可联系案例</button><button class="btn secondary" data-tour="stop">对照：发送前撤回案例</button></div></div>
         <div class="rule"><b>演示边界：</b>这里展示的是业务规则与因果评价方法。没有连接真实账户、消息渠道或工行数据；页面点击、模拟首缴和示例图表都不是已实现的银行业绩。</div>
+      </section>
+
+      <section id="customer" class="view" aria-label="客户手机端">
+        <div class="headline"><h2>客户看得到，银行才有可执行的服务</h2><p>首期 A/B/T 界面示意 · 完全虚构账户</p></div>
+        <div id="journey" class="route" aria-label="本案例演示路线"></div>
+        <div class="customer-layout"><div id="customerPhone" class="phone"></div><article class="panel" id="customerReceipt" aria-live="polite"></article></div>
       </section>
 
       <section id="case" class="view" aria-label="客户与触达回放">
@@ -214,7 +249,8 @@
       </section>
 
       <section id="service" class="view" aria-label="客户服务判断">
-        <div class="headline"><h2>客户主动进入后的适配判断</h2><p>此屏演示拟议服务能力；不计入首期 A/B/T 的已验证效果</p></div>
+        <div class="headline"><h2>客户主动进入后的适配判断</h2><p>后续 C 能力原型 · 独立验证后再决定是否上线</p></div>
+        <div class="future-label"><b>与首期分开：</b>此处用选中案例复演税额与流动性规则，首期 B/T 页面只提供中性说明，不包含本页完整适配。原型产生的模拟事件不加入评价页的 A/B/T 汇总数据。</div>
         <div class="service-layout">
           <article class="panel">
             <div id="serviceAccess" class="status"></div>
@@ -290,7 +326,7 @@
     {arm:"B",name:"页面提示",n:50000,y:650},
     {arm:"T",name:"经许可主动触达",n:50000,y:670}
   ];
-  const state = {caseId:"U101",permission:true,refused:false,sent:false,paused:false,ledger:false,outcome:null,events:[]};
+  const state = {caseId:"U101",permission:true,refused:false,sent:false,delivered:false,explored:false,paymentOpen:false,paused:false,ledger:false,outcome:null,events:[]};
   const $ = id => document.getElementById(id);
   const fmt = n => Math.round(n).toLocaleString("zh-CN");
   const pct = n => (n*100).toFixed(2)+"%";
@@ -321,7 +357,7 @@
   }
   function resetCase(id) {
     const c=CASES.find(x=>x.id===id)||CASES[0];
-    Object.assign(state,{caseId:c.id,permission:c.permission,refused:c.refused,sent:false,paused:false,ledger:false,outcome:null,events:[]});
+    Object.assign(state,{caseId:c.id,permission:c.permission,refused:c.refused,sent:false,delivered:false,explored:false,paymentOpen:false,paused:false,ledger:false,outcome:null,events:[]});
     addEvent("资格快照","账户来源、转户、在户、首缴与许可状态已读取");
     const q=eligibility(c);
     if(q.n1) addEvent("固定演示分组",c.arm+"组；在差异展示或发送前确定，后续不重分配");
@@ -366,9 +402,37 @@
       <div class="actions">
         ${c.arm==="T" ? `<button class="btn" data-action="send" ${action?"":"disabled"}>模拟发送经许可消息</button>`:""}
         ${q.n0 && state.permission ? '<button class="btn danger" data-action="revoke">客户撤回渠道许可</button>':""}
-        ${q.n1 && c.arm!=="A" ? '<button class="btn secondary" data-action="service">客户自主进入服务</button>':""}
+        <button class="btn secondary" data-action="customer">查看客户手机端</button>
+        ${q.n1 && c.arm!=="A" ? '<button class="btn secondary" data-action="service">复演后续适配原型</button>':""}
         <button class="btn secondary" data-action="reset">重置本案例</button>
       </div>`;
+    renderCustomer();
+  }
+
+  /*
+   * 手机端与银行回执共用案例状态，但分开呈现客户界面和执行证据。
+   * 输入：固定分组与本地事件；输出：三臂差异页面、任务状态、停止回执。
+   * 原理：发送不等于送达，点击不等于首缴，撤回不能删除入组记录。
+   */
+  function renderCustomer() {
+    const c=currentCase(),q=eligibility(c);
+    const stopped=state.refused||!state.permission||state.paused;
+    const hasEntry=q.n1&&c.arm!=="A";
+    const canPay=c.active&&!state.paused&&!state.ledger;
+    const route=[
+      ["① 资格核验",true], ["② 固定分组",q.n1],
+      ["③ 客户查看",state.explored], ["④ 账务回传",state.ledger],
+    ];
+    $("journey").innerHTML=route.map(([label,done])=>`<span class="${done?"done":""}">${label}${done?" ✓":""}</span>`).join("")+`<button class="btn secondary" data-tab="score">⑤ 查看群体评价 →</button>`;
+    const message=state.delivered?`<div class="phone-card phone-message"><b>服务消息 · 模拟已送达</b><p>您可在个人养老金账户页了解首次缴存方式。是否缴存由您决定；如不希望收到此类介绍，可随时停止接收。</p><button class="btn secondary" data-action="account-entry">查看账户页说明</button>${state.permission?'<button class="btn danger" style="margin-top:8px" data-action="revoke">不再接收主动介绍</button>':'<p>您已停止接收主动介绍。</p>'}</div>`:"";
+    const entry=hasEntry?`<div class="phone-card"><b>了解首次缴存方式</b><p>首次办理需要什么？账户资金如何使用？先了解，再自主决定。</p><button class="btn secondary" data-action="account-entry">${state.explored?"再次查看说明":"查看中性说明"}</button></div>`:"";
+    const help=state.explored&&hasEntry?'<div class="phone-card"><b>首次缴存说明</b><p>可通过账户原有入口自主办理。缴存前请了解资金领取条件、当期税额扣除与账户内产品风险；若当前不合适，可稍后再决定。本说明不推介具体产品。</p></div>':"";
+    const payment=state.paymentOpen&&!state.ledger?`<div class="phone-card"><b>原有缴存流程 · 本地模拟</b><p>此操作只模拟客户自主确认后的账务回传，不会转账、扣款，也不代表真实缴存成功。</p><button class="btn" data-action="account-ledger" ${canPay?"":"disabled"}>模拟自主确认与账务回传</button></div>`:"";
+    $("customerPhone").innerHTML=`<div class="phone-top"><span>9:41 · 界面示意</span><span>${q.n1?c.arm+"组":"未入组"} · ${c.id}</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>${state.ledger?"已模拟首缴":"尚未首缴"}</strong><button class="btn" data-action="normal-pay" ${canPay?"":"disabled"}>${state.ledger?"模拟账务已回传":state.paused?"本次服务已暂缓":"原有缴存入口"}</button></div>${message}${entry}${help}${payment}${state.paused?'<div class="phone-card"><b>可以稍后再决定</b><p>本次主动促缴已停止。短期必要支出和应急资金应优先安排；需要解释时可使用原有人工服务。</p></div>':""}<p class="phone-note">参赛界面示意，非工行现有手机银行截图。正常自助服务与是否接受主动介绍分开处理。</p>`;
+    let task="无新增主动任务";
+    if(q.n1&&c.arm==="T") task=stopped?(state.sent?"停止后续任务，保留已提交回执":"待发送任务已取消"):state.delivered?"模拟送达已记录":state.sent?"已提交，待模拟送达":"待发送，发送前复核";
+    const stopReceipt=stopped?`<div class="stop-receipt"><h3>停止执行回执 · 本地模拟</h3><p>① ${state.paused?"已知暂缓：停止本次主动促缴":"客户撤回：停止主动介绍"}</p><p>② 尚未发送的相关任务已取消；停止状态供各渠道复核</p><p>③ ${q.n1?"最初处理臂与主分析分母保留":"未进入随机试验，不补录入组"}</p>${state.sent?'<p>已提交或已送达的消息回执保留，撤回不等于已发消息被收回。</p>':""}</div>`:"";
+    $("customerReceipt").innerHTML=`<div class="kicker">银行执行视角 / ${c.id}</div><h2>同一案例，两侧状态一致</h2><p class="muted">先核验与分组，再产生差异展示。下方只显示本案例的模拟回执，不改变独立的群体评价示例。</p><div class="receipt-grid"><div class="receipt-item"><span>最初处理臂</span><b>${q.n1?c.arm+"组 · 保留":"未入组"}</b></div><div class="receipt-item"><span>渠道任务</span><b>${task}</b></div><div class="receipt-item"><span>中性说明查看</span><b>${state.explored?"客户已自主查看":"尚未查看"}</b></div><div class="receipt-item"><span>主结果证据</span><b>${state.ledger?"模拟账务回传":"尚无账务首缴"}</b></div></div>${stopReceipt}<div class="actions">${c.arm==="T"?`<button class="btn" data-action="send" ${q.maySend&&!state.sent?"":"disabled"}>模拟提交获准消息</button><button class="btn secondary" data-action="deliver" ${q.maySend&&state.sent&&!state.delivered?"":"disabled"}>模拟消息送达</button>`:""}${q.n0&&state.permission?'<button class="btn danger" data-action="revoke">模拟撤回许可</button>':""}<button class="btn secondary" data-tab="case">查看资格与完整事件</button><button class="btn secondary" data-action="reset">重置本案例</button></div><div class="rule">${c.arm==="A"?"A组没有新增中性说明或主动消息，但可通过原有入口自主办理。":c.arm==="B"?"B组仅在账户页提供中性说明，不创建主动消息任务。":c.arm==="T"?"T组页面与B组相同；主动消息是唯一新增处理，提交、送达与查看分别记录。":"本案例保留原有账户服务，未进入新增定向试验。"}</div>`;
   }
 
   /*
@@ -473,12 +537,29 @@
   document.addEventListener("click",event=>{
     const tab=event.target.closest("[data-tab]");
     if(tab){showTab(tab.dataset.tab);return;}
+    const preview=event.target.closest("[data-preview]");
+    if(preview){resetCase({A:"U106",B:"U102",T:"U101"}[preview.dataset.preview]);showTab("customer");return;}
+    const tour=event.target.closest("[data-tour]");
+    if(tour){resetCase(tour.dataset.tour==="stop"?"U103":"U101");showTab("customer");return;}
     const caseButton=event.target.closest("[data-case]");
     if(caseButton){resetCase(caseButton.dataset.case);return;}
     const action=event.target.closest("[data-action]");
     if(!action)return;
     const c=currentCase(),q=eligibility(c);
     switch(action.dataset.action){
+      case "customer":showTab("customer");break;
+      case "deliver":
+        if(q.maySend&&c.arm==="T"&&state.sent&&!state.delivered){state.delivered=true;addEvent("模拟送达回执","消息出现在客户手机端；未据此判定阅读或首缴");renderCase();}
+        break;
+      case "account-entry":
+        if(q.n1&&c.arm!=="A"&&!state.explored){state.explored=true;addEvent("客户查看中性说明","客户自主进入；仅作过程事件，不记作账务首缴");renderCase();}
+        break;
+      case "normal-pay":
+        if(c.active&&!state.paused&&!state.ledger){state.paymentOpen=true;addEvent("原有缴存入口","客户自主打开原有办理流程，尚未产生账务结果");renderCase();}
+        break;
+      case "account-ledger":
+        if(state.paymentOpen&&c.active&&!state.paused&&!state.ledger){state.ledger=true;addEvent("模拟自主首缴回传","原有流程产生本地虚构账务回执；不加入群体汇总示例");renderCase();renderService();}
+        break;
       case "send":
         if(q.maySend&&c.arm==="T"&&!state.sent) {
           state.sent=true;addEvent("临发送复核通过","渠道许可、拒绝与频控再次校验");
