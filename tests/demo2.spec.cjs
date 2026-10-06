@@ -133,7 +133,53 @@ async function main() {
     assert.equal(await page.locator(".phone-message").count(), 1);
     await page.getByRole("button", { name: "辅助 · 增量评价", exact: true }).click();
     assert.match(await page.locator("#comparisons").innerText(), /区间跨零/);
-    assert.match(await page.locator("#score").innerText(), /全部50,000名最初入组客户/);
+    assert.match(await page.locator("#score").innerText(), /各组50,000名最初入组客户/);
+    assert.match(await page.locator("#score").innerText(), /共150,000人/);
+
+    // 资金顾虑不自动暂停：无必要支出占用且缴后缓冲足够，可自主选择；不需要税额输入。
+    await choose("U102");
+    await action("start").click();
+    await page.locator('[data-alpha-barrier="liquidity"]').click();
+    await action("barrier-next").click();
+    assert.equal(await page.locator("#alphaTaxField").isVisible(), false);
+    assert.equal(await page.locator("#alphaDepositField").isVisible(), true);
+    await page.locator("#reserve").fill("");
+    await page.locator("#evaluate").click();
+    assert.equal(await screen(3).isVisible(), true);
+    await page.locator("#reserve").fill("6");
+    await page.locator("#evaluate").click();
+    assert.equal(await page.evaluate(() => state.outcome.kind), "continue");
+    assert.equal(await page.evaluate(() => state.outcome.tax), null);
+    await action("result-next").click();
+    assert.equal(await action("continue").isDisabled(), false);
+
+    // 拟缴资金明确涉及必要支出，足够的其他缓冲也不覆盖该停止条件。
+    await choose("U102");
+    await startTax();
+    await page.locator("#urgent").check();
+    await page.locator("#evaluate").click();
+    assert.equal(await page.evaluate(() => state.outcome.kind), "pause");
+    await action("result-next").click();
+    assert.equal(await action("continue").isDisabled(), true);
+    assert.equal(await action("less").isDisabled(), true);
+
+    // 范围与财务卡保持独立展示，切换成本不会修改模拟试验样本。
+    await page.getByRole("button", { name: "辅助 · 三臂方案", exact: true }).click();
+    assert.match(await page.locator("#scopeCards").innerText(), /完整六屏不直接算作首期处理/);
+    await shot("scope-overview");
+    await page.getByRole("button", { name: "辅助 · 增量评价", exact: true }).click();
+    for (const [category, phrase] of [["channel","账单"],["human","分钟数"],["run","运维"],["build","摊销期"]]) {
+      await page.locator(`[data-cost="${category}"]`).click();
+      assert.match(await page.locator("#costDetail").innerText(), new RegExp(phrase));
+      assert.equal(await page.locator(`[data-cost="${category}"]`).getAttribute("aria-pressed"), "true");
+      assert.equal(await page.locator('[data-cost][aria-pressed="true"]').count(), 1);
+    }
+    assert.equal(await page.evaluate(() => TRIAL.map(x => x.n).join(",")), "50000,50000,50000");
+    await shot("increment-and-finance");
+    await page.setViewportSize({ width: 390, height: 844 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await shot("mobile-finance");
+    await page.setViewportSize({ width: 1360, height: 900 });
 
     // 手机端必要信息与原因码任务卡均无横向溢出。
     await choose("U102");
