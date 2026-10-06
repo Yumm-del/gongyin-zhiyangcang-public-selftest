@@ -244,7 +244,7 @@
 <body>
   <div class="shell">
     <header class="mast">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">六屏 Alpha v3.2</span></div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">Alpha v3.3</span></div>
       <div class="mast-note">第十七届“工行杯”项目方案演示<br>虚构客户 · 模拟事件 · 非工行生产系统</div>
     </header>
 
@@ -262,7 +262,8 @@
     </section>
 
     <nav class="tabs" aria-label="演示页面">
-      <button class="tab active" data-tab="alpha" aria-current="page">六屏 Alpha · 主演示</button>
+      <button class="tab active" data-tab="management" aria-current="page">银行经营总览</button>
+      <button class="tab" data-tab="alpha">客户服务 · 六屏 Alpha</button>
       <button class="tab" data-tab="overview">辅助 · 三臂方案</button>
       <button class="tab" data-tab="customer">辅助 · 首期客户页面</button>
       <button class="tab" data-tab="case">辅助 · 事件回放</button>
@@ -270,6 +271,26 @@
     </nav>
 
     <main>
+      <section id="management" class="view active" aria-label="银行经营总览">
+        <div class="headline"><h2>哪些服务值得投入，资源应该投向哪里？</h2><p>方法演示 · 尚无银行实测经营结果</p></div>
+        <article class="panel" style="padding:16px 20px">
+          <div class="actions" style="margin-top:0">
+            <button class="btn" data-tab="alpha" id="managementService">体验客户服务路径 →</button>
+            <button class="btn secondary" data-tab="score" id="managementScore">查看服务增量与投入依据 →</button>
+          </div>
+          <p class="muted" style="margin:9px 0 0">建议顺序：经营问题 → 客户服务案例 → 群体增量评价 → 投入决策。</p>
+        </article>
+        <div class="grid-2" style="margin-top:14px">
+          <article class="panel"><div class="kicker">经营问题一 · B−A</div><h3>增加页面入口，有没有首缴增量？</h3><p>与现有服务比较，评价账户页说明入口是否帮助客户完成首次有效缴存。</p></article>
+          <article class="panel"><div class="kicker">经营问题二 · T−B</div><h3>主动联系的额外增量，值不值得投入？</h3><p>在相同页面服务上增加一种获准联系，判断新增贡献能否覆盖触达与承接成本。</p></article>
+        </div>
+        <div class="headline"><h2>三项依据，共同决定是否扩大</h2><p>首缴人数增加不直接等于值得投入</p></div>
+        <div class="grid-3">
+          <article class="panel"><span class="pill">增量可信</span><h3 style="margin-top:9px">按原始分组评价</h3><p>全部最初入组客户留在分母；报告首缴率差及区间，避免将自然缴存计为服务贡献。</p></article>
+          <article class="panel"><span class="pill green">客户保护达标</span><h3 style="margin-top:9px">停止条件先于营销</h3><p>拒绝与暂缓可执行，税额与领取说明可复核；保护问题不能用转化或收益抵销。</p></article>
+          <article class="panel"><span class="pill amber">净贡献覆盖成本</span><h3 style="margin-top:9px">按全行口径核算</h3><p>实际贡献扣除替代损失及新增成本；证据不足时调整验证，价值不足时收缩投入。</p></article>
+        </div>
+      </section>
       <section id="overview" class="view" aria-label="方案总览">
         <div class="headline"><h2>完整产品、首期试验与后续验证</h2><p>对应项目书v85第2.1节</p></div>
         <div class="grid-3" id="scopeCards">
@@ -308,16 +329,16 @@
         </div>
       </section>
 
-      <section id="alpha" class="view active" aria-label="六屏 Alpha">
-        <div class="headline" id="alphaTitle"><h2>六屏 Alpha：从客户入口走到银行任务卡</h2><p>与计划书第2.5节逐屏对应</p></div>
+      <section id="alpha" class="view" aria-label="六屏 Alpha">
+        <div class="headline" id="alphaTitle"><h2>客户服务演示：前五屏客户操作，第六屏银行承接</h2><p>屏序与说明保留在手机外的导航中</p></div>
         <div class="future-label">完整服务链使用虚构账户复演，尚未接入工行App或账务系统。首期A/B/T只测试中性入口与主动联系；完整适配能力须另行验证，单人原型操作不加入模拟试验汇总。</div>
         <div id="alphaSteps" class="alpha-steps" aria-label="六屏进度"></div>
         <div id="alphaClosed" hidden class="alpha-closed" role="status"></div>
         <div class="alpha-layout">
           <div id="alphaScreens">
-            <section class="alpha-stage active" data-screen="1" aria-label="第1屏 账户页中性入口"><div class="phone"><div class="phone-top"><span>第1屏 · 界面示意</span><span>个人养老金</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>尚未首缴</strong><span>原有缴存服务保留</span></div><div class="phone-card"><b>了解首次缴存，先做自己的判断</b><p>可查看办理步骤，或按需了解当期税额与资金安排。是否继续由您决定，不需要先提交完整收入与资产。</p><button class="btn" data-alpha="start">了解首次缴存</button></div><p class="phone-note">本页不会转账或扣款。任何缴存结果须以银行正式账务为准。</p></div></section>
-            <section class="alpha-stage" data-screen="2" aria-label="第2屏 客户自选障碍"><div class="phone"><div class="phone-top"><span>第2屏 · 客户自选障碍</span><span>按需服务</span></div><h2>这次想先了解什么？</h2><p class="muted">先选问题，再决定是否需要个人化信息。</p><div id="alphaBarriers"></div><button class="btn" data-alpha="barrier-next">确认选择，继续</button></div></section>
-            <section class="alpha-stage" data-screen="3" aria-label="第3屏 必要信息确认"><div class="phone"><div class="phone-top"><span>第3屏 · 必要信息确认</span><span>仅本机临时输入</span></div><h2>只确认本次必要信息</h2>
+            <section class="alpha-stage active" data-screen="1" aria-label="第1屏 账户页中性入口"><div class="phone"><div class="phone-top"><span>个人养老金</span><span>个人养老金</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>尚未首缴</strong><span>原有缴存服务保留</span></div><div class="phone-card"><b>了解首次缴存，先做自己的判断</b><p>可查看办理步骤，或按需了解当期税额与资金安排。是否继续由您决定，不需要先提交完整收入与资产。</p><button class="btn" data-alpha="start">了解首次缴存</button></div><p class="phone-note">本页不会转账或扣款。任何缴存结果须以银行正式账务为准。</p></div></section>
+            <section class="alpha-stage" data-screen="2" aria-label="第2屏 客户自选障碍"><div class="phone"><div class="phone-top"><span>服务选择</span><span>按需服务</span></div><h2>这次想先了解什么？</h2><p class="muted">先选问题，再决定是否需要个人化信息。</p><div id="alphaBarriers"></div><button class="btn" data-alpha="barrier-next">确认选择，继续</button></div></section>
+            <section class="alpha-stage" data-screen="3" aria-label="第3屏 必要信息确认"><div class="phone"><div class="phone-top"><span>信息确认</span><span>仅本机临时输入</span></div><h2>只确认本次必要信息</h2>
             <div id="serviceAccess" class="status"></div>
             <p class="muted" id="alphaInputPurpose">需要税额时才填写T0；按需确认拟缴资金与近期必要支出。信息仅本机临时使用。</p>
             <div class="form-grid">
@@ -348,8 +369,8 @@
             <div class="actions"><button class="btn" id="evaluate">生成服务判断</button><button class="btn secondary" id="clearService">清空本次判断</button></div>
             <p id="alphaError" class="caution" role="alert"></p>
             </div></section>
-            <section class="alpha-stage" data-screen="4" aria-label="第4屏 税额与流动性结果"><div class="phone"><div class="phone-top"><span>第4屏 · 税额与流动性结果</span><span>确定性规则</span></div><div class="result" id="serviceResult" aria-live="polite"></div><button class="btn" data-alpha="result-next">查看可选出口</button></div></section>
-            <section class="alpha-stage" data-screen="5" aria-label="第5屏 四个出口"><div class="phone"><div class="phone-top"><span>第5屏 · 客户自主选择</span><span>继续 / 降额 / 暂缓 / 转人工</span></div><h2>下一步，由您决定</h2><div id="alphaExits"></div></div></section>
+            <section class="alpha-stage" data-screen="4" aria-label="第4屏 税额与流动性结果"><div class="phone"><div class="phone-top"><span>测算结果</span><span>确定性规则</span></div><div class="result" id="serviceResult" aria-live="polite"></div><button class="btn" data-alpha="result-next">查看可选出口</button></div></section>
+            <section class="alpha-stage" data-screen="5" aria-label="第5屏 四个出口"><div class="phone"><div class="phone-top"><span>服务选择</span><span>继续 / 降额 / 暂缓 / 转人工</span></div><h2>下一步，由您决定</h2><div id="alphaExits"></div></div></section>
             <section class="alpha-stage" data-screen="6" aria-label="第6屏 银行原因码任务卡"><article class="panel" id="alphaTask" aria-live="polite"></article></section>
           </div>
           <aside class="panel alpha-guide"><div class="kicker">虚构案例复演</div><h3>选一个场景，从第1屏开始</h3><label for="alphaCase" class="muted">切换场景会清空本次临时输入与记录</label><select id="alphaCase"><option value="U102">案例甲 · 税额疑问，可自主继续</option><option value="U104">案例乙 · 必要支出，应当暂缓</option><option value="U103">案例丙 · 判断中撤回渠道许可</option><option value="U105">边界案例 · 转入账户排除</option></select><h3 id="alphaGuideTitle"></h3><p id="alphaGuideText"></p><div class="actions"><button class="btn secondary" data-alpha="back" id="alphaBack">上一步</button><button class="btn secondary" data-alpha="close" id="alphaClose">关闭本次页面</button><button class="btn danger" data-alpha="revoke" id="alphaRevoke">撤回主动联系许可</button><button class="btn secondary" data-alpha="restart">重新开始本案例</button></div><div class="rule">退出不等于缴存失败；跳转不等于首缴成功；撤回只停止主动联系，不改变最初分组。</div><div class="actions"><button class="btn secondary" data-alpha="export">下载本次复演记录</button><button class="btn secondary" data-tab="case">查看辅助事件回放</button></div></aside>
@@ -402,7 +423,7 @@
     {arm:"T",name:"经许可主动触达",n:50000,y:670}
   ];
   const RULE_VERSION="ALPHA-RULE-20261006-02";
-  const DEMO_VERSION="3.2";
+  const DEMO_VERSION="3.3";
   const ALPHA_TITLES=["账户页中性入口","客户自选障碍","必要信息确认","税额与流动性结果","四个出口","银行原因码任务卡"];
   const ALPHA_GUIDES=["先说明服务用途，再由客户决定进入。完整六屏是Alpha原型，不表示已向首期B/T客户上线。","只想了解步骤，可直接得到说明，不必先提供税务或家庭资产信息。","T0不是月薪；未知时可留空，转人工或看固定说明。当前信息只用于本次服务。","当期税额差与投资收益分开。必要支出和流动性停止条件优先，不因正税差放宽。","允许自主继续、主动降额、暂缓或转人工。暂缓时不允许继续促缴，降额须回到信息页复算。","营销任务卡只显示原因码及对应动作，不显示T0、储备或拟缴金额。模拟跳转不会自动生成账务首缴。"];
   const state = {caseId:"U102",permission:true,refused:false,sent:false,delivered:false,explored:false,paymentOpen:false,paused:false,ledger:false,outcome:null,events:[],alphaStep:1,alphaMax:1,alphaClosed:false,alphaExit:null,alphaAudit:[]};
@@ -535,7 +556,7 @@
     if(state.alphaExit==="continue")codes.push([state.outcome?.kind==="less"?"CUSTOMER_LOWER_AMOUNT":"ALLOW_SELF_SERVICE","仅模拟跳转原有流程，等待正式账务事件"]);
     if(state.alphaExit==="human")codes.push(["HUMAN_REQUEST","生成待人工承接任务；本地模拟，尚未实际转接"]);
     if(!codes.length)codes.push(["AWAIT_CUSTOMER_CHOICE","尚无需执行的营销任务"]);
-    $("alphaTask").innerHTML=`<div class="kicker">第6屏 · 银行原因码任务卡</div><h2>按原因执行，不暴露原始敏感输入</h2><p class="muted">虚构编号 ${c.id} · 规则版本 ${RULE_VERSION}</p>${codes.map(([code,action])=>`<div class="receipt-item" style="margin:10px 0"><b>${code}</b><span>${action}</span></div>`).join("")}<div class="rule">${state.alphaExit==="continue"?"跳转回执已记录；本次仍无真实账务首缴。":state.paused?"停止回执已记录；本次未发生首缴。":"任务卡是本地复演，不是生产渠道的成功回执。"}</div><p class="muted" style="margin-top:15px">服务路径是否带来首缴增量，要回到随机分组与群体账务结果评价。单人复演不加入下方虚构汇总。</p><div class="actions"><button class="btn" data-tab="score">查看服务增量怎样测量 →</button><button class="btn secondary" data-alpha="export">下载本次复演记录</button><button class="btn secondary" data-tab="case">辅助 · 完整事件</button></div>`;
+    $("alphaTask").innerHTML=`<div class="kicker">银行侧承接视图 · 原因码任务卡</div><h2>按原因执行，不暴露原始敏感输入</h2><p class="muted">虚构编号 ${c.id} · 规则版本 ${RULE_VERSION}</p>${codes.map(([code,action])=>`<div class="receipt-item" style="margin:10px 0"><b>${code}</b><span>${action}</span></div>`).join("")}<div class="rule">${state.alphaExit==="continue"?"跳转回执已记录；本次仍无真实账务首缴。":state.paused?"停止回执已记录；本次未发生首缴。":"任务卡是本地复演，不是生产渠道的成功回执。"}</div><p class="muted" style="margin-top:15px">服务路径是否带来首缴增量，要回到随机分组与群体账务结果评价。单人复演不加入下方虚构汇总。</p><div class="actions"><button class="btn" data-tab="score">查看服务增量怎样测量 →</button><button class="btn secondary" data-alpha="export">下载本次复演记录</button><button class="btn secondary" data-tab="case">辅助 · 完整事件</button></div>`;
   }
 
   /*
