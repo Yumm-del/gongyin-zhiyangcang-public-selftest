@@ -213,6 +213,27 @@ async function main() {
     }
     assert.equal(await page.evaluate(() => TRIAL.map(x => x.n).join(",")), "50000,50000,50000");
     await shot("increment-and-finance");
+    // 情景测算独立于固定试验；高贡献不能覆盖证据不足或客户保护问题。
+    assert.match(await page.locator('#investmentResult').innerText(), /证据不足/);
+    await page.locator('#investmentContribution').fill('10000');
+    await page.locator('#investmentProtection').selectOption('pass');
+    assert.match(await page.locator('#investmentResult').innerText(), /证据不足/);
+    await page.locator('#investmentProtection').selectOption('fail');
+    assert.match(await page.locator('#investmentResult').innerText(), /暂停相关策略/);
+    await page.locator('#investmentCompare').selectOption('ba');
+    assert.match(await page.locator('#investmentResult').innerText(), /先核验客户保护/);
+    await page.locator('#investmentProtection').selectOption('pass');
+    assert.match(await page.locator('#investmentResult').innerText(), /页面入口列为后续投入候选/);
+    await page.locator('#investmentContribution').fill('0');
+    assert.match(await page.locator('#investmentResult').innerText(), /收缩新增投入/);
+    await page.locator('#investmentContribution').fill('-1');
+    assert.match(await page.locator('#investmentResult').innerText(), /请确认假设参数/);
+    await page.locator('#investmentReset').click();
+    await page.locator('#investmentCompare').selectOption('tb');
+    assert.match(await page.locator('#investmentResult').innerText(), /13,000元/);
+    assert.match(await page.locator('#investmentResult').innerText(), /650元/);
+    assert.equal(await page.evaluate(()=>TRIAL.map(x=>x.n).join(',')), '50000,50000,50000');
+    await shot('investment-tb');
     await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await shot("mobile-finance");
@@ -220,6 +241,15 @@ async function main() {
 
     // 手机端必要信息与原因码任务卡均无横向溢出。
     await choose("U102");
+    await startTax();
+    // 不确定税额时清除案例数值并转人工；重新开案例恢复虚构算例。
+    await page.locator('#taxUnknown').check();
+    assert.equal(await page.locator('#taxable').inputValue(), '');
+    assert.equal(await page.locator('#taxable').isDisabled(), true);
+    await page.locator('#evaluate').click();
+    assert.equal(await page.evaluate(()=>state.outcome.kind), 'human');
+    assert.equal(await page.evaluate(()=>state.outcome.tax), null);
+    await choose('U102');
     await startTax();
     await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -229,6 +259,19 @@ async function main() {
     await action("continue").click();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await shot("mobile-screen-6");
+    // 暂缓阻止促缴，但不封锁原有办理；自主操作不恢复发送权限或改变分组。
+    await choose('U104');
+    await action('start').click();
+    await action('barrier-next').click();
+    await page.locator('#evaluate').click();
+    await page.getByRole('button',{name:'辅助 · 首期客户页面',exact:true}).click();
+    const normal=page.locator('[data-action="normal-pay"]');
+    assert.equal(await normal.isDisabled(), false);
+    await normal.click();
+    await page.locator('[data-action="account-ledger"]').click();
+    assert.equal(await page.evaluate(()=>state.ledger), true);
+    assert.equal(await page.evaluate(()=>state.paused), true);
+    assert.equal(await page.evaluate(()=>eligibility(currentCase()).maySend), false);
     assert.deepEqual(errors, []);
     await page.getByRole('button',{name:'银行经营总览',exact:true}).click();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -237,7 +280,7 @@ async function main() {
     const repository = path.resolve(__dirname,"..");
     const hashes = Object.fromEntries(["demo2.html","engine.js","tests/demo2.spec.cjs"].map(file=>[file,crypto.createHash("sha256").update(fs.readFileSync(path.join(repository,file))).digest("hex")]));
     const verification = {startedAt,finishedAt:new Date().toISOString(),commit:execFileSync("git",["rev-parse","HEAD"],{cwd:repository,encoding:"utf8"}).trim(),worktree:execFileSync("git",["status","--porcelain"],{cwd:repository,encoding:"utf8"}).trim(),demoVersion:await page.evaluate(()=>DEMO_VERSION),ruleVersion:await page.evaluate(()=>RULE_VERSION),node:process.version,playwright:require("playwright/package.json").version,browser:browser.version(),fileSHA256:hashes,firstScreenChecks,result:"PASS",realLedgerConnected:false};
-    fs.writeFileSync(path.join(qaDir,"verification-v3.3.json"),JSON.stringify(verification,null,2));
+    fs.writeFileSync(path.join(qaDir,"verification-v3.4.json"),JSON.stringify(verification,null,2));
     console.log("six-screen Alpha and auxiliary checks: PASS");
   } finally {
     await browser.close();

@@ -244,7 +244,7 @@
 <body>
   <div class="shell">
     <header class="mast">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">Alpha v3.3</span></div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">Alpha v3.4</span></div>
       <div class="mast-note">第十七届“工行杯”项目方案演示<br>虚构客户 · 模拟事件 · 非工行生产系统</div>
     </header>
 
@@ -353,8 +353,12 @@
               </label>
               <label class="field" id="alphaTaxField">缴存前全年应纳税所得额 T0
                 <input id="taxable" type="number" min="0" step="100" value="42000" placeholder="可留空，转人工或看通用说明">
-                <small>不是月薪或税前年收入；留空不生成精确税额。</small>
+                <small>不是月薪或税前年收入；42,000元为虚构案例预填值，请勿当作本人数据。</small>
               </label>
+              <div id="taxHelp">
+                <label class="check"><input id="taxUnknown" type="checkbox">我不确定全年应纳税所得额</label>
+                <details><summary>这个数是什么，如何确认？</summary><p class="muted">本算例采用扣除个人养老金缴费之前的全年综合所得应纳税所得额，即收入按适用税务规则扣除相关费用和其他扣除后的金额。不能直接用月薪或税前年收入填写，也不要再重复扣减拟缴养老金。</p><p class="muted">请结合对应年度税务记录及实际扣除确认口径。年内收入尚未确定、扣除不清楚或税务情形复杂时，选择“不确定”，可查看通用说明或申请人工解释；本页面不生成精确税额。</p></details>
+              </div>
               <label class="field" id="alphaDepositField">拟缴金额（元）
                 <input id="deposit" type="number" min="0" max="12000" step="100" value="12000">
                 <small>本演示最高按12,000元计算。</small>
@@ -395,6 +399,27 @@
           <article class="panel"><div class="kicker">试点期经营评价</div><h3>已实现贡献与完整成本</h3><p>实际留存天数、已确认配置贡献，扣除原业务替代损失及新增成本；按全部原始入组客户比较。</p><span class="pill">每名入组客户的净贡献差</span></article>
           <article class="panel"><div class="kicker">后续跟踪</div><h3>长期收益单独观察</h3><p>事前确定跟踪期。未观察收益与已实现贡献分列，不直接年化60天结果；短期成本先发生也不直接代表最终无价值。</p><span class="pill amber">长期留存尚待验证</span></article>
         </div>
+        <article class="panel" id="investmentPanel" style="margin-top:16px">
+          <div class="kicker">银行端 · 投入判断</div><h2>这项新增服务，值得继续投入吗？</h2>
+          <p class="muted">使用上方固定模拟试验结果，每臂50,000人。下列金额、工时及保护状态均为可调整的假设，不是工行预算、报价或验收结果。</p>
+          <div class="grid-2" style="margin-top:16px">
+            <div>
+              <label class="field">比较哪项新增服务<select id="investmentCompare"><option value="ba">B−A：增加页面说明入口</option><option value="tb" selected>T−B：增加获准主动联系</option></select></label>
+              <div class="form-grid" style="margin-top:12px">
+                <label class="field">每位增量首缴客户净贡献（元）<input id="investmentContribution" type="number" min="0" max="100000" step="10" value="200"><small>扣除本行原业务替代损失；尚未扣除此处新增服务成本。不以缴存额代替。</small></label>
+                <label class="field">每名入组客户新增渠道成本（元）<input id="investmentChannel" type="number" min="0" max="1000" step="0.01" value="0.10"><small>按全部入组客户平均，可包含未发送者；相对所选对照的新增成本。</small></label>
+                <label class="field">新增人工服务涉及入组客户（%）<input id="investmentHumanRate" type="number" min="0" max="100" step="1" value="5"></label>
+                <label class="field">每次新增人工服务与返工（分钟）<input id="investmentMinutes" type="number" min="0" max="480" step="1" value="2"></label>
+                <label class="field">人工单位工时成本（元/小时）<input id="investmentHourly" type="number" min="0" max="10000" step="10" value="60"></label>
+                <label class="field">新增建设摊销、运维与审核（元）<input id="investmentFixed" type="number" min="0" max="100000000" step="100" value="3000"><small>同一比较与观察期内计值；复用投入不重复计费。</small></label>
+              </div>
+              <label class="field" style="margin-top:12px">客户保护状态（情景假设）<select id="investmentProtection"><option value="pending" selected>尚未核验</option><option value="pass">假设已达标</option><option value="fail">假设出现保护问题</option></select></label>
+              <button class="btn secondary" id="investmentReset" style="margin-top:12px">恢复本项演示假设</button>
+            </div>
+            <div id="investmentResult" aria-live="polite"></div>
+          </div>
+          <p class="muted" style="margin-top:16px">计算：增量人数 × 假设单位净贡献 − 新增总成本。人工成本按全部入组客户中的服务人数核算。下界与上界情景仅改变首缴率差，成本与单位贡献固定；它们不是完整财务置信区间。正式决策应直接比较每名原始入组客户的全行净贡献，并由行方核验长期收益、成本及保护要求。</p>
+        </article>
         <article class="panel" style="margin-top:16px"><h2>新增成本从哪里取得</h2><p class="muted">选择一类投入，查看核算依据。各项比较配对成本，复用投入不重复计费。</p><div class="actions" role="group" aria-label="成本类别"><button class="btn secondary" data-cost="build" aria-pressed="true">一次性建设</button><button class="btn secondary" data-cost="channel" aria-pressed="false">渠道触达</button><button class="btn secondary" data-cost="human" aria-pressed="false">人工服务</button><button class="btn secondary" data-cost="run" aria-pressed="false">持续运行</button></div><div id="costDetail" class="status" style="margin-top:16px" aria-live="polite"></div></article>
       </section>
     </main>
@@ -422,8 +447,8 @@
     {arm:"B",name:"页面提示",n:50000,y:650},
     {arm:"T",name:"经许可主动触达",n:50000,y:670}
   ];
-  const RULE_VERSION="ALPHA-RULE-20261006-02";
-  const DEMO_VERSION="3.3";
+  const RULE_VERSION="ALPHA-RULE-20261007-03";
+  const DEMO_VERSION="3.4";
   const ALPHA_TITLES=["账户页中性入口","客户自选障碍","必要信息确认","税额与流动性结果","四个出口","银行原因码任务卡"];
   const ALPHA_GUIDES=["先说明服务用途，再由客户决定进入。完整六屏是Alpha原型，不表示已向首期B/T客户上线。","只想了解步骤，可直接得到说明，不必先提供税务或家庭资产信息。","T0不是月薪；未知时可留空，转人工或看固定说明。当前信息只用于本次服务。","当期税额差与投资收益分开。必要支出和流动性停止条件优先，不因正税差放宽。","允许自主继续、主动降额、暂缓或转人工。暂缓时不允许继续促缴，降额须回到信息页复算。","营销任务卡只显示原因码及对应动作，不显示T0、储备或拟缴金额。模拟跳转不会自动生成账务首缴。"];
   const state = {caseId:"U102",permission:true,refused:false,sent:false,delivered:false,explored:false,paymentOpen:false,paused:false,ledger:false,outcome:null,events:[],alphaStep:1,alphaMax:1,alphaClosed:false,alphaExit:null,alphaAudit:[]};
@@ -463,6 +488,7 @@
     if(q.n1) addEvent("固定演示分组",c.arm+"组；在差异展示或发送前确定，后续不重分配");
     else addEvent("停止定向",q.reasons.join("；"));
     $("taxable").value=c.taxable??"";
+    $("taxUnknown").checked=false;
     $("deposit").value="12000";
     $("reserve").value=String(c.reserve);
     $("urgent").checked=c.urgent;
@@ -545,6 +571,7 @@
     $("alphaBarriers").innerHTML=Object.entries(names).map(([key,[title,detail]])=>`<button class="alpha-choice ${barrier===key?"selected":""}" data-alpha-barrier="${key}" ${state.paused?"disabled":""} aria-pressed="${barrier===key}">${title}<small>${detail}</small></button>`).join("");
     document.querySelector('[data-alpha="barrier-next"]').disabled=state.paused;
     $("alphaTaxField").hidden=barrier==="liquidity";
+    $("taxHelp").hidden=barrier==="liquidity";
     $("alphaDepositField").hidden=false;
     $("alphaInputPurpose").textContent=barrier==="liquidity"?"本次不需要T0。按拟缴金额确认缴存后缓冲，以及这笔资金是否涉及近期必要支出；有顾虑不自动等于应暂缓。":"T0用于逐档计算当期税额差；按拟缴金额确认必要支出与缴存后缓冲。信息仅本机临时使用。";
     const stopped=state.paused,valid=state.outcome&&state.outcome.kind!=="invalid";
@@ -568,7 +595,8 @@
     const c=currentCase(),q=eligibility(c);
     const stopped=state.refused||!state.permission||state.paused;
     const hasEntry=q.n1&&c.arm!=="A";
-    const canPay=c.active&&!state.paused&&!state.ledger;
+    // 暂缓只停止本项目促缴，不据此限制客户的原有账户办理权利。
+    const canPay=c.active&&!state.ledger;
     const route=[
       ["① 资格核验",true], ["② 固定分组",q.n1],
       ["③ 客户查看",state.explored], ["④ 账务回传",state.ledger],
@@ -578,7 +606,7 @@
     const entry=hasEntry?`<div class="phone-card"><b>了解首次缴存方式</b><p>首次办理需要什么？账户资金如何使用？先了解，再自主决定。</p><button class="btn secondary" data-action="account-entry">${state.explored?"再次查看说明":"查看中性说明"}</button></div>`:"";
     const help=state.explored&&hasEntry?'<div class="phone-card"><b>首次缴存说明</b><p>可通过账户原有入口自主办理。缴存前请了解资金领取条件、当期税额扣除与账户内产品风险；若当前不合适，可稍后再决定。本说明不推介具体产品。</p></div>':"";
     const payment=state.paymentOpen&&!state.ledger?`<div class="phone-card"><b>原有缴存流程 · 本地模拟</b><p>此操作只模拟客户自主确认后的账务回传，不会转账、扣款，也不代表真实缴存成功。</p><button class="btn" data-action="account-ledger" ${canPay?"":"disabled"}>模拟自主确认与账务回传</button></div>`:"";
-    $("customerPhone").innerHTML=`<div class="phone-top"><span>9:41 · 界面示意</span><span>${q.n1?c.arm+"组":"未入组"} · ${c.id}</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>${state.ledger?"已模拟首缴":"尚未首缴"}</strong><button class="btn" data-action="normal-pay" ${canPay?"":"disabled"}>${state.ledger?"模拟账务已回传":state.paused?"本次服务已暂缓":"原有缴存入口"}</button></div>${message}${entry}${help}${payment}${state.paused?'<div class="phone-card"><b>可以稍后再决定</b><p>本次主动促缴已停止。短期必要支出和应急资金应优先安排；需要解释时可使用原有人工服务。</p></div>':""}<p class="phone-note">参赛界面示意，非工行现有手机银行截图。正常自助服务与是否接受主动介绍分开处理。</p>`;
+    $("customerPhone").innerHTML=`<div class="phone-top"><span>9:41 · 界面示意</span><span>${q.n1?c.arm+"组":"未入组"} · ${c.id}</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>${state.ledger?"已模拟首缴":"尚未首缴"}</strong><button class="btn" data-action="normal-pay" ${canPay?"":"disabled"}>${state.ledger?"模拟账务已回传":"原有缴存入口"}</button></div>${message}${entry}${help}${payment}${state.paused?'<div class="phone-card"><b>可以稍后再决定</b><p>本次主动促缴已停止，原有账户入口保留，不代表建议继续缴存。短期必要支出和应急资金应优先安排；具体办理仍须经过银行既有流程。</p></div>':""}<p class="phone-note">参赛界面示意，非工行现有手机银行截图。正常自助服务与是否接受主动介绍分开处理。</p>`;
     let task="无新增主动任务";
     if(q.n1&&c.arm==="T") task=stopped?(state.sent?"停止后续任务，保留已提交回执":"待发送任务已取消"):state.delivered?"模拟送达已记录":state.sent?"已提交，待模拟送达":"待发送，发送前复核";
     const stopReceipt=stopped?`<div class="stop-receipt"><h3>停止执行回执 · 本地模拟</h3><p>① ${state.paused?"已知暂缓：停止本次主动促缴":"客户撤回：停止主动介绍"}</p><p>② 尚未发送的相关任务已取消；停止状态供各渠道复核</p><p>③ ${q.n1?"最初处理臂与主分析分母保留":"未进入随机试验，不补录入组"}</p>${state.sent?'<p>已提交或已送达的消息回执保留，撤回不等于已发消息被收回。</p>':""}</div>`:"";
@@ -629,6 +657,7 @@
         ? "<b>A组维持现有服务：</b>本页新增的适配界面不对A组展示；原账户缴存入口保留。"
         : "<b>本案例停止新增服务：</b>资格或渠道许可未通过，不能以营销名义索取个人化输入。";
     document.querySelectorAll(".alpha-stage input,#barrier,#evaluate").forEach(el=>{el.disabled=!allowed;});
+    $("taxable").disabled=!allowed||$("taxUnknown").checked;
     if(!state.outcome) {
       $("serviceResult").className="result";
       $("serviceResult").innerHTML='<span class="pill">等待客户选择</span><h3>可以不缴，也可以稍后再决定</h3><p class="muted">填写本次必要信息后才展示判断。税差是缴费环节的当期变化，不是收益承诺。</p>';
@@ -687,6 +716,69 @@
     const [title,detail]=details[category];
     $("costDetail").textContent=title+"："+detail;
     document.querySelectorAll("[data-cost]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.cost===category)));
+  }
+
+  /*
+   * 投入判断：输入为固定模拟试验结果及用户调整的成本/贡献假设，输出为情景测算。
+   * 成本均为相对对照的新增值；保护与证据门槛先于收益，不构成真实上线审批。
+   * 用率差下界/点估计/上界计算情景，不能将这些情景称为完整ROI置信区间。
+   */
+  function renderInvestment() {
+    const ids=["Contribution","Channel","HumanRate","Minutes","Hourly","Fixed"];
+    const values=ids.map(name=>$("investment"+name).value.trim());
+    const fields=ids.map(name=>$("investment"+name));
+    if(values.some(value=>value==="")||fields.some(field=>!field.checkValidity())) {
+      $("investmentResult").innerHTML='<div class="status stop"><h3>请确认假设参数</h3><p>金额与工时不能为负数；人工涉及比例须在0%至100%之间。缺少参数时不生成投入建议。</p></div>';
+      return;
+    }
+    const [unit,channel,rate,minutes,hourly,fixed]=values.map(Number);
+    const isPage=$("investmentCompare").value==="ba";
+    const comparison=compare(TRIAL[isPage?1:2],TRIAL[isPage?0:1]);
+    const n=TRIAL[isPage?1:2].n;
+    const channelCost=n*channel;
+    const humanCost=n*rate/100*minutes/60*hourly;
+    const cost=channelCost+humanCost+fixed;
+    const incremental=n*comparison.diff;
+    const low=n*comparison.lo*unit-cost;
+    const central=incremental*unit-cost;
+    const high=n*comparison.hi*unit-cost;
+    const protection=$("investmentProtection").value;
+    let title,reason,style="amber";
+    if(protection==="fail") {
+      title="暂停相关策略，先处理保护问题";style="red";
+      reason="假设存在保护问题，即使测算收益为正，也不能以收益抵销。请排查并复核相关动作。";
+    } else if(comparison.lo<=0) {
+      title="证据不足，暂不扩大投入";
+      reason="模拟首缴率差区间包含零。调整收益假设不能消除服务效果的不确定性；可在批准的周期和预算内完善验证。";
+    } else if(protection!=="pass") {
+      title="先核验客户保护，再讨论投入";
+      reason="模拟增量有正向证据，但保护状态尚未核验；成本与贡献也仍是假设。";
+    } else if(high<=0) {
+      title="当前假设下，收缩新增投入";style="red";
+      reason="连上界情景也无法覆盖新增成本。优先降低服务成本或保留现有服务，不据此认定其他方案也无效。";
+    } else if(low>0) {
+      title=isPage?"可将页面入口列为后续投入候选":"可将主动联系列为后续投入候选";style="green";
+      reason="在假设保护达标、成本和单位贡献固定的条件下，下界情景仍为正。先核验真实数据与财务口径，再由行方决定投入。";
+    } else {
+      title="净价值尚不稳健，先控制新增成本";
+      reason="点估计或上界情景可能为正，但下界未覆盖成本。维持受控验证并核验成本，暂不扩大投入。";
+    }
+    const money=value=>(value<0?"−":"")+fmt(Math.abs(value))+"元";
+    const threshold=incremental>0?money(cost/incremental):"当前无法计算";
+    $("investmentResult").innerHTML=`<span class="pill ${style}">假设情景建议 · 非审批结论</span><h3 style="margin-top:12px">${title}</h3><p>${reason}</p>
+      <div class="math"><div><span>${isPage?"B−A":"T−B"}模拟增量人数（点估计）</span><b>${fmt(incremental)}人</b></div>
+      <div><span>新增渠道成本</span><b>${money(channelCost)}</b></div><div><span>新增人工成本</span><b>${money(humanCost)}</b></div>
+      <div><span>建设摊销、运维与审核</span><b>${money(fixed)}</b></div><div><span>新增总成本</span><b>${money(cost)}</b></div>
+      <div><span>下界情景净贡献</span><b>${money(low)}</b></div><div><span>点估计情景净贡献</span><b>${money(central)}</b></div><div><span>上界情景净贡献</span><b>${money(high)}</b></div>
+      <div><span>每位增量客户盈亏平衡门槛（点估计）</span><b>${threshold}</b></div></div>
+      <p class="muted">${comparison.lo<=0?"增量区间包含零，盈亏平衡门槛不稳健。":"下界情景仅反映首缴率差的不确定性；真实成本、贡献和外推仍需核验。"}</p>`;
+  }
+  function resetInvestment() {
+    const page=$("investmentCompare").value==="ba";
+    const defaults={Contribution:200,Channel:page?0:0.10,HumanRate:page?2:5,Minutes:2,Hourly:60,Fixed:3000};
+    Object.entries(defaults).forEach(([key,value])=>$("investment"+key).value=String(value));
+    $("investmentProtection").value="pending";
+    renderInvestment();
   }
 
   function showTab(tab) {
@@ -759,10 +851,10 @@
         if(q.n1&&c.arm!=="A"&&!state.explored){state.explored=true;addEvent("客户查看中性说明","客户自主进入；仅作过程事件，不记作账务首缴");renderCase();}
         break;
       case "normal-pay":
-        if(c.active&&!state.paused&&!state.ledger){state.paymentOpen=true;addEvent("原有缴存入口","客户自主打开原有办理流程，尚未产生账务结果");renderCase();}
+        if(c.active&&!state.ledger){state.paymentOpen=true;addEvent("原有缴存入口","客户自主打开原有办理流程；不恢复本次促缴，尚未产生账务结果");renderCase();}
         break;
       case "account-ledger":
-        if(state.paymentOpen&&c.active&&!state.paused&&!state.ledger){state.ledger=true;addEvent("模拟自主首缴回传","原有流程产生本地虚构账务回执；不加入群体汇总示例");renderCase();renderService();}
+        if(state.paymentOpen&&c.active&&!state.ledger){state.ledger=true;addEvent("模拟自主首缴回传","原有流程产生本地虚构账务回执；不恢复促缴、不加入群体汇总示例");renderCase();renderService();}
         break;
       case "send":
         if(q.maySend&&c.arm==="T"&&!state.sent) {
@@ -809,11 +901,16 @@
     state.outcome=null;state.alphaExit=null;state.alphaMax=3;$("alphaError").textContent="";renderService();renderCase();
   });
   document.querySelectorAll(".alpha-stage input").forEach(input=>input.addEventListener("input",()=>{
+    if(input.id==="taxUnknown"&&input.checked)$("taxable").value="";
     state.outcome=null;state.alphaExit=null;state.alphaMax=3;$("alphaError").textContent="";renderService();renderAlpha();
   }));
+  $("investmentPanel").querySelectorAll("input").forEach(input=>input.addEventListener("input",renderInvestment));
+  $("investmentProtection").addEventListener("change",renderInvestment);
+  $("investmentCompare").addEventListener("change",resetInvestment);
+  $("investmentReset").addEventListener("click",resetInvestment);
   if(ENGINE.selfTest().length) console.error("税额计算引擎自检失败",ENGINE.selfTest());
   $("alphaCase").addEventListener("change",event=>resetCase(event.target.value));
-  resetCase("U102");renderScore();showCost("build");
+  resetCase("U102");renderScore();showCost("build");resetInvestment();
   </script>
 </body>
 </html>
