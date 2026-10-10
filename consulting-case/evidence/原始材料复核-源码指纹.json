@@ -1,0 +1,26 @@
+{
+  "source_zip": "工银智养仓-Alpha-v3.4-源码与检查记录.zip",
+  "recorded_source_commit": "72de129a53f0c5e976250e96a7cf4fb003564f7d",
+  "source_zip_sha256": "087fb892daff230930a1c237f603803b82b0c81a22c157d5404438687a7fc393",
+  "file_integrity": {
+    "demo2.html": {
+      "expected_sha256": "d1c75aca4d02c1bc1c1fe9513a9200767eca047b3342f99d868b9b13f6cf8421",
+      "actual_sha256": "d1c75aca4d02c1bc1c1fe9513a9200767eca047b3342f99d868b9b13f6cf8421",
+      "matches": true
+    },
+    "engine.js": {
+      "expected_sha256": "5526c28b3b89dd2bcf04a524b9e5401e760e064ef968a265c030a1acb0c253d8",
+      "actual_sha256": "5526c28b3b89dd2bcf04a524b9e5401e760e064ef968a265c030a1acb0c253d8",
+      "matches": true
+    },
+    "tests/demo2.spec.cjs": {
+      "expected_sha256": "4550b3e91c7e63c5d1b1963b910e9af28d75d253984a0d0f05cc31909ed0c2cc",
+      "actual_sha256": "4550b3e91c7e63c5d1b1963b910e9af28d75d253984a0d0f05cc31909ed0c2cc",
+      "matches": true
+    }
+  },
+  "runner_adaptation": "Two Git metadata expressions replaced; existing exported evidence and its screenshot retained. Original browser assertions unchanged.",
+  "runner_sha256": "15c4429cc0e08269564c0de25e887a2ffc9b66f0fdc0e74ddc5cb97bc1cf1c14",
+  "scope": "Local fictional cases; no bank system validation",
+  "public_copy_note": "Only the original host path was replaced by the archive filename. Recorded versions, hashes and verification results are unchanged."
+}

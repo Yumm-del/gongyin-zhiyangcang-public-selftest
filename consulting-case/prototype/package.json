@@ -1,0 +1,9 @@
+{
+  "name": "pension-consulting-case-local-checks",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local reproduction of existing fictional Alpha checks",
+  "dependencies": {
+    "playwright": "1.62.1"
+  }
+}

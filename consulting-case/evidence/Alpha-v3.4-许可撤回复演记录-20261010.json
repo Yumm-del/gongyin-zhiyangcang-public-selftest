@@ -1,0 +1,143 @@
+{
+  "demo": true,
+  "demoVersion": "3.4",
+  "caseId": "U103",
+  "ruleVersion": "ALPHA-RULE-20261007-03",
+  "originalArm": "T",
+  "events": [
+    {
+      "title": "资格快照",
+      "detail": "账户来源、转户、在户、首缴与许可状态已读取",
+      "time": "2026-10-10T06:56:42.570Z",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "title": "固定演示分组",
+      "detail": "T组；在差异展示或发送前确定，后续不重分配",
+      "time": "2026-10-10T06:56:42.570Z",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "title": "Alpha自主进入",
+      "detail": "完整六屏能力复演，与首期汇总分开",
+      "time": "2026-10-10T06:56:42.600Z",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "title": "规则输出",
+      "detail": "继续",
+      "time": "2026-10-10T06:56:43.003Z",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "title": "客户撤回许可",
+      "detail": "尚未发送任务取消；原分组和已提交事件保留",
+      "time": "2026-10-10T06:56:43.033Z",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "title": "Alpha人工任务",
+      "detail": "只记录HUMAN_REQUEST原因码，未实际转接",
+      "time": "2026-10-10T06:56:43.099Z",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    }
+  ],
+  "alphaPath": [
+    {
+      "time": "2026-10-10T06:56:42.571Z",
+      "screen": 1,
+      "action": "打开第1屏",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:42.600Z",
+      "screen": 2,
+      "action": "进入第2屏",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:42.852Z",
+      "screen": 2,
+      "action": "客户自选障碍",
+      "ruleVersion": "ALPHA-RULE-20261007-03",
+      "barrier": "tax"
+    },
+    {
+      "time": "2026-10-10T06:56:42.882Z",
+      "screen": 2,
+      "action": "确认障碍",
+      "ruleVersion": "ALPHA-RULE-20261007-03",
+      "barrier": "tax"
+    },
+    {
+      "time": "2026-10-10T06:56:42.882Z",
+      "screen": 3,
+      "action": "进入第3屏",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:43.003Z",
+      "screen": 3,
+      "action": "规则求值",
+      "ruleVersion": "ALPHA-RULE-20261007-03",
+      "inputs": {
+        "barrier": "tax",
+        "taxable": "42000",
+        "deposit": "12000",
+        "reserve": "6",
+        "urgent": false
+      },
+      "output": {
+        "kind": "continue",
+        "reason": "当前未触发本次服务的停止条件，客户可自主决定是否办理。",
+        "taxable": 42000,
+        "deposit": 12000,
+        "reserve": 6,
+        "tax": {
+          "t0": 42000,
+          "deposit": 12000,
+          "t1": 30000,
+          "before": 1680,
+          "after": 900,
+          "save": 780,
+          "naive": 1200,
+          "cross": true,
+          "rb": 0.1,
+          "ra": 0.03
+        }
+      }
+    },
+    {
+      "time": "2026-10-10T06:56:43.004Z",
+      "screen": 4,
+      "action": "进入第4屏",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:43.033Z",
+      "screen": 4,
+      "action": "撤回渠道许可",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:43.067Z",
+      "screen": 5,
+      "action": "进入第5屏",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:43.099Z",
+      "screen": 5,
+      "action": "客户请求人工",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    },
+    {
+      "time": "2026-10-10T06:56:43.100Z",
+      "screen": 6,
+      "action": "进入第6屏",
+      "ruleVersion": "ALPHA-RULE-20261007-03"
+    }
+  ],
+  "exit": "human",
+  "realLedgerConnected": false
+}

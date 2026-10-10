@@ -1,0 +1,73 @@
+{
+  "startedAt": "2026-10-10T06:56:34.743Z",
+  "finishedAt": "2026-10-10T06:56:59.784Z",
+  "recordedSourceCommit": "72de129a53f0c5e976250e96a7cf4fb003564f7d",
+  "sourceKind": "verified ZIP snapshot",
+  "nativeGitWorktree": false,
+  "demoVersion": "3.4",
+  "ruleVersion": "ALPHA-RULE-20261007-03",
+  "node": "v24.19.0",
+  "playwright": "1.62.1",
+  "browser": "151.0.7922.34",
+  "fileSHA256": {
+    "demo2.html": "d1c75aca4d02c1bc1c1fe9513a9200767eca047b3342f99d868b9b13f6cf8421",
+    "engine.js": "5526c28b3b89dd2bcf04a524b9e5401e760e064ef968a265c030a1acb0c253d8",
+    "tests/demo2.spec.cjs": "4550b3e91c7e63c5d1b1963b910e9af28d75d253984a0d0f05cc31909ed0c2cc"
+  },
+  "firstScreenChecks": [
+    {
+      "viewport": {
+        "width": 1360,
+        "height": 900
+      },
+      "entry": "managementService",
+      "button": {
+        "x": 49,
+        "y": 411.140625,
+        "width": 152.875,
+        "height": 43.4375
+      }
+    },
+    {
+      "viewport": {
+        "width": 1360,
+        "height": 900
+      },
+      "entry": "managementScore",
+      "button": {
+        "x": 209.875,
+        "y": 411.140625,
+        "width": 191.875,
+        "height": 43.4375
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "entry": "managementService",
+      "button": {
+        "x": 49,
+        "y": 315.5625,
+        "width": 152.875,
+        "height": 43.4375
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "entry": "managementScore",
+      "button": {
+        "x": 209.875,
+        "y": 315.5625,
+        "width": 191.875,
+        "height": 43.4375
+      }
+    }
+  ],
+  "result": "PASS",
+  "realLedgerConnected": false
+}

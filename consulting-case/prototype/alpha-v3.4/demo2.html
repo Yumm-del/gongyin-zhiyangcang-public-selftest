@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>工银智养仓｜未首缴服务与增量验证 Demo</title>
+  <style>
+    :root {
+      --navy:#173a63; --navy-dark:#102c4c; --red:#c91f32; --red-light:#fff0f2;
+      --blue:#eaf2fa; --green:#eaf6f0; --amber:#fff5e7; --ink:#203247;
+      --muted:#64768a; --line:#d9e3ec; --surface:#fff; --bg:#f4f7fa;
+      --shadow:0 15px 45px rgba(17,46,77,.075);
+    }
+    * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.65 "Microsoft YaHei","PingFang SC",system-ui,sans-serif; }
+    button,input,select { font:inherit; }
+    button { cursor:pointer; }
+    button:focus-visible,input:focus-visible,select:focus-visible { outline:3px solid #77a9db; outline-offset:2px; }
+    .shell { max-width:1400px; margin:auto; padding:0 28px 42px; }
+    .mast { display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:74px; border-bottom:1px solid var(--line); }
+    .brand { display:flex; align-items:center; gap:11px; color:var(--navy); font-weight:800; font-size:17px; letter-spacing:.02em; }
+    .brand-mark { width:29px; height:29px; border-radius:6px; background:var(--red); display:grid; place-items:center; color:#fff; font-size:17px; font-weight:900; }
+    .mast-note { color:var(--muted); font-size:12px; text-align:right; }
+    .hero { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(280px,.75fr); gap:22px; padding:36px 0 26px; }
+    .hero-main { background:linear-gradient(135deg,var(--navy-dark),var(--navy) 68%,#275887); color:#fff; border-radius:19px; padding:34px 38px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+    .hero-main::after { content:""; position:absolute; width:310px; height:310px; border:1px solid rgba(255,255,255,.13); border-radius:50%; right:-125px; top:-160px; box-shadow:0 0 0 55px rgba(255,255,255,.025),0 0 0 115px rgba(255,255,255,.025); }
+    .eyebrow { font-size:12px; letter-spacing:.16em; font-weight:800; opacity:.82; }
+    h1 { margin:15px 0 14px; max-width:780px; font-size:clamp(27px,3.1vw,42px); line-height:1.36; letter-spacing:-.035em; }
+    h1 strong { color:#ffb7bf; }
+    .hero-main p { max-width:780px; margin:0; color:#dbe8f5; font-size:15px; }
+    .hero-tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:25px; }
+    .hero-tags span { padding:6px 10px; border:1px solid rgba(255,255,255,.27); border-radius:7px; color:#e9f3fd; font-size:12px; background:rgba(255,255,255,.06); }
+    .hero-side { background:#fff; border:1px solid var(--line); border-radius:19px; padding:25px; box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:space-between; }
+    .hero-side .num { font:800 47px/1.05 "Bahnschrift",Arial,sans-serif; color:var(--red); }
+    .hero-side h2 { font-size:18px; margin:5px 0 7px; color:var(--navy); }
+    .hero-side p { color:var(--muted); font-size:13px; margin:0; }
+    .hero-side .notice { border-top:1px solid var(--line); padding-top:15px; margin-top:18px; color:var(--ink); font-size:12px; }
+    .tabs { display:flex; gap:7px; padding:6px; background:#e9eff5; border-radius:11px; width:max-content; max-width:100%; overflow-x:auto; margin-bottom:19px; }
+    .tab { white-space:nowrap; border:0; background:transparent; color:var(--muted); padding:10px 19px; border-radius:8px; font-weight:700; }
+    .tab.active { color:var(--navy); background:#fff; box-shadow:0 3px 10px rgba(16,44,76,.1); }
+    .view { display:none; }
+    .view.active { display:block; animation:rise .25s ease; }
+    @keyframes rise { from { opacity:.3; transform:translateY(7px); } to { opacity:1; transform:none; } }
+    .grid-3 { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+    .grid-2 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .panel { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:23px; box-shadow:var(--shadow); }
+    .panel h2 { margin:0 0 8px; font-size:20px; color:var(--navy); line-height:1.4; }
+    .panel h3 { margin:0 0 7px; font-size:16px; color:var(--navy); }
+    .panel p { margin:0 0 12px; }
+    .muted { color:var(--muted); font-size:13px; }
+    .kicker { color:var(--red); font-size:12px; font-weight:800; letter-spacing:.08em; }
+    .flow-card { position:relative; min-height:190px; }
+    .flow-card .n { display:inline-grid; place-items:center; width:35px; height:35px; border-radius:9px; background:var(--blue); color:var(--navy); font-weight:900; margin-bottom:20px; }
+    .flow-card:after { content:"→"; position:absolute; right:-19px; top:75px; color:#9cb0c4; font-size:23px; z-index:2; }
+    .flow-card:last-child:after { content:""; }
+    .headline { display:flex; justify-content:space-between; align-items:end; gap:18px; margin:26px 0 13px; }
+    .headline h2 { margin:0; color:var(--navy); font-size:21px; }
+    .headline p { margin:0; color:var(--muted); font-size:13px; }
+    .arm { border-top:4px solid var(--navy); }
+    .arm.b { border-color:#3b80b7; }
+    .arm.t { border-color:#d3842d; }
+    .arm .arm-name { display:flex; align-items:baseline; gap:10px; margin-bottom:13px; }
+    .arm .arm-name b { font-size:25px; color:var(--navy); }
+    .arm .arm-name span { color:var(--muted); font-size:12px; }
+    .arm .question { margin:16px 0 0; background:var(--bg); border-radius:7px; padding:10px; font-size:13px; font-weight:700; color:var(--navy); }
+    .rule { margin-top:16px; background:var(--red-light); border:1px solid #f0cfd3; border-left:4px solid var(--red); border-radius:9px; padding:14px 16px; color:#74212b; font-size:13px; }
+    .case-layout { display:grid; grid-template-columns:minmax(250px,.8fr) minmax(0,1.5fr) minmax(260px,.88fr); gap:16px; align-items:start; }
+    .case-list { display:grid; gap:8px; }
+    .case-button { border:1px solid var(--line); background:#fff; text-align:left; padding:12px 13px; border-radius:9px; color:var(--ink); }
+    .case-button strong { display:block; font-size:13px; }
+    .case-button span { display:block; font-size:12px; color:var(--muted); margin-top:2px; }
+    .case-button.selected { border-color:#9ab9d7; background:var(--blue); box-shadow:inset 3px 0 var(--navy); }
+    .kv { display:grid; grid-template-columns:120px 1fr; gap:8px 12px; font-size:13px; margin:14px 0 19px; }
+    .kv dt { color:var(--muted); } .kv dd { margin:0; font-weight:700; }
+    .pill { display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:999px; background:var(--blue); color:var(--navy); font-size:12px; font-weight:800; }
+    .pill.red { background:var(--red-light); color:#9f2532; }
+    .pill.green { background:var(--green); color:#267455; }
+    .pill.amber { background:var(--amber); color:#9b621f; }
+    .status { padding:13px 15px; border-radius:9px; background:var(--blue); border:1px solid #cfe0f0; font-size:13px; margin:0 0 14px; }
+    .status.stop { background:var(--red-light); border-color:#edc5ca; }
+    .status.good { background:var(--green); border-color:#cce6d6; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .btn { background:var(--navy); color:#fff; border:1px solid var(--navy); border-radius:8px; padding:10px 15px; font-size:13px; font-weight:800; }
+    .btn:hover { background:#275684; }
+    .btn.secondary { background:#fff; color:var(--navy); border-color:#aec4d8; }
+    .btn.secondary:hover { background:var(--blue); }
+    .btn.danger { background:#fff; color:var(--red); border-color:#e3a6ad; }
+    .btn.danger:hover { background:var(--red-light); }
+    .btn:disabled { opacity:.45; cursor:not-allowed; }
+    .timeline { display:grid; gap:0; margin:8px 0 0; padding:0; list-style:none; max-height:510px; overflow:auto; }
+    .timeline li { border-left:2px solid #bdd0e2; margin-left:6px; padding:0 0 14px 18px; position:relative; font-size:12px; }
+    .timeline li:before { content:""; position:absolute; top:4px; left:-6px; width:10px; height:10px; border-radius:50%; background:var(--navy); }
+    .timeline li:last-child { border-left-color:transparent; }
+    .timeline b { display:block; color:var(--navy); }
+    .timeline span { color:var(--muted); }
+    .service-layout { display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,.75fr); gap:16px; }
+    .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; margin:16px 0; }
+    .field { display:flex; flex-direction:column; gap:5px; font-size:13px; color:var(--navy); font-weight:700; }
+    .field input,.field select { min-height:43px; width:100%; padding:9px 11px; border-radius:8px; border:1px solid #b8c8d7; background:#fff; color:var(--ink); }
+    .field small { color:var(--muted); font-weight:400; font-size:11px; }
+    .check { display:flex; gap:8px; align-items:start; font-size:13px; margin:12px 0; }
+    .check input { margin-top:5px; accent-color:var(--red); }
+    .result { border:1px solid var(--line); border-radius:12px; padding:18px; background:var(--bg); min-height:330px; }
+    .result h3 { font-size:20px; margin:9px 0; }
+    .result.pause { background:var(--red-light); border-color:#ebc5cb; }
+    .result.human { background:var(--blue); border-color:#c9deef; }
+    .result.continue { background:var(--green); border-color:#cae4d4; }
+    .result.less { background:var(--amber); border-color:#eddbbd; }
+    .math { border-top:1px solid rgba(23,58,99,.2); margin-top:14px; padding-top:11px; display:grid; gap:5px; font-size:13px; }
+    .math div { display:flex; justify-content:space-between; gap:15px; }
+    .math b { color:var(--navy); }
+    .result .important { color:#9c1f2c; font-weight:800; }
+    .score-head { display:flex; justify-content:space-between; gap:15px; align-items:start; }
+    .score-head .pill { white-space:nowrap; }
+    .score-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; margin:16px 0; }
+    .score-card { border:1px solid var(--line); border-radius:10px; padding:16px; background:#fff; }
+    .score-card .label { display:flex; justify-content:space-between; color:var(--muted); font-size:12px; }
+    .score-card strong { display:block; font:800 31px/1.1 "Bahnschrift",Arial,sans-serif; color:var(--navy); margin:13px 0 8px; }
+    .score-card .bar { height:8px; background:#e6eef5; border-radius:5px; overflow:hidden; }
+    .score-card .bar i { height:100%; display:block; background:var(--navy); }
+    .score-card:nth-child(2) .bar i { background:#3b80b7; }
+    .score-card:nth-child(3) .bar i { background:#d3842d; }
+    .compare { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; margin-top:15px; }
+    .compare .panel { box-shadow:none; }
+    .compare strong { font-size:25px; color:var(--navy); }
+    .compare .caution { color:var(--red); }
+    .table-wrap { overflow-x:auto; }
+    table { border-collapse:collapse; width:100%; min-width:600px; font-size:13px; }
+    th,td { text-align:left; padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+    th { background:var(--navy); color:#fff; }
+    tr:nth-child(even) td { background:#f5f8fb; }
+    .footnote { margin-top:25px; padding:18px 0 0; border-top:1px solid var(--line); color:var(--muted); font-size:12px; }
+    .footnote a { color:var(--navy); }
+    .arm-screen { background:#f4f7fa; border:1px solid var(--line); border-radius:10px; padding:13px; margin:13px 0; font-size:12px; }
+    .arm-screen .sample-entry { padding:9px; background:#fff; border:1px solid #cbd9e7; border-radius:6px; margin-top:9px; color:var(--navy); }
+    .arm-screen .sample-message { background:var(--amber); padding:9px; border-radius:6px; margin-top:9px; }
+    .route { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
+    .route span { padding:7px 11px; border:1px solid var(--line); border-radius:7px; background:#fff; font-size:12px; color:var(--muted); }
+    .route span.done { background:var(--green); color:#267455; border-color:#bddccc; }
+    .customer-layout { display:grid; grid-template-columns:minmax(290px,.85fr) minmax(0,1.15fr); gap:28px; align-items:start; }
+    .phone { max-width:380px; width:100%; margin:0 auto; border:8px solid #203247; border-radius:32px; background:#f5f7fa; padding:13px 17px 24px; box-shadow:var(--shadow); }
+    .phone-top { display:flex; justify-content:space-between; color:#516278; font-size:11px; margin:0 0 20px; }
+    .phone h2 { font-size:19px; color:var(--navy); margin:0 0 17px; }
+    .phone-account { background:linear-gradient(120deg,var(--navy-dark),#34608b); padding:20px; border-radius:12px; color:#fff; }
+    .phone-account p { font-size:12px; margin:0; color:#dbe8f5; }
+    .phone-account strong { display:block; font-size:29px; margin:8px 0 14px; }
+    .phone-account .btn { background:#fff; color:var(--navy); border:0; width:100%; }
+    .phone-card { padding:15px; margin-top:13px; background:#fff; border:1px solid var(--line); border-radius:10px; font-size:13px; }
+    .phone-card p { margin:7px 0 10px; color:var(--muted); font-size:12px; }
+    .phone-card .btn { width:100%; }
+    .phone-message { background:var(--amber); border-color:#ead4b3; }
+    .phone-note { font-size:11px; color:var(--muted); margin:15px 0 0; }
+    .receipt-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:16px 0; }
+    .receipt-item { padding:13px; border:1px solid var(--line); border-radius:9px; background:#f8fbfe; }
+    .receipt-item span { display:block; font-size:12px; color:var(--muted); }
+    .receipt-item b { display:block; color:var(--navy); font-size:14px; margin-top:4px; }
+    .stop-receipt { border:1px solid #e7aeb6; background:var(--red-light); border-radius:10px; padding:16px; margin-top:15px; }
+    .stop-receipt h3 { color:#922331; margin:0 0 9px; }
+    .stop-receipt p { font-size:13px; margin:6px 0; }
+    .future-label { padding:13px 16px; border:1px solid #ead4b3; background:var(--amber); border-radius:9px; font-size:13px; margin-bottom:17px; }
+    .alpha-layout { display:grid; grid-template-columns:minmax(330px,1fr) minmax(290px,.8fr); gap:25px; align-items:start; }
+    .alpha-stage { display:none; }
+    .alpha-stage.active { display:block; }
+    .alpha-stage .phone { max-width:440px; }
+    .alpha-stage .panel { max-width:500px; margin:auto; }
+    .alpha-choice { display:block; width:100%; text-align:left; padding:13px; margin:9px 0; border:1px solid var(--line); background:#fff; color:var(--navy); border-radius:9px; }
+    .alpha-choice.selected { background:var(--blue); border-color:#709bc0; }
+    .alpha-choice:disabled { opacity:.5; cursor:not-allowed; }
+    .alpha-choice small { display:block; font-size:12px; color:var(--muted); margin-top:5px; }
+    .alpha-stage .form-grid { grid-template-columns:1fr; }
+    .alpha-stage .result { padding:15px; box-shadow:none; }
+    .alpha-stage .result h3 { font-size:19px; }
+    .alpha-steps { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:7px; margin-bottom:20px; }
+    .alpha-steps button { border:1px solid var(--line); border-radius:8px; background:#fff; padding:11px 7px; color:var(--muted); font-size:12px; }
+    .alpha-steps button.active { background:var(--navy); color:#fff; }
+    .alpha-steps button:disabled { cursor:default; opacity:.6; }
+    .alpha-guide p { font-size:13px; color:var(--muted); }
+    .alpha-guide select { width:100%; padding:10px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink); margin:8px 0 15px; }
+    /* 桌面首屏优先呈现可操作手机；保留核心主张，减少重复区域的高度。 */
+    @media (min-width:761px) {
+      .mast { min-height:58px; }
+      .hero { padding:12px 0; }
+      .hero-main { padding:16px 24px; }
+      h1 { font-size:27px; line-height:1.3; margin:7px 0; }
+      .hero-main p { font-size:13px; }
+      .hero-tags { display:none; }
+      .hero-side { padding:16px; }
+      .hero-side .num { font-size:32px; }
+      .hero-side .notice { margin-top:9px; padding-top:8px; }
+      .tabs { margin-bottom:8px; padding:3px; }
+      .tab { padding:8px 15px; }
+      .headline { margin:12px 0 9px; }
+      .future-label { padding:8px 12px; margin-bottom:10px; font-size:12px; }
+      .alpha-steps { margin-bottom:10px; }
+      .alpha-steps button { padding:7px; }
+      .alpha-stage[data-screen="1"] .phone { padding:10px 15px 15px; }
+      .alpha-stage[data-screen="1"] .phone-top { margin-bottom:8px; }
+      .alpha-stage[data-screen="1"] .phone h2 { margin-bottom:8px; }
+      .alpha-stage[data-screen="1"] .phone-account { padding:10px 14px; }
+      .alpha-stage[data-screen="1"] .phone-account strong { font-size:24px; margin:2px 0; }
+      .alpha-stage[data-screen="1"] .phone-card { margin-top:8px; padding:10px; }
+    }
+    .alpha-closed { border:1px solid #e7aeb6; background:var(--red-light); padding:18px; border-radius:10px; margin-bottom:17px; }
+    @media (min-width:761px) and (max-height:800px) {
+      .hero { grid-template-columns:1fr; }
+      .hero-main { padding:12px 20px; }
+      .hero-main .eyebrow,.hero-side { display:none; }
+      h1 { font-size:24px; margin:2px 0 6px; }
+      .hero-main p { max-width:none; font-size:12px; }
+      .alpha-stage[data-screen="1"] .phone-top { display:none; }
+    }
+    @media(max-width:980px) {
+      .case-layout { grid-template-columns:260px minmax(0,1fr); }
+      .case-layout .event-panel { grid-column:1/-1; }
+      .timeline { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media(max-width:720px) {
+      .shell { padding:0 15px 30px; }
+      .tabs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; overflow:visible; }
+      .tab { white-space:normal; text-align:center; }
+      .mast { min-height:64px; }
+      .mast-note { display:none; }
+      .hero { grid-template-columns:1fr; padding:20px 0; }
+      .hero-main { padding:26px 22px; }
+      .hero-side { display:none; }
+      .grid-3,.grid-2,.case-layout,.service-layout,.customer-layout,.alpha-layout,.compare { grid-template-columns:1fr; }
+      .alpha-steps { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .flow-card { min-height:unset; }
+      .flow-card:after { display:none; }
+      .case-layout .event-panel { grid-column:auto; }
+      .timeline { grid-template-columns:1fr; }
+      .score-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+      .score-card { padding:13px; }
+      .score-card:last-child { grid-column:1/-1; }
+      .score-card strong { font-size:25px; }
+      .form-grid { grid-template-columns:1fr; }
+      .headline { display:block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="mast">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">工</span>工银智养仓 <span class="pill">Alpha v3.4</span></div>
+      <div class="mast-note">第十七届“工行杯”项目方案演示<br>虚构客户 · 模拟事件 · 非工行生产系统</div>
+    </header>
+
+    <section class="hero" aria-label="项目主张">
+      <div class="hero-main">
+        <div class="eyebrow">银行经营决策 · 客户服务与增量评价</div>
+        <h1>不以“谁最可能缴存”为预测目标，<br><strong>而以“服务使谁发生缴存”为测量目标。</strong></h1>
+        <p>先核验资格与渠道许可，再决定页面提示或主动联系；客户可继续、降额、暂缓或转人工。最后以正式账务和事前随机分组衡量增量，而不是用打开率替代成效。</p>
+        <div class="hero-tags"><span>资格先行</span><span>A / B / T 固定分组</span><span>拒绝与暂缓可停止</span><span>账务主结果按全部入组人计</span></div>
+      </div>
+      <aside class="hero-side">
+        <div><div class="num">A / B / T</div><h2>先验证最小有效服务</h2><p>A为现有服务，B增加账户页中性提示，T在B之上测试经许可的主动联系。</p></div>
+        <div class="notice">完整Alpha演示服务路径；首期先验证入口与主动联系，后续再独立验证完整适配、AI和模型策略。</div>
+      </aside>
+    </section>
+
+    <nav class="tabs" aria-label="演示页面">
+      <button class="tab active" data-tab="management" aria-current="page">银行经营总览</button>
+      <button class="tab" data-tab="alpha">客户服务 · 六屏 Alpha</button>
+      <button class="tab" data-tab="overview">辅助 · 三臂方案</button>
+      <button class="tab" data-tab="customer">辅助 · 首期客户页面</button>
+      <button class="tab" data-tab="case">辅助 · 事件回放</button>
+      <button class="tab" data-tab="score">辅助 · 增量评价</button>
+    </nav>
+
+    <main>
+      <section id="management" class="view active" aria-label="银行经营总览">
+        <div class="headline"><h2>哪些服务值得投入，资源应该投向哪里？</h2><p>方法演示 · 尚无银行实测经营结果</p></div>
+        <article class="panel" style="padding:16px 20px">
+          <div class="actions" style="margin-top:0">
+            <button class="btn" data-tab="alpha" id="managementService">体验客户服务路径 →</button>
+            <button class="btn secondary" data-tab="score" id="managementScore">查看服务增量与投入依据 →</button>
+          </div>
+          <p class="muted" style="margin:9px 0 0">建议顺序：经营问题 → 客户服务案例 → 群体增量评价 → 投入决策。</p>
+        </article>
+        <div class="grid-2" style="margin-top:14px">
+          <article class="panel"><div class="kicker">经营问题一 · B−A</div><h3>增加页面入口，有没有首缴增量？</h3><p>与现有服务比较，评价账户页说明入口是否帮助客户完成首次有效缴存。</p></article>
+          <article class="panel"><div class="kicker">经营问题二 · T−B</div><h3>主动联系的额外增量，值不值得投入？</h3><p>在相同页面服务上增加一种获准联系，判断新增贡献能否覆盖触达与承接成本。</p></article>
+        </div>
+        <div class="headline"><h2>三项依据，共同决定是否扩大</h2><p>首缴人数增加不直接等于值得投入</p></div>
+        <div class="grid-3">
+          <article class="panel"><span class="pill">增量可信</span><h3 style="margin-top:9px">按原始分组评价</h3><p>全部最初入组客户留在分母；报告首缴率差及区间，避免将自然缴存计为服务贡献。</p></article>
+          <article class="panel"><span class="pill green">客户保护达标</span><h3 style="margin-top:9px">停止条件先于营销</h3><p>拒绝与暂缓可执行，税额与领取说明可复核；保护问题不能用转化或收益抵销。</p></article>
+          <article class="panel"><span class="pill amber">净贡献覆盖成本</span><h3 style="margin-top:9px">按全行口径核算</h3><p>实际贡献扣除替代损失及新增成本；证据不足时调整验证，价值不足时收缩投入。</p></article>
+        </div>
+      </section>
+      <section id="overview" class="view" aria-label="方案总览">
+        <div class="headline"><h2>完整产品、首期试验与后续验证</h2><p>对应项目书v85第2.1节</p></div>
+        <div class="grid-3" id="scopeCards">
+          <article class="panel"><span class="pill green">现在可复演</span><h3 style="margin-top:12px">六屏Alpha</h3><p>按需分流、税额与资金判断、客户出口及银行原因码。使用虚构账户，演示部分完整产品路径。</p><button class="btn secondary" data-tab="alpha">操作六屏原型</button></article>
+          <article class="panel"><span class="pill">首期拟验证</span><h3 style="margin-top:12px">固定A/B/T</h3><p>B−A测入口，T−B测主动联系。B与T进入入口后的内容和承接规则相同，完整六屏不直接算作首期处理。</p><button class="btn secondary" data-preview="B">查看首期简单入口</button></article>
+          <article class="panel"><span class="pill amber">后续独立验证</span><h3 style="margin-top:12px">适配与策略升级</h3><p>C相对B验证完整适配；AI另测组件价值。随机数据充分后探索Uplift，验证策略后再有条件应用Bandit。</p><p class="muted">规则与多臂实验已能支持经营决策，无须完成全部模型阶段。</p></article>
+        </div>
+        <div class="headline"><h2>从服务资格到经营决策</h2><p>客户选择与群体评价分别记录</p></div>
+        <div class="grid-3">
+          <article class="panel flow-card"><div class="n">1</div><h2>资格与权限</h2><p>本行原始开户、未转入、仍在户且未首缴。状态不明或拒绝主动联系的客户不能直接进入营销名单。</p><div class="muted">N0 → 可服务资格池 N1</div></article>
+          <article class="panel flow-card"><div class="n">2</div><h2>服务与停止</h2><p>页面提示与主动联系分开测试。客户自行进入后再说明障碍；短期必要支出、撤回许可或明确拒绝具有停止权。</p><div class="muted">继续 · 降额 · 暂缓 · 转人工</div></article>
+          <article class="panel flow-card"><div class="n">3</div><h2>账务与净增量</h2><p>全部最初入组客户进入主分析；未访问B页面、T消息未送达的人也留在原组。60天首缴、7天对账，保护和净价值并列。</p><div class="muted">B−A 页面价值 · T−B 主动联系价值</div></article>
+        </div>
+        <div class="headline"><h2>首期三臂，回答两个经营问题</h2><p>固定演示结构；生产试验需银行审批与预注册</p></div>
+        <div class="grid-3">
+          <article class="panel arm"><div class="arm-name"><b>A</b><span>现有服务</span></div><p>原账户页、原缴存入口和正常必要服务，不增加主动触达。</p><div class="arm-screen"><b>个人养老金账户</b><div class="sample-entry">原有缴存入口</div><p class="muted">无新增说明入口 · 无新增消息</p></div><button class="btn secondary" data-preview="A">体验 A 组页面</button><div class="question">自然首缴基线是什么？</div></article>
+          <article class="panel arm b"><div class="arm-name"><b>B</b><span>页面提示</span></div><p>在A基础上加一条中性“了解首次缴存方式”入口，不主动找人。</p><div class="arm-screen"><b>个人养老金账户</b><div class="sample-entry">原有缴存入口</div><div class="sample-entry">＋ 了解首次缴存方式</div><p class="muted">仅客户访问账户页时可见</p></div><button class="btn secondary" data-preview="B">体验 B 组页面</button><div class="question">B−A：页面改动创造增量吗？</div></article>
+          <article class="panel arm t"><div class="arm-name"><b>T</b><span>主动触达</span></div><p>在B基础上，经许可、内容审核与频控后，只测试一种主动联系动作。</p><div class="arm-screen"><b>与 B 组相同的账户页</b><div class="sample-entry">原有缴存入口 ＋ 中性说明</div><div class="sample-message">＋ 经许可的消息，引导查看账户页</div><p class="muted">客户可以拒绝或撤回</p></div><button class="btn secondary" data-preview="T">体验 T 组页面</button><div class="question">T−B：银行主动找人值得吗？</div></article>
+        </div>
+        <div class="panel" style="margin-top:17px"><h2>从客户看到什么，走到账务怎样评价</h2><p>先体验 T 组的发送、送达与客户查看，再体验撤回许可后的停止回执。每一步是独立事件，客户未打开消息也保留原分组。</p><div class="actions"><button class="btn" data-tour="normal">开始：经许可联系案例</button><button class="btn secondary" data-tour="stop">对照：发送前撤回案例</button></div></div>
+        <div class="rule"><b>演示边界：</b>这里展示的是业务规则与因果评价方法。没有连接真实账户、消息渠道或工行数据；页面点击、模拟首缴和示例图表都不是已实现的银行业绩。</div>
+      </section>
+
+      <section id="customer" class="view" aria-label="客户手机端">
+        <div class="headline"><h2>客户看得到，银行才有可执行的服务</h2><p>首期 A/B/T 界面示意 · 完全虚构账户</p></div>
+        <div id="journey" class="route" aria-label="本案例演示路线"></div>
+        <div class="customer-layout"><div id="customerPhone" class="phone"></div><article class="panel" id="customerReceipt" aria-live="polite"></article></div>
+      </section>
+
+      <section id="case" class="view" aria-label="客户与触达回放">
+        <div class="headline"><h2>从客户状态走到可执行动作</h2><p>选择虚构客户，查看固定分组、许可校验与事件回执</p></div>
+        <div class="case-layout">
+          <aside class="panel"><h3>虚构客户</h3><p class="muted">编号和结果只用于演示；切换客户会清空本次回放。</p><div id="caseList" class="case-list"></div></aside>
+          <article class="panel"><div id="caseDetail"></div></article>
+          <aside class="panel event-panel"><h3>事件链</h3><p class="muted">资格快照、分组、发送、撤回和账务分开记录。</p><ol id="eventList" class="timeline"></ol></aside>
+        </div>
+      </section>
+
+      <section id="alpha" class="view" aria-label="六屏 Alpha">
+        <div class="headline" id="alphaTitle"><h2>客户服务演示：前五屏客户操作，第六屏银行承接</h2><p>屏序与说明保留在手机外的导航中</p></div>
+        <div class="future-label">完整服务链使用虚构账户复演，尚未接入工行App或账务系统。首期A/B/T只测试中性入口与主动联系；完整适配能力须另行验证，单人原型操作不加入模拟试验汇总。</div>
+        <div id="alphaSteps" class="alpha-steps" aria-label="六屏进度"></div>
+        <div id="alphaClosed" hidden class="alpha-closed" role="status"></div>
+        <div class="alpha-layout">
+          <div id="alphaScreens">
+            <section class="alpha-stage active" data-screen="1" aria-label="第1屏 账户页中性入口"><div class="phone"><div class="phone-top"><span>账户服务</span><span>个人养老金</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>尚未首缴</strong><span>原有缴存服务保留</span></div><div class="phone-card"><b>了解首次缴存，先做自己的判断</b><p>可查看办理步骤，或按需了解当期税额与资金安排。是否继续由您决定，不需要先提交完整收入与资产。</p><button class="btn" data-alpha="start">了解首次缴存</button></div><p class="phone-note">本页不会转账或扣款。任何缴存结果须以银行正式账务为准。</p></div></section>
+            <section class="alpha-stage" data-screen="2" aria-label="第2屏 客户自选障碍"><div class="phone"><div class="phone-top"><span>服务选择</span><span>按需服务</span></div><h2>这次想先了解什么？</h2><p class="muted">先选问题，再决定是否需要个人化信息。</p><div id="alphaBarriers"></div><button class="btn" data-alpha="barrier-next">确认选择，继续</button></div></section>
+            <section class="alpha-stage" data-screen="3" aria-label="第3屏 必要信息确认"><div class="phone"><div class="phone-top"><span>信息确认</span><span>仅本机临时输入</span></div><h2>只确认本次必要信息</h2>
+            <div id="serviceAccess" class="status"></div>
+            <p class="muted" id="alphaInputPurpose">需要税额时才填写T0；按需确认拟缴资金与近期必要支出。信息仅本机临时使用。</p>
+            <div class="form-grid">
+              <label class="field" hidden style="display:none">当前障碍
+                <select id="barrier">
+                  <option value="tax">想理解缴费环节税额差</option>
+                  <option value="steps">不清楚首次缴存步骤</option>
+                  <option value="liquidity">担心近期资金安排</option>
+                  <option value="not-now">现在不打算缴存</option>
+                  <option value="complex">信息复杂，需要人工解释</option>
+                </select>
+              </label>
+              <label class="field" id="alphaTaxField">缴存前全年应纳税所得额 T0
+                <input id="taxable" type="number" min="0" step="100" value="42000" placeholder="可留空，转人工或看通用说明">
+                <small>不是月薪或税前年收入；42,000元为虚构案例预填值，请勿当作本人数据。</small>
+              </label>
+              <div id="taxHelp">
+                <label class="check"><input id="taxUnknown" type="checkbox">我不确定全年应纳税所得额</label>
+                <details><summary>这个数是什么，如何确认？</summary><p class="muted">本算例采用扣除个人养老金缴费之前的全年综合所得应纳税所得额，即收入按适用税务规则扣除相关费用和其他扣除后的金额。不能直接用月薪或税前年收入填写，也不要再重复扣减拟缴养老金。</p><p class="muted">请结合对应年度税务记录及实际扣除确认口径。年内收入尚未确定、扣除不清楚或税务情形复杂时，选择“不确定”，可查看通用说明或申请人工解释；本页面不生成精确税额。</p></details>
+              </div>
+              <label class="field" id="alphaDepositField">拟缴金额（元）
+                <input id="deposit" type="number" min="0" max="12000" step="100" value="12000">
+                <small>本演示最高按12,000元计算。</small>
+              </label>
+              <label class="field">拟缴后、扣除必要支出的资金缓冲（月）
+                <input id="reserve" type="number" min="0" max="24" step="1" value="6">
+                <small>3个月仅为虚构演示阈值，非银行统一标准；填写拟缴后能维持的月数。</small>
+              </label>
+            </div>
+            <label class="check"><input id="urgent" type="checkbox">这笔拟缴资金需要用于近期医疗、住房、教育等必要支出</label>
+            <label class="check"><input id="reduce" type="checkbox">客户主动选择较低缴存额（低于12,000元时适用）</label>
+            <div class="actions"><button class="btn" id="evaluate">生成服务判断</button><button class="btn secondary" id="clearService">清空本次判断</button></div>
+            <p id="alphaError" class="caution" role="alert"></p>
+            </div></section>
+            <section class="alpha-stage" data-screen="4" aria-label="第4屏 税额与流动性结果"><div class="phone"><div class="phone-top"><span>测算结果</span><span>确定性规则</span></div><div class="result" id="serviceResult" aria-live="polite"></div><button class="btn" data-alpha="result-next">查看可选出口</button></div></section>
+            <section class="alpha-stage" data-screen="5" aria-label="第5屏 四个出口"><div class="phone"><div class="phone-top"><span>服务选择</span><span>继续 / 降额 / 暂缓 / 转人工</span></div><h2>下一步，由您决定</h2><div id="alphaExits"></div></div></section>
+            <section class="alpha-stage" data-screen="6" aria-label="第6屏 银行原因码任务卡"><article class="panel" id="alphaTask" aria-live="polite"></article></section>
+          </div>
+          <aside class="panel alpha-guide"><div class="kicker">虚构案例复演</div><h3>选一个场景，从第1屏开始</h3><label for="alphaCase" class="muted">切换场景会清空本次临时输入与记录</label><select id="alphaCase"><option value="U102">案例甲 · 税额疑问，可自主继续</option><option value="U104">案例乙 · 必要支出，应当暂缓</option><option value="U103">案例丙 · 判断中撤回渠道许可</option><option value="U105">边界案例 · 转入账户排除</option></select><h3 id="alphaGuideTitle"></h3><p id="alphaGuideText"></p><div class="actions"><button class="btn secondary" data-alpha="back" id="alphaBack">上一步</button><button class="btn secondary" data-alpha="close" id="alphaClose">关闭本次页面</button><button class="btn danger" data-alpha="revoke" id="alphaRevoke">撤回主动联系许可</button><button class="btn secondary" data-alpha="restart">重新开始本案例</button></div><div class="rule">退出不等于缴存失败；跳转不等于首缴成功；撤回只停止主动联系，不改变最初分组。</div><div class="actions"><button class="btn secondary" data-alpha="export">下载本次复演记录</button><button class="btn secondary" data-tab="case">查看辅助事件回放</button></div></aside>
+        </div>
+      </section>
+
+      <section id="score" class="view" aria-label="增量评价">
+        <div class="headline"><h2>同一入组口径，才看得见净增量</h2><p>以下人数和结果完全虚构，仅演示统计口径</p></div>
+        <div class="panel">
+          <div class="score-head"><div><div class="kicker">模拟试验卡 / 非工行数据</div><h2>60天首次有效缴存率</h2><p class="muted">第61—67天只核对回传与冲正；各组50,000名最初入组客户均留在原分母，共150,000人。</p></div><span class="pill red">虚构汇总示意</span></div>
+          <div id="scoreCards" class="score-grid"></div>
+          <div id="comparisons" class="compare"></div>
+          <div class="rule"><b>主分析是意向治疗：</b>没有访问页面的B组客户、未收到消息的T组客户仍计入原组。N_APP、打开率和点击率只解释执行过程，不能替代主指标分母。</div>
+        </div>
+        <div class="grid-2" style="margin-top:16px">
+          <article class="panel"><h2>客户保护是第二道门</h2><p>投诉、拒绝后仍触达、已知暂缓后仍促缴、税额错误与不适配推介应单独报告。即使首缴差为正，保护触线仍应暂停相关动作。</p><span class="pill amber">保护阈值待行方批准</span></article>
+          <article class="panel"><h2>投入回报按全行口径</h2><p>缴存资金不等于收入。需扣除渠道、人工、系统、合规与风险成本，并识别从本行其他业务转入的原贡献。示例T−B区间跨零，不能据点估计直接申请扩张。</p><span class="pill">真实净贡献待行方核算</span></article>
+        </div>
+        <div class="headline"><h2>首缴增量，还要经过经营价值判断</h2><p>测算结构示意 · 未填入银行真实数据</p></div>
+        <div class="grid-3" id="financeHorizon">
+          <article class="panel"><div class="kicker">首缴评价</div><h3>60天行为结果</h3><p>报告首缴率差及区间，同时查看缴存金额分布。人数增加不直接等于收入增加。</p><span class="pill">不设诱导多缴的门槛</span></article>
+          <article class="panel"><div class="kicker">试点期经营评价</div><h3>已实现贡献与完整成本</h3><p>实际留存天数、已确认配置贡献，扣除原业务替代损失及新增成本；按全部原始入组客户比较。</p><span class="pill">每名入组客户的净贡献差</span></article>
+          <article class="panel"><div class="kicker">后续跟踪</div><h3>长期收益单独观察</h3><p>事前确定跟踪期。未观察收益与已实现贡献分列，不直接年化60天结果；短期成本先发生也不直接代表最终无价值。</p><span class="pill amber">长期留存尚待验证</span></article>
+        </div>
+        <article class="panel" id="investmentPanel" style="margin-top:16px">
+          <div class="kicker">银行端 · 投入判断</div><h2>这项新增服务，值得继续投入吗？</h2>
+          <p class="muted">使用上方固定模拟试验结果，每臂50,000人。下列金额、工时及保护状态均为可调整的假设，不是工行预算、报价或验收结果。</p>
+          <div class="grid-2" style="margin-top:16px">
+            <div>
+              <label class="field">比较哪项新增服务<select id="investmentCompare"><option value="ba">B−A：增加页面说明入口</option><option value="tb" selected>T−B：增加获准主动联系</option></select></label>
+              <div class="form-grid" style="margin-top:12px">
+                <label class="field">每位增量首缴客户净贡献（元）<input id="investmentContribution" type="number" min="0" max="100000" step="10" value="200"><small>扣除本行原业务替代损失；尚未扣除此处新增服务成本。不以缴存额代替。</small></label>
+                <label class="field">每名入组客户新增渠道成本（元）<input id="investmentChannel" type="number" min="0" max="1000" step="0.01" value="0.10"><small>按全部入组客户平均，可包含未发送者；相对所选对照的新增成本。</small></label>
+                <label class="field">新增人工服务涉及入组客户（%）<input id="investmentHumanRate" type="number" min="0" max="100" step="1" value="5"></label>
+                <label class="field">每次新增人工服务与返工（分钟）<input id="investmentMinutes" type="number" min="0" max="480" step="1" value="2"></label>
+                <label class="field">人工单位工时成本（元/小时）<input id="investmentHourly" type="number" min="0" max="10000" step="10" value="60"></label>
+                <label class="field">新增建设摊销、运维与审核（元）<input id="investmentFixed" type="number" min="0" max="100000000" step="100" value="3000"><small>同一比较与观察期内计值；复用投入不重复计费。</small></label>
+              </div>
+              <label class="field" style="margin-top:12px">客户保护状态（情景假设）<select id="investmentProtection"><option value="pending" selected>尚未核验</option><option value="pass">假设已达标</option><option value="fail">假设出现保护问题</option></select></label>
+              <button class="btn secondary" id="investmentReset" style="margin-top:12px">恢复本项演示假设</button>
+            </div>
+            <div id="investmentResult" aria-live="polite"></div>
+          </div>
+          <p class="muted" style="margin-top:16px">计算：增量人数 × 假设单位净贡献 − 新增总成本。人工成本按全部入组客户中的服务人数核算。下界与上界情景仅改变首缴率差，成本与单位贡献固定；它们不是完整财务置信区间。正式决策应直接比较每名原始入组客户的全行净贡献，并由行方核验长期收益、成本及保护要求。</p>
+        </article>
+        <article class="panel" style="margin-top:16px"><h2>新增成本从哪里取得</h2><p class="muted">选择一类投入，查看核算依据。各项比较配对成本，复用投入不重复计费。</p><div class="actions" role="group" aria-label="成本类别"><button class="btn secondary" data-cost="build" aria-pressed="true">一次性建设</button><button class="btn secondary" data-cost="channel" aria-pressed="false">渠道触达</button><button class="btn secondary" data-cost="human" aria-pressed="false">人工服务</button><button class="btn secondary" data-cost="run" aria-pressed="false">持续运行</button></div><div id="costDetail" class="status" style="margin-top:16px" aria-live="polite"></div></article>
+      </section>
+    </main>
+    <footer class="footnote">工银智养仓参赛概念演示 · 仅使用虚构账户与模拟事件。税额计算仅展示方法，不提供税务或投资建议。旧版公众自测仍可在 <a href="demo1.html">demo1.html</a> 查看。</footer>
+  </div>
+  <script src="engine.js"></script>
+  <script>
+  "use strict";
+
+  /*
+   * 虚构客户用于复演边界，不是训练样本。
+   * 输入：静态案例字段；输出：资格、固定臂和预填服务场景。
+   * 原理：案例的臂在加载前已经写定，回放中的点击不会改变分组。
+   */
+  const CASES = [
+    {id:"U101",name:"许可后主动联系",hint:"本行原始开户 · T组 · 可发送",origin:true,transfer:false,active:true,paid:false,permission:true,refused:false,arm:"T",taxable:42000,reserve:6,urgent:false},
+    {id:"U102",name:"账户页自主进入",hint:"本行原始开户 · B组 · 税额疑问",origin:true,transfer:false,active:true,paid:false,permission:true,refused:false,arm:"B",taxable:42000,reserve:6,urgent:false},
+    {id:"U103",name:"发送前撤回许可",hint:"本行原始开户 · T组 · 抑制回执",origin:true,transfer:false,active:true,paid:false,permission:true,refused:false,arm:"T",taxable:42000,reserve:6,urgent:false},
+    {id:"U104",name:"应当暂缓",hint:"本行原始开户 · B组 · 必要支出",origin:true,transfer:false,active:true,paid:false,permission:true,refused:false,arm:"B",taxable:42000,reserve:1,urgent:true},
+    {id:"U105",name:"转入账户排除",hint:"曾从他行转入 · 不入定向池",origin:false,transfer:true,active:true,paid:false,permission:true,refused:false,arm:null,taxable:null,reserve:6,urgent:false},
+    {id:"U106",name:"现有服务基线",hint:"本行原始开户 · A组",origin:true,transfer:false,active:true,paid:false,permission:true,refused:false,arm:"A",taxable:42000,reserve:6,urgent:false}
+  ];
+  const TRIAL = [
+    {arm:"A",name:"现有服务",n:50000,y:500},
+    {arm:"B",name:"页面提示",n:50000,y:650},
+    {arm:"T",name:"经许可主动触达",n:50000,y:670}
+  ];
+  const RULE_VERSION="ALPHA-RULE-20261007-03";
+  const DEMO_VERSION="3.4";
+  const ALPHA_TITLES=["账户页中性入口","客户自选障碍","必要信息确认","税额与流动性结果","四个出口","银行原因码任务卡"];
+  const ALPHA_GUIDES=["先说明服务用途，再由客户决定进入。完整六屏是Alpha原型，不表示已向首期B/T客户上线。","只想了解步骤，可直接得到说明，不必先提供税务或家庭资产信息。","T0不是月薪；未知时可留空，转人工或看固定说明。当前信息只用于本次服务。","当期税额差与投资收益分开。必要支出和流动性停止条件优先，不因正税差放宽。","允许自主继续、主动降额、暂缓或转人工。暂缓时不允许继续促缴，降额须回到信息页复算。","营销任务卡只显示原因码及对应动作，不显示T0、储备或拟缴金额。模拟跳转不会自动生成账务首缴。"];
+  const state = {caseId:"U102",permission:true,refused:false,sent:false,delivered:false,explored:false,paymentOpen:false,paused:false,ledger:false,outcome:null,events:[],alphaStep:1,alphaMax:1,alphaClosed:false,alphaExit:null,alphaAudit:[]};
+  const $ = id => document.getElementById(id);
+  const fmt = n => Math.round(n).toLocaleString("zh-CN");
+  const pct = n => (n*100).toFixed(2)+"%";
+  const pp = n => (n*100).toFixed(2)+"个百分点";
+  const currentCase = () => CASES.find(x => x.id===state.caseId);
+
+  /*
+   * 入组资格只读取分组前快照，执行许可另作实时复核。
+   * 输入：一名虚构客户及当前许可；输出：初始N0/N1、当前发送许可和排除原因。
+   * 原理：入组后的撤回会停止发送，但不能从意向治疗分母中删掉该客户。
+   */
+  function eligibility(c) {
+    const reasons=[];
+    if (!c.origin || c.transfer) reasons.push("非本行原始开户或存在转入");
+    if (!c.active) reasons.push("账户不在户");
+    if (c.paid) reasons.push("已有有效缴存");
+    const n0=reasons.length===0;
+    if (n0 && (!c.permission || c.refused)) reasons.push("入组时渠道许可不足或客户已拒绝");
+    const n1=n0 && c.permission && !c.refused;
+    const maySend=n1 && state.permission && !state.refused && !state.paused && !state.ledger;
+    return {n0,n1,maySend,reasons};
+  }
+
+  /* 事件记录：每一步单独留痕，模拟生产中的资格快照、任务回执和账务事件。 */
+  function addEvent(title,detail) {
+    state.events.push({title,detail,time:new Date().toISOString(),ruleVersion:RULE_VERSION});
+    renderEvents();
+  }
+  function resetCase(id) {
+    const c=CASES.find(x=>x.id===id)||CASES[0];
+    Object.assign(state,{caseId:c.id,permission:c.permission,refused:c.refused,sent:false,delivered:false,explored:false,paymentOpen:false,paused:false,ledger:false,outcome:null,events:[],alphaStep:1,alphaMax:1,alphaClosed:false,alphaExit:null,alphaAudit:[]});
+    addEvent("资格快照","账户来源、转户、在户、首缴与许可状态已读取");
+    const q=eligibility(c);
+    if(q.n1) addEvent("固定演示分组",c.arm+"组；在差异展示或发送前确定，后续不重分配");
+    else addEvent("停止定向",q.reasons.join("；"));
+    $("taxable").value=c.taxable??"";
+    $("taxUnknown").checked=false;
+    $("deposit").value="12000";
+    $("reserve").value=String(c.reserve);
+    $("urgent").checked=c.urgent;
+    $("reduce").checked=false;
+    $("barrier").value=c.urgent?"liquidity":"tax";
+    $("alphaError").textContent="";
+    renderCase(); renderService();
+    alphaRecord("打开第1屏");renderAlpha();
+  }
+  function renderEvents() {
+    $("eventList").innerHTML=state.events.map((e,i)=>
+      `<li><b>E${String(i+1).padStart(2,"0")} · ${e.title}</b><span>${e.detail}</span></li>`).join("");
+  }
+  function renderCase() {
+    $("caseList").innerHTML=CASES.map(c=>
+      `<button class="case-button ${c.id===state.caseId?"selected":""}" data-case="${c.id}" aria-pressed="${c.id===state.caseId}"><strong>${c.id} · ${c.name}</strong><span>${c.hint}</span></button>`).join("");
+    const c=currentCase(),q=eligibility(c);
+    const armText=q.n1?({A:"A｜维持现有服务",B:"B｜账户页中性入口",T:"T｜页面入口＋获准主动联系"}[c.arm]):"不进入首期试验";
+    const action=q.maySend && c.arm==="T" && !state.sent;
+    let status="";
+    if(!q.n0) status=`<div class="status stop"><b>资格排除：</b>${q.reasons.join("；")}。保留正常自助服务，不加入定向名单。</div>`;
+    else if(!q.n1) status=`<div class="status stop"><b>入组前停止：</b>${q.reasons.join("；")}。原有自助办理入口仍可用。</div>`;
+    else if(state.ledger) status='<div class="status good"><b>模拟首缴完成：</b>移出未首缴定向池，但仍保留最初分组和账务结果。</div>';
+    else if(!state.permission || state.refused) status='<div class="status stop"><b>入组后撤回：</b>停止尚未发送的主动消息；该客户仍留在最初随机臂的主分析分母。</div>';
+    else if(state.paused) status='<div class="status stop"><b>服务已暂缓：</b>本次促缴任务已取消；不再发送主动联系。</div>';
+    else if(state.sent) status='<div class="status good"><b>演示消息已提交：</b>此处只产生本地回执，未连接短信或Push。</div>';
+    else status='<div class="status"><b>可继续演示：</b>首期处理臂已固定；发送前仍需再次校验许可与拒绝。</div>';
+    $("caseDetail").innerHTML=`
+      <div class="kicker">客户 ${c.id} / 完全虚构</div><h2>${c.name}</h2>
+      <dl class="kv">
+        <dt>开户来源</dt><dd>${c.origin?"工行原始开户":"非本行原始开户"}</dd>
+        <dt>转户记录</dt><dd>${c.transfer?"有，首期排除":"无"}</dd>
+        <dt>本行有效首缴</dt><dd>${state.ledger?"已模拟完成":"零"}</dd>
+        <dt>渠道许可</dt><dd>${state.permission?"当前有效":"已撤回"}</dd>
+        <dt>最初入组资格</dt><dd><span class="pill ${q.n1?"green":"red"}">${q.n1?"N1 已入组":"不在 N1"}</span></dd>
+        <dt>固定处理臂</dt><dd>${armText}</dd>
+      </dl>${status}
+      <p class="muted">页面访问者 N_APP 只作过程统计；没有访问页面或消息未送达，也不会从原随机臂的主分析中删除。</p>
+      <div class="actions">
+        ${c.arm==="T" ? `<button class="btn" data-action="send" ${action?"":"disabled"}>模拟发送经许可消息</button>`:""}
+        ${q.n0 && state.permission ? '<button class="btn danger" data-action="revoke">客户撤回渠道许可</button>':""}
+        <button class="btn secondary" data-action="customer">查看客户手机端</button>
+        ${q.n1 && c.arm!=="A" ? '<button class="btn secondary" data-action="service">进入六屏 Alpha</button>':""}
+        <button class="btn secondary" data-action="reset">重置本案例</button>
+      </div>`;
+    renderCustomer();
+    renderAlpha();
+  }
+
+  /* 六屏使用同一规则状态；复演记录只存在本机内存，可由用户主动下载。 */
+  function alphaRecord(action,extra={}) {
+    state.alphaAudit.push({time:new Date().toISOString(),screen:state.alphaStep,action,ruleVersion:RULE_VERSION,...extra});
+  }
+  function alphaShow(screen) {
+    if(state.alphaClosed)return;
+    state.alphaStep=screen;state.alphaMax=Math.max(state.alphaMax,screen);
+    alphaRecord("进入第"+screen+"屏");renderAlpha();
+    $("alphaTitle").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function renderAlpha() {
+    const c=currentCase(),q=eligibility(c),barrier=$("barrier").value;
+    $("alphaSteps").innerHTML=ALPHA_TITLES.map((name,i)=>`<button class="${state.alphaStep===i+1?"active":""}" data-alpha-screen="${i+1}" ${i+1>state.alphaMax||state.alphaClosed?"disabled":""} aria-current="${state.alphaStep===i+1?"step":"false"}">${i+1} · ${name}</button>`).join("");
+    document.querySelectorAll(".alpha-stage").forEach(el=>el.classList.toggle("active",Number(el.dataset.screen)===state.alphaStep));
+    $("alphaScreens").hidden=state.alphaClosed;
+    $("alphaClosed").hidden=!state.alphaClosed;
+    $("alphaClosed").innerHTML="<b>本次页面已关闭，退出回执已记录。</b><p>没有发生转账或首缴。可下载本次记录，或重新开始本案例。</p>";
+    $("alphaCase").value=c.id;
+    document.querySelectorAll('#alphaCase option[data-temporary]').forEach(option=>option.remove());
+    $("alphaCase").value=c.id;
+    if(!$("alphaCase").value){const option=document.createElement("option");option.value=c.id;option.textContent=c.id+" · "+c.name+"（辅助案例）";option.dataset.temporary="true";$("alphaCase").append(option);$("alphaCase").value=c.id;}
+    $("alphaGuideTitle").textContent="第"+state.alphaStep+"屏 · "+ALPHA_TITLES[state.alphaStep-1];
+    $("alphaGuideText").textContent=!q.n1?"本案例资格排除："+q.reasons.join("；")+"。不进入新增定向服务，原有自助服务可在辅助页面查看。":ALPHA_GUIDES[state.alphaStep-1];
+    $("alphaBack").disabled=state.alphaStep===1||state.alphaClosed;
+    $("alphaClose").disabled=state.alphaClosed;
+    $("alphaRevoke").disabled=!state.permission||state.alphaClosed;
+    document.querySelector('[data-alpha="start"]').disabled=!q.n1||c.arm==="A"||state.ledger;
+    const entryNote=document.querySelector('.alpha-stage[data-screen="1"] .phone-note');
+    entryNote.textContent=c.arm==="A"?"A组维持现有服务，不开放新增六屏入口。可在“首期客户页面”使用原有缴存入口。":!q.n1?"本案例不符合新增定向服务资格，原有正常自助服务保留。":"本页不会转账或扣款。任何缴存结果须以银行正式账务为准。";
+    const names={tax:["想理解当期税额差","需要时才确认T0与拟缴金额"],steps:["只想了解缴存步骤","不填写税务信息，先看通用说明"],liquidity:["担心近期资金安排","优先确认必要支出与资金缓冲"],"not-now":["目前不打算缴存","直接暂缓，不索取额外信息"],complex:["问题复杂，希望人工解释","直接请求人工，不强制填写T0"]};
+    $("alphaBarriers").innerHTML=Object.entries(names).map(([key,[title,detail]])=>`<button class="alpha-choice ${barrier===key?"selected":""}" data-alpha-barrier="${key}" ${state.paused?"disabled":""} aria-pressed="${barrier===key}">${title}<small>${detail}</small></button>`).join("");
+    document.querySelector('[data-alpha="barrier-next"]').disabled=state.paused;
+    $("alphaTaxField").hidden=barrier==="liquidity";
+    $("taxHelp").hidden=barrier==="liquidity";
+    $("alphaDepositField").hidden=false;
+    $("alphaInputPurpose").textContent=barrier==="liquidity"?"本次不需要T0。按拟缴金额确认缴存后缓冲，以及这笔资金是否涉及近期必要支出；有顾虑不自动等于应暂缓。":"T0用于逐档计算当期税额差；按拟缴金额确认必要支出与缴存后缓冲。信息仅本机临时使用。";
+    const stopped=state.paused,valid=state.outcome&&state.outcome.kind!=="invalid";
+    $("alphaExits").innerHTML=`<p class="muted">${stopped?"本次已暂缓，不能用继续或降额绕过停止条件。":!state.permission?"主动联系许可已撤回；客户仍可自主选择原有服务。":"查看领取约束与产品风险后，自主选择下一步。"}</p><button class="alpha-choice" data-alpha="continue" ${!valid||stopped||state.outcome?.kind==="human"?"disabled":""}>继续<small>只模拟跳转原有缴存流程，不自动记作首缴</small></button><button class="alpha-choice" data-alpha="less" ${!valid||stopped||state.outcome?.kind==="human"||Number($("deposit").value)<=1?"disabled":""}>降额重算<small>由客户选择较低金额，返回第3屏确认</small></button><button class="alpha-choice" data-alpha="pause">暂缓<small>停止本次主动促缴，生成停止回执</small></button><button class="alpha-choice" data-alpha="human">转人工<small>只提交原因码，不在营销卡展示原始输入</small></button>`;
+    const codes=[];
+    if(!q.n1)codes.push(["ELIGIBILITY_EXCLUDED","不创建新增定向任务"]);
+    if(!state.permission)codes.push(["CHANNEL_REVOKED","取消尚未发送的主动联系；保留最初分组"]);
+    if(state.paused)codes.push(["SERVICE_PAUSED","停止本次主动促缴，禁止以降额或税差重启"]);
+    if(state.alphaExit==="continue")codes.push([state.outcome?.kind==="less"?"CUSTOMER_LOWER_AMOUNT":"ALLOW_SELF_SERVICE","仅模拟跳转原有流程，等待正式账务事件"]);
+    if(state.alphaExit==="human")codes.push(["HUMAN_REQUEST","生成待人工承接任务；本地模拟，尚未实际转接"]);
+    if(!codes.length)codes.push(["AWAIT_CUSTOMER_CHOICE","尚无需执行的营销任务"]);
+    $("alphaTask").innerHTML=`<div class="kicker">银行侧承接视图 · 原因码任务卡</div><h2>按原因执行，不暴露原始敏感输入</h2><p class="muted">虚构编号 ${c.id} · 规则版本 ${RULE_VERSION}</p>${codes.map(([code,action])=>`<div class="receipt-item" style="margin:10px 0"><b>${code}</b><span>${action}</span></div>`).join("")}<div class="rule">${state.alphaExit==="continue"?"跳转回执已记录；本次仍无真实账务首缴。":state.paused?"停止回执已记录；本次未发生首缴。":"任务卡是本地复演，不是生产渠道的成功回执。"}</div><p class="muted" style="margin-top:15px">服务路径是否带来首缴增量，要回到随机分组与群体账务结果评价。单人复演不加入下方虚构汇总。</p><div class="actions"><button class="btn" data-tab="score">查看服务增量怎样测量 →</button><button class="btn secondary" data-alpha="export">下载本次复演记录</button><button class="btn secondary" data-tab="case">辅助 · 完整事件</button></div>`;
+  }
+
+  /*
+   * 手机端与银行回执共用案例状态，但分开呈现客户界面和执行证据。
+   * 输入：固定分组与本地事件；输出：三臂差异页面、任务状态、停止回执。
+   * 原理：发送不等于送达，点击不等于首缴，撤回不能删除入组记录。
+   */
+  function renderCustomer() {
+    const c=currentCase(),q=eligibility(c);
+    const stopped=state.refused||!state.permission||state.paused;
+    const hasEntry=q.n1&&c.arm!=="A";
+    // 暂缓只停止本项目促缴，不据此限制客户的原有账户办理权利。
+    const canPay=c.active&&!state.ledger;
+    const route=[
+      ["① 资格核验",true], ["② 固定分组",q.n1],
+      ["③ 客户查看",state.explored], ["④ 账务回传",state.ledger],
+    ];
+    $("journey").innerHTML=route.map(([label,done])=>`<span class="${done?"done":""}">${label}${done?" ✓":""}</span>`).join("")+`<button class="btn secondary" data-tab="score">⑤ 查看群体评价 →</button>`;
+    const message=state.delivered?`<div class="phone-card phone-message"><b>服务消息 · 模拟已送达</b><p>您可在个人养老金账户页了解首次缴存方式。是否缴存由您决定；如不希望收到此类介绍，可随时停止接收。</p><button class="btn secondary" data-action="account-entry">查看账户页说明</button>${state.permission?'<button class="btn danger" style="margin-top:8px" data-action="revoke">不再接收主动介绍</button>':'<p>您已停止接收主动介绍。</p>'}</div>`:"";
+    const entry=hasEntry?`<div class="phone-card"><b>了解首次缴存方式</b><p>首次办理需要什么？账户资金如何使用？先了解，再自主决定。</p><button class="btn secondary" data-action="account-entry">${state.explored?"再次查看说明":"查看中性说明"}</button></div>`:"";
+    const help=state.explored&&hasEntry?'<div class="phone-card"><b>首次缴存说明</b><p>可通过账户原有入口自主办理。缴存前请了解资金领取条件、当期税额扣除与账户内产品风险；若当前不合适，可稍后再决定。本说明不推介具体产品。</p></div>':"";
+    const payment=state.paymentOpen&&!state.ledger?`<div class="phone-card"><b>原有缴存流程 · 本地模拟</b><p>此操作只模拟客户自主确认后的账务回传，不会转账、扣款，也不代表真实缴存成功。</p><button class="btn" data-action="account-ledger" ${canPay?"":"disabled"}>模拟自主确认与账务回传</button></div>`:"";
+    $("customerPhone").innerHTML=`<div class="phone-top"><span>9:41 · 界面示意</span><span>${q.n1?c.arm+"组":"未入组"} · ${c.id}</span></div><h2>个人养老金账户</h2><div class="phone-account"><p>虚构账户 · 本行有效缴存</p><strong>${state.ledger?"已模拟首缴":"尚未首缴"}</strong><button class="btn" data-action="normal-pay" ${canPay?"":"disabled"}>${state.ledger?"模拟账务已回传":"原有缴存入口"}</button></div>${message}${entry}${help}${payment}${state.paused?'<div class="phone-card"><b>可以稍后再决定</b><p>本次主动促缴已停止，原有账户入口保留，不代表建议继续缴存。短期必要支出和应急资金应优先安排；具体办理仍须经过银行既有流程。</p></div>':""}<p class="phone-note">参赛界面示意，非工行现有手机银行截图。正常自助服务与是否接受主动介绍分开处理。</p>`;
+    let task="无新增主动任务";
+    if(q.n1&&c.arm==="T") task=stopped?(state.sent?"停止后续任务，保留已提交回执":"待发送任务已取消"):state.delivered?"模拟送达已记录":state.sent?"已提交，待模拟送达":"待发送，发送前复核";
+    const stopReceipt=stopped?`<div class="stop-receipt"><h3>停止执行回执 · 本地模拟</h3><p>① ${state.paused?"已知暂缓：停止本次主动促缴":"客户撤回：停止主动介绍"}</p><p>② 尚未发送的相关任务已取消；停止状态供各渠道复核</p><p>③ ${q.n1?"最初处理臂与主分析分母保留":"未进入随机试验，不补录入组"}</p>${state.sent?'<p>已提交或已送达的消息回执保留，撤回不等于已发消息被收回。</p>':""}</div>`:"";
+    $("customerReceipt").innerHTML=`<div class="kicker">银行执行视角 / ${c.id}</div><h2>同一案例，两侧状态一致</h2><p class="muted">先核验与分组，再产生差异展示。下方只显示本案例的模拟回执，不改变独立的群体评价示例。</p><div class="receipt-grid"><div class="receipt-item"><span>最初处理臂</span><b>${q.n1?c.arm+"组 · 保留":"未入组"}</b></div><div class="receipt-item"><span>渠道任务</span><b>${task}</b></div><div class="receipt-item"><span>中性说明查看</span><b>${state.explored?"客户已自主查看":"尚未查看"}</b></div><div class="receipt-item"><span>主结果证据</span><b>${state.ledger?"模拟账务回传":"尚无账务首缴"}</b></div></div>${stopReceipt}<div class="actions">${c.arm==="T"?`<button class="btn" data-action="send" ${q.maySend&&!state.sent?"":"disabled"}>模拟提交获准消息</button><button class="btn secondary" data-action="deliver" ${q.maySend&&state.sent&&!state.delivered?"":"disabled"}>模拟消息送达</button>`:""}${q.n0&&state.permission?'<button class="btn danger" data-action="revoke">模拟撤回许可</button>':""}<button class="btn secondary" data-tab="case">查看资格与完整事件</button><button class="btn secondary" data-action="reset">重置本案例</button></div><div class="rule">${c.arm==="A"?"A组没有新增中性说明或主动消息，但可通过原有入口自主办理。":c.arm==="B"?"B组仅在账户页提供中性说明，不创建主动消息任务。":c.arm==="T"?"T组页面与B组相同；主动消息是唯一新增处理，提交、送达与查看分别记录。":"本案例保留原有账户服务，未进入新增定向试验。"}</div>`;
+  }
+
+  /*
+   * 服务规则输出四种合法结果。
+   * 输入：客户主动提供的障碍、T0、拟缴额和必要支出；输出：继续/降额/暂缓/转人工。
+   * 原理：流动性与拒绝先于税额收益，未知T0不虚构精确税额。
+   */
+  function evaluateService() {
+    const c=currentCase(),q=eligibility(c);
+    if(!q.n1 || c.arm==="A") return null;
+    const barrier=$("barrier").value;
+    const raw=$("taxable").value.trim();
+    const taxable=raw===""?null:Number(raw);
+    const deposit=Number($("deposit").value);
+    const rawReserve=$("reserve").value.trim();
+    const reserve=Number(rawReserve);
+    const urgent=$("urgent").checked;
+    if(!Number.isFinite(deposit)||deposit<=0||deposit>12000||rawReserve===""||!Number.isFinite(reserve)||reserve<0||reserve>24||taxable!==null&&(!Number.isFinite(taxable)||taxable<0)) {
+      return {kind:"invalid",reason:"请检查金额：拟缴额为1—12,000元，应急储备为0—24个月，T0不可为负数。"};
+    }
+    let kind="continue",reason="当前未触发本次服务的停止条件，客户可自主决定是否办理。";
+    // 资金顾虑只是客户需求；停止依据是客户暂不缴、拟缴资金涉及必要支出或缴后缓冲不足。
+    if(barrier==="not-now"||urgent||reserve<3) {
+      kind="pause";reason="客户暂不打算缴存，或近期必要支出／应急储备触发暂缓；本次促缴停止。";
+    } else if(barrier==="complex"||(taxable===null&&barrier!=="liquidity")) {
+      kind="human";reason="信息不完整或问题复杂，不输出精确税额；可查看固定说明或请求人工解释。";
+    } else if($("reduce").checked&&deposit<12000) {
+      kind="less";reason="客户主动选择较低金额；先按实际拟缴额复算，再由客户确认。";
+    }
+    return {kind,reason,taxable,deposit,reserve,tax:taxable===null?null:ENGINE.saving(taxable,deposit)};
+  }
+  function renderService() {
+    const c=currentCase(),q=eligibility(c);
+    const allowed=q.n1&&c.arm!=="A"&&!state.paused&&!state.ledger;
+    const access=$("serviceAccess");
+    access.className="status"+(allowed?" good":" stop");
+    access.innerHTML=allowed
+      ? `<b>Alpha服务资格通过：</b>输入只用于本次完整能力复演；原案例${c.arm}组记录仅用于辅助回放，不表示完整服务已进入首期处理。`
+      : state.paused
+        ? "<b>本次服务已暂缓：</b>停止状态已记录；新会话需重新核验，不因清空页面而恢复促缴。"
+      : state.ledger
+        ? "<b>模拟首缴已记账：</b>不再作为未首缴客户重复促缴。"
+      : c.arm==="A"&&q.n1
+        ? "<b>A组维持现有服务：</b>本页新增的适配界面不对A组展示；原账户缴存入口保留。"
+        : "<b>本案例停止新增服务：</b>资格或渠道许可未通过，不能以营销名义索取个人化输入。";
+    document.querySelectorAll(".alpha-stage input,#barrier,#evaluate").forEach(el=>{el.disabled=!allowed;});
+    $("taxable").disabled=!allowed||$("taxUnknown").checked;
+    if(!state.outcome) {
+      $("serviceResult").className="result";
+      $("serviceResult").innerHTML='<span class="pill">等待客户选择</span><h3>可以不缴，也可以稍后再决定</h3><p class="muted">填写本次必要信息后才展示判断。税差是缴费环节的当期变化，不是收益承诺。</p>';
+      return;
+    }
+    const o=state.outcome;
+    if(o.kind==="invalid") {
+      $("serviceResult").className="result pause";
+      $("serviceResult").innerHTML=`<span class="pill red">输入待修正</span><h3>暂不生成判断</h3><p>${o.reason}</p>`;
+      return;
+    }
+    const labels={continue:"继续",less:"降额",pause:"暂缓",human:"转人工"};
+    $("serviceResult").className="result "+o.kind;
+    const tax=o.tax ? `<div class="math">
+      <div><span>缴存前税额</span><b>${fmt(o.tax.before)} 元</b></div>
+      <div><span>缴存后税额</span><b>${fmt(o.tax.after)} 元</b></div>
+      <div><span>当期税额差</span><b>${fmt(o.tax.save)} 元</b></div>
+      ${o.tax.cross?`<div><span>简化算法误差</span><b>${fmt(o.tax.naive-o.tax.save)} 元</b></div>`:""}
+    </div>`:"<p class='muted'>本路径无需或未提供可复算的T0，不生成精确税额。</p>";
+    $("serviceResult").innerHTML=`
+      <span class="pill ${o.kind==="pause"?"red":o.kind==="human"?"":"green"}">规则输出 · ${labels[o.kind]}</span>
+      <h3>${o.kind==="pause"?"暂缓本次促缴":o.kind==="human"?"补充信息或转人工":o.kind==="less"?"按客户选择降低金额":"保留自主办理选择"}</h3>
+      <p>${o.reason}</p>${tax}
+      ${o.tax?`<p class="muted">计算前提：全年应纳税所得额T0为${fmt(o.taxable)}元，拟缴${fmt(o.deposit)}元；按演示引擎逐档复算，不以月薪替代T0。</p>`:""}
+      <p class="muted"><b>当期税额差不等于投资收益。</b>账户资金领取受规定条件约束，不能按普通活期资金随时使用；账户内产品可能有风险，具体产品仍走既有适当性流程。必要支出、短期资金紧张或判断信息不足时，可能暂不适合继续。</p>
+      ${o.kind==="pause"?'<p class="important">停止状态须同步至尚未发送的任务队列。</p>':""}
+    `;
+  }
+
+  /* 对两组首次有效缴存率做演示用正态近似区间；真实试验须预注册完整统计方案。 */
+  function compare(group,base) {
+    const p1=group.y/group.n,p0=base.y/base.n,diff=p1-p0;
+    const se=Math.sqrt(p1*(1-p1)/group.n+p0*(1-p0)/base.n);
+    return {diff,lo:diff-1.96*se,hi:diff+1.96*se};
+  }
+  function renderScore() {
+    $("scoreCards").innerHTML=TRIAL.map(x=>`<div class="score-card">
+      <div class="label"><b>${x.arm} · ${x.name}</b><span>n=${fmt(x.n)}</span></div>
+      <strong>${pct(x.y/x.n)}</strong><div class="bar" aria-hidden="true"><i style="width:${(x.y/x.n)/.02*100}%"></i></div><div class="muted" style="display:flex;justify-content:space-between;font-size:11px"><span>0%</span><span>共同刻度上限 2%</span></div>
+      <div class="muted" style="margin-top:9px">模拟有效首缴 ${fmt(x.y)} 人</div>
+    </div>`).join("");
+    const ba=compare(TRIAL[1],TRIAL[0]),tb=compare(TRIAL[2],TRIAL[1]);
+    $("comparisons").innerHTML=`
+      <article class="panel"><div class="kicker">B − A</div><h3>页面入口的平均作用</h3><strong>+${pp(ba.diff)}</strong><p class="muted">示意95%区间：${pp(ba.lo)} ～ ${pp(ba.hi)}。仍须核对执行、成本及客户保护。</p></article>
+      <article class="panel"><div class="kicker">T − B</div><h3>主动联系的额外作用</h3><strong>+${pp(tb.diff)}</strong><p class="muted">示意95%区间：${pp(tb.lo)} ～ ${pp(tb.hi)}。<span class="caution">区间跨零，不足以据此扩大触达。</span></p></article>`;
+  }
+
+  /* 成本卡只展示项目书的测算依据，不生成假预算或将虚构首缴换算成真实收益。 */
+  function showCost(category) {
+    const details={
+      build:["一次性建设","页面、规则、接口与试验联调工时；区分复用与新建，注明摊销期。依据技术团队估算或供应报价，由项目财务复核。"],
+      channel:["渠道触达","按实际计费规则汇总发送、调用等费用。依据渠道合同、执行日志与账单，由渠道负责人确认。"],
+      human:["人工服务","有效服务及复核返工分钟数 × 核定单位工时成本。依据工单与抽样工时记录，由业务和财务共同确认。"],
+      run:["持续运行","运维、内容审核、模型维护与保护事件处置。依据运维、审核和处置记录，由相应负责人确认。"]
+    };
+    const [title,detail]=details[category];
+    $("costDetail").textContent=title+"："+detail;
+    document.querySelectorAll("[data-cost]").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.cost===category)));
+  }
+
+  /*
+   * 投入判断：输入为固定模拟试验结果及用户调整的成本/贡献假设，输出为情景测算。
+   * 成本均为相对对照的新增值；保护与证据门槛先于收益，不构成真实上线审批。
+   * 用率差下界/点估计/上界计算情景，不能将这些情景称为完整ROI置信区间。
+   */
+  function renderInvestment() {
+    const ids=["Contribution","Channel","HumanRate","Minutes","Hourly","Fixed"];
+    const values=ids.map(name=>$("investment"+name).value.trim());
+    const fields=ids.map(name=>$("investment"+name));
+    if(values.some(value=>value==="")||fields.some(field=>!field.checkValidity())) {
+      $("investmentResult").innerHTML='<div class="status stop"><h3>请确认假设参数</h3><p>金额与工时不能为负数；人工涉及比例须在0%至100%之间。缺少参数时不生成投入建议。</p></div>';
+      return;
+    }
+    const [unit,channel,rate,minutes,hourly,fixed]=values.map(Number);
+    const isPage=$("investmentCompare").value==="ba";
+    const comparison=compare(TRIAL[isPage?1:2],TRIAL[isPage?0:1]);
+    const n=TRIAL[isPage?1:2].n;
+    const channelCost=n*channel;
+    const humanCost=n*rate/100*minutes/60*hourly;
+    const cost=channelCost+humanCost+fixed;
+    const incremental=n*comparison.diff;
+    const low=n*comparison.lo*unit-cost;
+    const central=incremental*unit-cost;
+    const high=n*comparison.hi*unit-cost;
+    const protection=$("investmentProtection").value;
+    let title,reason,style="amber";
+    if(protection==="fail") {
+      title="暂停相关策略，先处理保护问题";style="red";
+      reason="假设存在保护问题，即使测算收益为正，也不能以收益抵销。请排查并复核相关动作。";
+    } else if(comparison.lo<=0) {
+      title="证据不足，暂不扩大投入";
+      reason="模拟首缴率差区间包含零。调整收益假设不能消除服务效果的不确定性；可在批准的周期和预算内完善验证。";
+    } else if(protection!=="pass") {
+      title="先核验客户保护，再讨论投入";
+      reason="模拟增量有正向证据，但保护状态尚未核验；成本与贡献也仍是假设。";
+    } else if(high<=0) {
+      title="当前假设下，收缩新增投入";style="red";
+      reason="连上界情景也无法覆盖新增成本。优先降低服务成本或保留现有服务，不据此认定其他方案也无效。";
+    } else if(low>0) {
+      title=isPage?"可将页面入口列为后续投入候选":"可将主动联系列为后续投入候选";style="green";
+      reason="在假设保护达标、成本和单位贡献固定的条件下，下界情景仍为正。先核验真实数据与财务口径，再由行方决定投入。";
+    } else {
+      title="净价值尚不稳健，先控制新增成本";
+      reason="点估计或上界情景可能为正，但下界未覆盖成本。维持受控验证并核验成本，暂不扩大投入。";
+    }
+    const money=value=>(value<0?"−":"")+fmt(Math.abs(value))+"元";
+    const threshold=incremental>0?money(cost/incremental):"当前无法计算";
+    $("investmentResult").innerHTML=`<span class="pill ${style}">假设情景建议 · 非审批结论</span><h3 style="margin-top:12px">${title}</h3><p>${reason}</p>
+      <div class="math"><div><span>${isPage?"B−A":"T−B"}模拟增量人数（点估计）</span><b>${fmt(incremental)}人</b></div>
+      <div><span>新增渠道成本</span><b>${money(channelCost)}</b></div><div><span>新增人工成本</span><b>${money(humanCost)}</b></div>
+      <div><span>建设摊销、运维与审核</span><b>${money(fixed)}</b></div><div><span>新增总成本</span><b>${money(cost)}</b></div>
+      <div><span>下界情景净贡献</span><b>${money(low)}</b></div><div><span>点估计情景净贡献</span><b>${money(central)}</b></div><div><span>上界情景净贡献</span><b>${money(high)}</b></div>
+      <div><span>每位增量客户盈亏平衡门槛（点估计）</span><b>${threshold}</b></div></div>
+      <p class="muted">${comparison.lo<=0?"增量区间包含零，盈亏平衡门槛不稳健。":"下界情景仅反映首缴率差的不确定性；真实成本、贡献和外推仍需核验。"}</p>`;
+  }
+  function resetInvestment() {
+    const page=$("investmentCompare").value==="ba";
+    const defaults={Contribution:200,Channel:page?0:0.10,HumanRate:page?2:5,Minutes:2,Hourly:60,Fixed:3000};
+    Object.entries(defaults).forEach(([key,value])=>$("investment"+key).value=String(value));
+    $("investmentProtection").value="pending";
+    renderInvestment();
+  }
+
+  function showTab(tab) {
+    document.querySelectorAll(".tab").forEach(el=>{
+      const active=el.dataset.tab===tab;
+      el.classList.toggle("active",active);
+      if(active) el.setAttribute("aria-current","page"); else el.removeAttribute("aria-current");
+    });
+    document.querySelectorAll(".view").forEach(el=>el.classList.toggle("active",el.id===tab));
+    if(tab==="alpha") {renderService();renderAlpha();}
+    window.scrollTo({top:250,behavior:"smooth"});
+  }
+  document.addEventListener("click",event=>{
+    const cost=event.target.closest("[data-cost]");
+    if(cost){showCost(cost.dataset.cost);return;}
+    const alphaStep=event.target.closest("[data-alpha-screen]");
+    if(alphaStep){if(!alphaStep.disabled&&Number(alphaStep.dataset.alphaScreen)<=state.alphaMax)alphaShow(Number(alphaStep.dataset.alphaScreen));return;}
+    const alphaBarrier=event.target.closest("[data-alpha-barrier]");
+    if(alphaBarrier){if(alphaBarrier.disabled)return;$("barrier").value=alphaBarrier.dataset.alphaBarrier;state.outcome=null;state.alphaExit=null;state.alphaMax=2;alphaRecord("客户自选障碍",{barrier:$("barrier").value});renderAlpha();return;}
+    const alphaAction=event.target.closest("[data-alpha]");
+    if(alphaAction){
+      if(alphaAction.disabled)return;
+      const action=alphaAction.dataset.alpha;
+      if(action==="export") {
+        const record={demo:true,demoVersion:DEMO_VERSION,caseId:state.caseId,ruleVersion:RULE_VERSION,originalArm:currentCase().arm,events:state.events,alphaPath:state.alphaAudit,exit:state.alphaExit,realLedgerConnected:false};
+        const url=URL.createObjectURL(new Blob([JSON.stringify(record,null,2)],{type:"application/json"}));
+        const link=document.createElement("a");link.href=url;link.download="alpha-"+state.caseId+"-record.json";link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return;
+      }
+      if(action==="restart"){resetCase(state.caseId);return;}
+      if(state.alphaClosed)return;
+      if(action==="start"){if(eligibility(currentCase()).n1&&currentCase().arm!=="A"){state.explored=true;addEvent("Alpha自主进入","完整六屏能力复演，与首期汇总分开");alphaShow(2);}return;}
+      if(action==="back"){alphaShow(Math.max(1,state.alphaStep-1));return;}
+      if(action==="close"){state.alphaClosed=true;state.alphaExit="closed";alphaRecord("客户关闭页面",{ledger:false});addEvent("Alpha退出回执","页面已关闭；未产生账务首缴");renderAlpha();return;}
+      if(action==="revoke"){state.permission=false;state.refused=true;alphaRecord("撤回渠道许可");addEvent("客户撤回许可","尚未发送任务取消；原分组和已提交事件保留");renderCase();renderService();return;}
+      if(action==="barrier-next"){
+        const barrier=$("barrier").value;alphaRecord("确认障碍",{barrier});
+        if(["steps","complex","not-now"].includes(barrier)){
+          const kind=barrier==="steps"?"continue":barrier==="complex"?"human":"pause";
+          state.outcome={kind,reason:barrier==="steps"?"可从原账户页进入缴存，按原有流程核对信息并自主确认；账务成功须由正式系统回传。仅查看步骤，不需要提供T0。":barrier==="complex"?"客户选择人工解释，无需强制提供税务信息。":"客户暂不打算缴存，停止本次促缴，不索取额外信息。",tax:null};
+          if(kind==="pause"){state.paused=true;addEvent("Alpha停止回执","客户暂不缴存，取消本次促缴");}
+          renderService();alphaShow(4);return;
+        }
+        if(barrier==="liquidity")$("taxable").value="";
+        alphaShow(3);renderService();return;
+      }
+      if(action==="result-next"){if(state.outcome&&state.outcome.kind!=="invalid")alphaShow(5);return;}
+      if(action==="less"&&!state.paused){$("deposit").value=String(Math.max(1,Math.floor(Number($("deposit").value)/2)));$("reduce").checked=true;state.outcome=null;state.alphaExit=null;state.alphaMax=3;alphaRecord("客户选择降额重算");alphaShow(3);renderService();return;}
+      if(action==="continue"&&!state.paused&&state.outcome&&["continue","less"].includes(state.outcome.kind)){state.alphaExit="continue";alphaRecord("客户自主继续");addEvent("Alpha模拟跳转","跳转原有缴存流程；不生成账务首缴");alphaShow(6);return;}
+      if(action==="pause"){state.paused=true;state.alphaExit="pause";alphaRecord("客户选择暂缓");addEvent("Alpha停止回执","取消本次主动促缴；原分组保留");renderService();renderCase();alphaShow(6);return;}
+      if(action==="human"){state.alphaExit="human";alphaRecord("客户请求人工");addEvent("Alpha人工任务","只记录HUMAN_REQUEST原因码，未实际转接");alphaShow(6);return;}
+      return;
+    }
+    const tab=event.target.closest("[data-tab]");
+    if(tab){showTab(tab.dataset.tab);return;}
+    const preview=event.target.closest("[data-preview]");
+    if(preview){resetCase({A:"U106",B:"U102",T:"U101"}[preview.dataset.preview]);showTab("customer");return;}
+    const tour=event.target.closest("[data-tour]");
+    if(tour){resetCase(tour.dataset.tour==="stop"?"U103":"U101");showTab("customer");return;}
+    const caseButton=event.target.closest("[data-case]");
+    if(caseButton){resetCase(caseButton.dataset.case);return;}
+    const action=event.target.closest("[data-action]");
+    if(!action)return;
+    const c=currentCase(),q=eligibility(c);
+    switch(action.dataset.action){
+      case "customer":showTab("customer");break;
+      case "deliver":
+        if(q.maySend&&c.arm==="T"&&state.sent&&!state.delivered){state.delivered=true;addEvent("模拟送达回执","消息出现在客户手机端；未据此判定阅读或首缴");renderCase();}
+        break;
+      case "account-entry":
+        if(q.n1&&c.arm!=="A"&&!state.explored){state.explored=true;addEvent("客户查看中性说明","客户自主进入；仅作过程事件，不记作账务首缴");renderCase();}
+        break;
+      case "normal-pay":
+        if(c.active&&!state.ledger){state.paymentOpen=true;addEvent("原有缴存入口","客户自主打开原有办理流程；不恢复本次促缴，尚未产生账务结果");renderCase();}
+        break;
+      case "account-ledger":
+        if(state.paymentOpen&&c.active&&!state.ledger){state.ledger=true;addEvent("模拟自主首缴回传","原有流程产生本地虚构账务回执；不恢复促缴、不加入群体汇总示例");renderCase();renderService();}
+        break;
+      case "send":
+        if(q.maySend&&c.arm==="T"&&!state.sent) {
+          state.sent=true;addEvent("临发送复核通过","渠道许可、拒绝与频控再次校验");
+          addEvent("消息提交回执","演示消息已提交；送达与客户阅读仍是不同事件");
+        }
+        renderCase();break;
+      case "revoke":
+        state.permission=false;state.refused=true;
+        addEvent("客户撤回许可","跨渠道抑制状态已更新；未执行的发送任务取消");
+        renderCase();renderService();break;
+      case "service":
+        if(q.n1&&c.arm!=="A") {
+          addEvent("客户自主进入","服务输入形成于本事件之后，不回填入组前特征");
+          showTab("alpha");
+        }
+        break;
+      case "reset":resetCase(c.id);break;
+      case "ledger":
+        if(state.outcome&&["continue","less"].includes(state.outcome.kind)&&!state.ledger) {
+          state.ledger=true;addEvent("模拟账务首缴","正式场景须以账务成功且未冲正为准；此处仅虚构回传");
+          renderCase();renderService();
+        }
+        break;
+    }
+  });
+  $("evaluate").addEventListener("click",()=>{
+    const outcome=evaluateService();
+    if(!outcome)return;
+    state.outcome=outcome;
+    alphaRecord("规则求值",{inputs:{barrier:$("barrier").value,taxable:$("taxable").value,deposit:$("deposit").value,reserve:$("reserve").value,urgent:$("urgent").checked},output:outcome});
+    $("alphaError").textContent=outcome.kind==="invalid"?outcome.reason:"";
+    if(outcome.kind!=="invalid"){
+      addEvent("规则输出",({continue:"继续",less:"降额",pause:"暂缓",human:"转人工"})[outcome.kind]);
+      if(outcome.kind==="pause") {
+        state.paused=true;
+        addEvent("任务取消回执","尚未发送的主动促缴任务已取消；不因税额差重新开启");
+      }
+    }
+    renderService();renderCase();
+    if(outcome.kind!=="invalid")alphaShow(4);
+  });
+  $("clearService").addEventListener("click",()=>{
+    state.outcome=null;state.alphaExit=null;state.alphaMax=3;$("alphaError").textContent="";renderService();renderCase();
+  });
+  document.querySelectorAll(".alpha-stage input").forEach(input=>input.addEventListener("input",()=>{
+    if(input.id==="taxUnknown"&&input.checked)$("taxable").value="";
+    state.outcome=null;state.alphaExit=null;state.alphaMax=3;$("alphaError").textContent="";renderService();renderAlpha();
+  }));
+  $("investmentPanel").querySelectorAll("input").forEach(input=>input.addEventListener("input",renderInvestment));
+  $("investmentProtection").addEventListener("change",renderInvestment);
+  $("investmentCompare").addEventListener("change",resetInvestment);
+  $("investmentReset").addEventListener("click",resetInvestment);
+  if(ENGINE.selfTest().length) console.error("税额计算引擎自检失败",ENGINE.selfTest());
+  $("alphaCase").addEventListener("change",event=>resetCase(event.target.value));
+  resetCase("U102");renderScore();showCost("build");resetInvestment();
+  </script>
+</body>
+</html>

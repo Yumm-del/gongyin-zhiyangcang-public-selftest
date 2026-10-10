@@ -1,0 +1,29 @@
+{
+  "public_commit": "258b17e0a81d1be1e50d8f1a59e898824c55ec04",
+  "comparisons": [
+    {
+      "file": "demo2.html",
+      "git_blob_sha": "5df71b45143ffa389a1414091492e33ce719d386",
+      "public_sha256": "d9d3f48e5130c918a0b21f8db2b1119f33bda516918f7fda77ad54f4b06ce4d1",
+      "zip_sha256": "d1c75aca4d02c1bc1c1fe9513a9200767eca047b3342f99d868b9b13f6cf8421",
+      "exact_bytes_match": false,
+      "newline_normalized_match": true
+    },
+    {
+      "file": "engine.js",
+      "git_blob_sha": "568181dfd4482b7c5b90f0d5b2b8c7d58b7f9a83",
+      "public_sha256": "f21f27ec438bb063f2e08623d9b293ec61af761b5184018fd8d80bbc2a6e19bf",
+      "zip_sha256": "5526c28b3b89dd2bcf04a524b9e5401e760e064ef968a265c030a1acb0c253d8",
+      "exact_bytes_match": false,
+      "newline_normalized_match": true
+    },
+    {
+      "file": "tests/demo2.spec.cjs",
+      "git_blob_sha": "a6bbdd0a7d540b56b608b722478a1887ae934dbc",
+      "public_sha256": "5141cdcf6871dbca0587f1b8a16729043488c5ce1af15f780a599066022fae97",
+      "zip_sha256": "4550b3e91c7e63c5d1b1963b910e9af28d75d253984a0d0f05cc31909ed0c2cc",
+      "exact_bytes_match": false,
+      "newline_normalized_match": true
+    }
+  ]
+}

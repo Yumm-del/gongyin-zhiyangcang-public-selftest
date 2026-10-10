@@ -1,0 +1,1202 @@
+{
+  "sources": {
+    "exploratory": "https://www.wjx.cn/report/384208131.aspx",
+    "supplemental": "https://www.wjx.cn/report/387277515.aspx"
+  },
+  "scope": "Public aggregates only; no respondent-level export available",
+  "exploratory_questions": {
+    "1": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.男",
+          "count": 88,
+          "display_percent": 56.77
+        },
+        {
+          "option": "B.女",
+          "count": 67,
+          "display_percent": 43.23
+        }
+      ]
+    },
+    "2": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.18-22岁",
+          "count": 5,
+          "display_percent": 3.23
+        },
+        {
+          "option": "B.23-30岁",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "C.31-40岁",
+          "count": 88,
+          "display_percent": 56.77
+        },
+        {
+          "option": "D.41岁及以上",
+          "count": 62,
+          "display_percent": 40.0
+        }
+      ]
+    },
+    "3": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.在校学生",
+          "count": 5,
+          "display_percent": 3.23
+        },
+        {
+          "option": "B.企业在职",
+          "count": 120,
+          "display_percent": 77.42
+        },
+        {
+          "option": "C.公职/事业单位",
+          "count": 25,
+          "display_percent": 16.13
+        },
+        {
+          "option": "D.自由职业",
+          "count": 5,
+          "display_percent": 3.23
+        },
+        {
+          "option": "E.其他",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "4": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.3000元及以下",
+          "count": 4,
+          "display_percent": 2.58
+        },
+        {
+          "option": "B.3001-5000元",
+          "count": 54,
+          "display_percent": 34.84
+        },
+        {
+          "option": "C.5001-8000元",
+          "count": 71,
+          "display_percent": 45.81
+        },
+        {
+          "option": "D.8000元以上",
+          "count": 26,
+          "display_percent": 16.77
+        }
+      ]
+    },
+    "5": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.从未听说",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "B.听过但不了解",
+          "count": 72,
+          "display_percent": 46.45
+        },
+        {
+          "option": "C.有一定了解",
+          "count": 44,
+          "display_percent": 28.39
+        },
+        {
+          "option": "D.非常熟悉",
+          "count": 39,
+          "display_percent": 25.16
+        }
+      ]
+    },
+    "6": {
+      "question_type": "多选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.银行宣传",
+          "count": 73,
+          "display_percent": 47.1
+        },
+        {
+          "option": "B.短视频/公众号等网络媒体",
+          "count": 99,
+          "display_percent": 63.87
+        },
+        {
+          "option": "C.单位/学校宣讲",
+          "count": 59,
+          "display_percent": 38.06
+        },
+        {
+          "option": "D.亲友介绍",
+          "count": 36,
+          "display_percent": 23.23
+        },
+        {
+          "option": "E.没有听说过",
+          "count": 22,
+          "display_percent": 14.19
+        }
+      ]
+    },
+    "7": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.完全不知道",
+          "count": 43,
+          "display_percent": 27.74
+        },
+        {
+          "option": "B.听说过，不清楚细节",
+          "count": 60,
+          "display_percent": 38.71
+        },
+        {
+          "option": "C.大致了解",
+          "count": 35,
+          "display_percent": 22.58
+        },
+        {
+          "option": "D.十分清楚",
+          "count": 17,
+          "display_percent": 10.97
+        }
+      ]
+    },
+    "8": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.可随时自由取出",
+          "count": 15,
+          "display_percent": 9.68
+        },
+        {
+          "option": "B.满足退休等规定条件才可支取",
+          "count": 84,
+          "display_percent": 54.19
+        },
+        {
+          "option": "C.不清楚",
+          "count": 56,
+          "display_percent": 36.13
+        }
+      ]
+    },
+    "9": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.已开户并存入资金",
+          "count": 16,
+          "display_percent": 10.32
+        },
+        {
+          "option": "B.已开户，暂未存钱",
+          "count": 38,
+          "display_percent": 24.52
+        },
+        {
+          "option": "C.了解过，未开户",
+          "count": 84,
+          "display_percent": 54.19
+        },
+        {
+          "option": "D.从未考虑开户",
+          "count": 17,
+          "display_percent": 10.97
+        }
+      ]
+    },
+    "10": {
+      "question_type": "多选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.政策不熟悉，担心风险",
+          "count": 51,
+          "display_percent": 32.9
+        },
+        {
+          "option": "B.资金锁定期长，流动性差",
+          "count": 75,
+          "display_percent": 48.39
+        },
+        {
+          "option": "C.收入有限，暂无闲置资金",
+          "count": 72,
+          "display_percent": 46.45
+        },
+        {
+          "option": "D.认为收益偏低",
+          "count": 54,
+          "display_percent": 34.84
+        },
+        {
+          "option": "E.已有其他养老储备规划",
+          "count": 53,
+          "display_percent": 34.19
+        }
+      ]
+    },
+    "11": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.不打算投入",
+          "count": 2,
+          "display_percent": 1.29
+        },
+        {
+          "option": "B.6000元以内",
+          "count": 100,
+          "display_percent": 64.52
+        },
+        {
+          "option": "C.6000-12000元",
+          "count": 42,
+          "display_percent": 27.1
+        },
+        {
+          "option": "D.12000元",
+          "count": 11,
+          "display_percent": 7.1
+        }
+      ]
+    },
+    "12": {
+      "question_type": "多选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.养老存款",
+          "count": 90,
+          "display_percent": 58.06
+        },
+        {
+          "option": "B.养老理财",
+          "count": 70,
+          "display_percent": 45.16
+        },
+        {
+          "option": "C.养老基金",
+          "count": 70,
+          "display_percent": 45.16
+        },
+        {
+          "option": "D.养老保险",
+          "count": 79,
+          "display_percent": 50.97
+        },
+        {
+          "option": "E.均不考虑",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "13": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.极低风险，本金不能亏损",
+          "count": 72,
+          "display_percent": 46.45
+        },
+        {
+          "option": "B.低风险，允许小幅波动",
+          "count": 46,
+          "display_percent": 29.68
+        },
+        {
+          "option": "C.中等风险，接受一定盈亏",
+          "count": 30,
+          "display_percent": 19.35
+        },
+        {
+          "option": "D.高风险，追求较高收益",
+          "count": 7,
+          "display_percent": 4.52
+        }
+      ]
+    },
+    "14": {
+      "question_type": "多选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.短视频平台",
+          "count": 81,
+          "display_percent": 52.26
+        },
+        {
+          "option": "B.银行网点/客户经理",
+          "count": 86,
+          "display_percent": 55.48
+        },
+        {
+          "option": "C.公众号文章",
+          "count": 66,
+          "display_percent": 42.58
+        },
+        {
+          "option": "D.线下讲座",
+          "count": 44,
+          "display_percent": 28.39
+        },
+        {
+          "option": "E.短信推送",
+          "count": 35,
+          "display_percent": 22.58
+        }
+      ]
+    },
+    "15": {
+      "question_type": "单选",
+      "denominator": 155,
+      "options": [
+        {
+          "option": "A.优质养老储备工具，愿意了解参与",
+          "count": 38,
+          "display_percent": 24.52
+        },
+        {
+          "option": "B.可作为养老备选方案，保持关注",
+          "count": 53,
+          "display_percent": 34.19
+        },
+        {
+          "option": "C.持观望态度，需要更多科普",
+          "count": 36,
+          "display_percent": 23.23
+        },
+        {
+          "option": "D.不感兴趣，不会参与",
+          "count": 28,
+          "display_percent": 18.06
+        }
+      ]
+    }
+  },
+  "supplemental_questions": {
+    "1": {
+      "question_type": "开放／说明",
+      "denominator": null,
+      "options": []
+    },
+    "2": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "是，继续",
+          "count": 100,
+          "display_percent": 100.0
+        },
+        {
+          "option": "否，结束",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "3": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "是，目前仍持有",
+          "count": 100,
+          "display_percent": 100.0
+        },
+        {
+          "option": "曾开立，目前已注销且没有其他个人养老金资金账户",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "从未开立",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不确定，可能与其他养老账户混淆",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "4": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "中国工商银行",
+          "count": 100,
+          "display_percent": 100.0
+        },
+        {
+          "option": "其他银行，请填写名称：________（可不填）",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不确定",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "5": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "从未成功缴入过",
+          "count": 100,
+          "display_percent": 100.0
+        },
+        {
+          "option": "曾成功缴入过，无论之后是否购买产品或领取资金",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "曾转入，但全部因操作差错退回或冲正，不确定是否算缴费",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不记得或无法确认",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "6": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "没有",
+          "count": 96,
+          "display_percent": 96.0
+        },
+        {
+          "option": "有",
+          "count": 3,
+          "display_percent": 3.0
+        },
+        {
+          "option": "不确定",
+          "count": 1,
+          "display_percent": 1.0
+        }
+      ]
+    },
+    "7": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "不到1个月",
+          "count": 5,
+          "display_percent": 5.0
+        },
+        {
+          "option": "1个月至不足3个月",
+          "count": 9,
+          "display_percent": 9.0
+        },
+        {
+          "option": "3个月至不足12个月",
+          "count": 38,
+          "display_percent": 38.0
+        },
+        {
+          "option": "1年至不足2年",
+          "count": 35,
+          "display_percent": 35.0
+        },
+        {
+          "option": "2年及以上",
+          "count": 12,
+          "display_percent": 12.0
+        },
+        {
+          "option": "不记得",
+          "count": 1,
+          "display_percent": 1.0
+        }
+      ]
+    },
+    "8": {
+      "question_type": "多选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "想开始为养老储蓄或投资",
+          "count": 26,
+          "display_percent": 26.0
+        },
+        {
+          "option": "想了解或使用税收优惠",
+          "count": 30,
+          "display_percent": 30.0
+        },
+        {
+          "option": "有感兴趣的个人养老金产品",
+          "count": 13,
+          "display_percent": 13.0
+        },
+        {
+          "option": "银行工作人员介绍或协助开户",
+          "count": 35,
+          "display_percent": 35.0
+        },
+        {
+          "option": "开户活动、礼品或其他权益",
+          "count": 36,
+          "display_percent": 36.0
+        },
+        {
+          "option": "单位、家人或朋友建议",
+          "count": 20,
+          "display_percent": 20.0
+        },
+        {
+          "option": "想先开好账户，以后再考虑",
+          "count": 40,
+          "display_percent": 40.0
+        },
+        {
+          "option": "其他： [详情]",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不记得【与其他选项互斥】",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "9": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "没有认真考虑过缴存",
+          "count": 14,
+          "display_percent": 14.0
+        },
+        {
+          "option": "考虑过，但没有进一步查资料或咨询",
+          "count": 30,
+          "display_percent": 30.0
+        },
+        {
+          "option": "查过资料或咨询过，但没有尝试办理",
+          "count": 19,
+          "display_percent": 19.0
+        },
+        {
+          "option": "找过缴存入口，但没有找到或没弄清怎么操作",
+          "count": 15,
+          "display_percent": 15.0
+        },
+        {
+          "option": "进入过缴存操作，但没有完成",
+          "count": 8,
+          "display_percent": 8.0
+        },
+        {
+          "option": "尝试提交或支付，但没有成功",
+          "count": 9,
+          "display_percent": 9.0
+        },
+        {
+          "option": "不记得或无法判断",
+          "count": 5,
+          "display_percent": 5.0
+        }
+      ]
+    },
+    "10": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "最近1个月内",
+          "count": 19,
+          "display_percent": 19.0
+        },
+        {
+          "option": "1个月前至不足3个月前",
+          "count": 25,
+          "display_percent": 25.0
+        },
+        {
+          "option": "3个月前至不足12个月前",
+          "count": 34,
+          "display_percent": 34.0
+        },
+        {
+          "option": "1年及以上",
+          "count": 19,
+          "display_percent": 19.0
+        },
+        {
+          "option": "不记得",
+          "count": 3,
+          "display_percent": 3.0
+        }
+      ]
+    },
+    "11": {
+      "question_type": "开放／说明",
+      "denominator": null,
+      "options": []
+    },
+    "12": {
+      "question_type": "多选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "暂时没有可用于长期安排的闲钱",
+          "count": 20,
+          "display_percent": 20.0
+        },
+        {
+          "option": "近期有其他必要支出，资金另有用途",
+          "count": 33,
+          "display_percent": 33.0
+        },
+        {
+          "option": "不愿让这笔钱长期受到领取条件限制",
+          "count": 20,
+          "display_percent": 20.0
+        },
+        {
+          "option": "不清楚资金在什么情况下可以领取",
+          "count": 15,
+          "display_percent": 15.0
+        },
+        {
+          "option": "不清楚自己能否获得税收优惠、能减少多少税",
+          "count": 11,
+          "display_percent": 11.0
+        },
+        {
+          "option": "了解税收优惠，但觉得对自己吸引力有限",
+          "count": 6,
+          "display_percent": 6.0
+        },
+        {
+          "option": "不清楚账户内有哪些产品、该如何选择",
+          "count": 15,
+          "display_percent": 15.0
+        },
+        {
+          "option": "了解一些产品，但觉得收益、风险或期限不符合需要",
+          "count": 7,
+          "display_percent": 7.0
+        },
+        {
+          "option": "不知道缴存入口在哪里，或不清楚操作步骤",
+          "count": 3,
+          "display_percent": 3.0
+        },
+        {
+          "option": "办理时遇到系统、支付或其他操作问题",
+          "count": 4,
+          "display_percent": 4.0
+        },
+        {
+          "option": "打算在以后的某个时间缴存，目前不着急",
+          "count": 27,
+          "display_percent": 27.0
+        },
+        {
+          "option": "开户主要因为活动或他人建议，目前没有缴存计划",
+          "count": 21,
+          "display_percent": 21.0
+        },
+        {
+          "option": "对银行提供的介绍或建议不够信任",
+          "count": 6,
+          "display_percent": 6.0
+        },
+        {
+          "option": "已通过其他方式安排养老资金，暂时不需要增加",
+          "count": 12,
+          "display_percent": 12.0
+        },
+        {
+          "option": "其他： [详情]",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "说不清或不愿回答【与其他选项互斥】",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "13": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "几个原因同样重要，无法选出一个",
+          "count": 97,
+          "display_percent": 97.0
+        },
+        {
+          "option": "不愿回答",
+          "count": 3,
+          "display_percent": 3.0
+        }
+      ]
+    },
+    "14": {
+      "question_type": "多选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "查看开户银行App中的说明",
+          "count": 52,
+          "display_percent": 52.0
+        },
+        {
+          "option": "查询政府部门或其他官方资料",
+          "count": 19,
+          "display_percent": 19.0
+        },
+        {
+          "option": "在搜索引擎、短视频或社交平台查找信息",
+          "count": 40,
+          "display_percent": 40.0
+        },
+        {
+          "option": "联系银行客服或客户经理",
+          "count": 27,
+          "display_percent": 27.0
+        },
+        {
+          "option": "去银行网点咨询",
+          "count": 12,
+          "display_percent": 12.0
+        },
+        {
+          "option": "询问家人、朋友或同事",
+          "count": 32,
+          "display_percent": 32.0
+        },
+        {
+          "option": "没有采取过这些行动",
+          "count": 9,
+          "display_percent": 9.0
+        },
+        {
+          "option": "不记得",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "15": {
+      "question_type": "开放／说明",
+      "denominator": null,
+      "options": []
+    },
+    "16": {
+      "question_type": "多选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "找到缴存入口并弄清步骤",
+          "count": 30,
+          "display_percent": 30.0
+        },
+        {
+          "option": "了解缴费、领取等制度规则",
+          "count": 44,
+          "display_percent": 44.0
+        },
+        {
+          "option": "根据自己的情况估算当期税额变化",
+          "count": 40,
+          "display_percent": 40.0
+        },
+        {
+          "option": "判断拟缴资金是否会影响近期必要支出",
+          "count": 21,
+          "display_percent": 21.0
+        },
+        {
+          "option": "比较账户内产品的风险、期限和费用",
+          "count": 26,
+          "display_percent": 26.0
+        },
+        {
+          "option": "处理实际操作失败或账户问题",
+          "count": 11,
+          "display_percent": 11.0
+        },
+        {
+          "option": "确认自己目前可以暂不缴存，以及后续何时再考虑",
+          "count": 26,
+          "display_percent": 26.0
+        },
+        {
+          "option": "其他： [详情]",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "当前不需要帮助【互斥】",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不确定【互斥】",
+          "count": 1,
+          "display_percent": 1.0
+        }
+      ]
+    },
+    "17": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "每行选项：",
+          "count": 10,
+          "display_percent": 10.0
+        },
+        {
+          "option": "愿意提供大致区间",
+          "count": 26,
+          "display_percent": 26.0
+        },
+        {
+          "option": "愿意提供本次测算所需的具体数值",
+          "count": 34,
+          "display_percent": 34.0
+        },
+        {
+          "option": "需要先了解用途、保存方式和删除方式",
+          "count": 21,
+          "display_percent": 21.0
+        },
+        {
+          "option": "不愿提供",
+          "count": 9,
+          "display_percent": 9.0
+        },
+        {
+          "option": "不确定",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "18": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "与税额测算有关的收入和扣除信息",
+          "count": 18,
+          "display_percent": 18.0
+        },
+        {
+          "option": "拟缴入个人养老金的金额",
+          "count": 28,
+          "display_percent": 28.0
+        },
+        {
+          "option": "这笔钱是否可能用于近期必要支出",
+          "count": 37,
+          "display_percent": 37.0
+        },
+        {
+          "option": "可用于应对突发支出的资金大致能覆盖多久",
+          "count": 17,
+          "display_percent": 17.0
+        }
+      ]
+    },
+    "19": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "自己阅读简短说明或图示",
+          "count": 24,
+          "display_percent": 24.0
+        },
+        {
+          "option": "自己填写少量信息后查看测算结果",
+          "count": 20,
+          "display_percent": 20.0
+        },
+        {
+          "option": "在线文字咨询",
+          "count": 16,
+          "display_percent": 16.0
+        },
+        {
+          "option": "自己预约电话咨询",
+          "count": 13,
+          "display_percent": 13.0
+        },
+        {
+          "option": "自己前往网点咨询",
+          "count": 3,
+          "display_percent": 3.0
+        },
+        {
+          "option": "视问题复杂程度再决定",
+          "count": 23,
+          "display_percent": 23.0
+        },
+        {
+          "option": "当前不需要帮助",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不确定",
+          "count": 1,
+          "display_percent": 1.0
+        }
+      ]
+    },
+    "20": {
+      "question_type": "多选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "仅在我主动进入相关账户页面时展示",
+          "count": 48,
+          "display_percent": 48.0
+        },
+        {
+          "option": "仅在我主动订阅提醒后，通过我选择的渠道发送",
+          "count": 46,
+          "display_percent": 46.0
+        },
+        {
+          "option": "通过手机银行Push主动发送",
+          "count": 22,
+          "display_percent": 22.0
+        },
+        {
+          "option": "通过短信主动发送",
+          "count": 12,
+          "display_percent": 12.0
+        },
+        {
+          "option": "银行主动打电话介绍",
+          "count": 10,
+          "display_percent": 10.0
+        },
+        {
+          "option": "仅在我主动咨询或办理业务时说明",
+          "count": 42,
+          "display_percent": 42.0
+        },
+        {
+          "option": "不希望收到相关介绍或提醒",
+          "count": 10,
+          "display_percent": 10.0
+        },
+        {
+          "option": "不确定",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "21": {
+      "question_type": "开放／说明",
+      "denominator": null,
+      "options": []
+    },
+    "22": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "由我自己选择提醒时间和次数",
+          "count": 45,
+          "display_percent": 45.0
+        },
+        {
+          "option": "只在我主动发起但未完成的操作后提醒一次",
+          "count": 17,
+          "display_percent": 17.0
+        },
+        {
+          "option": "只在我订阅的政策或产品信息发生变化时提醒",
+          "count": 24,
+          "display_percent": 24.0
+        },
+        {
+          "option": "接受定期提醒，希望频率为：________（可不填）",
+          "count": 4,
+          "display_percent": 4.0
+        },
+        {
+          "option": "不需要提醒",
+          "count": 10,
+          "display_percent": 10.0
+        },
+        {
+          "option": "不确定",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "23": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "18—29岁",
+          "count": 11,
+          "display_percent": 11.0
+        },
+        {
+          "option": "30—39岁",
+          "count": 45,
+          "display_percent": 45.0
+        },
+        {
+          "option": "40—49岁",
+          "count": 30,
+          "display_percent": 30.0
+        },
+        {
+          "option": "50—60岁",
+          "count": 10,
+          "display_percent": 10.0
+        },
+        {
+          "option": "61岁及以上",
+          "count": 4,
+          "display_percent": 4.0
+        },
+        {
+          "option": "不愿回答",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    },
+    "24": {
+      "question_type": "单选",
+      "denominator": 100,
+      "options": [
+        {
+          "option": "企业在职",
+          "count": 64,
+          "display_percent": 64.0
+        },
+        {
+          "option": "机关或事业单位在职",
+          "count": 12,
+          "display_percent": 12.0
+        },
+        {
+          "option": "个体经营或自由职业",
+          "count": 15,
+          "display_percent": 15.0
+        },
+        {
+          "option": "暂未就业",
+          "count": 5,
+          "display_percent": 5.0
+        },
+        {
+          "option": "已退休",
+          "count": 4,
+          "display_percent": 4.0
+        },
+        {
+          "option": "在校学生",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "其他",
+          "count": 0,
+          "display_percent": 0.0
+        },
+        {
+          "option": "不愿回答",
+          "count": 0,
+          "display_percent": 0.0
+        }
+      ]
+    }
+  },
+  "recomputed_metrics": {
+    "unpaid_among_opened": {
+      "numerator": 38,
+      "denominator": 54,
+      "percent": 70.37037037037037
+    },
+    "unpaid_among_all": {
+      "numerator": 38,
+      "denominator": 155,
+      "percent": 24.516129032258064
+    },
+    "supplemental_judgment_stage": 49,
+    "supplemental_operational_stage": 32,
+    "q9_operational_and_q16_needs_steps_possible_overlap": [
+      0,
+      30
+    ],
+    "q12_three_fund_or_locking_options_possible_union": [
+      33,
+      73
+    ],
+    "self_reported_no_bank_change": 96,
+    "reported_bank_change": 3,
+    "bank_change_unknown": 1,
+    "note": "Possible ranges are logical bounds, not statistical intervals."
+  }
+}
