@@ -1,0 +1,94 @@
+{
+  "data_status": "SYNTHETIC_TEACHING_CASES",
+  "source": "风险控制矩阵的许可测试底稿；同日分钟数",
+  "row_count": 8,
+  "counts": {
+    "CONTROL_FAILURE": 3,
+    "NO_EXCEPTION_IN_DEMO": 2,
+    "CANCELLED_NOT_SENT": 2,
+    "EVIDENCE_GAP": 1
+  },
+  "limitation": "不证明真实客户许可、取消回执或银行生产控制有效；同分钟先后需真实事件序列",
+  "results": [
+    {
+      "case_id": "S01",
+      "customer_id": "C001",
+      "revoked_minute": "550",
+      "queued_minute": "545",
+      "sent_minute": "552",
+      "status": "已发送",
+      "classification": "CONTROL_FAILURE",
+      "reason": "发送发生在撤回同分钟或之后；演示按撤回已生效处理"
+    },
+    {
+      "case_id": "S02",
+      "customer_id": "C002",
+      "revoked_minute": "",
+      "queued_minute": "545",
+      "sent_minute": "551",
+      "status": "已发送",
+      "classification": "NO_EXCEPTION_IN_DEMO",
+      "reason": "演示时间比较未见例外；前置有效许可尚未独立验证"
+    },
+    {
+      "case_id": "S03",
+      "customer_id": "C003",
+      "revoked_minute": "550",
+      "queued_minute": "560",
+      "sent_minute": "",
+      "status": "已取消",
+      "classification": "CANCELLED_NOT_SENT",
+      "reason": "记录显示取消；取消回执仍需另取证"
+    },
+    {
+      "case_id": "S04",
+      "customer_id": "C004",
+      "revoked_minute": "550",
+      "queued_minute": "545",
+      "sent_minute": "548",
+      "status": "已发送",
+      "classification": "NO_EXCEPTION_IN_DEMO",
+      "reason": "演示时间比较未见例外；前置有效许可尚未独立验证"
+    },
+    {
+      "case_id": "S05",
+      "customer_id": "C005",
+      "revoked_minute": "550",
+      "queued_minute": "545",
+      "sent_minute": "",
+      "status": "已取消",
+      "classification": "CANCELLED_NOT_SENT",
+      "reason": "记录显示取消；取消回执仍需另取证"
+    },
+    {
+      "case_id": "S06",
+      "customer_id": "C006",
+      "revoked_minute": "550",
+      "queued_minute": "545",
+      "sent_minute": "",
+      "status": "已发送",
+      "classification": "EVIDENCE_GAP",
+      "reason": "已发送但缺发送时刻，不能判定符合"
+    },
+    {
+      "case_id": "S07",
+      "customer_id": "C007",
+      "revoked_minute": "550",
+      "queued_minute": "545",
+      "sent_minute": "550",
+      "status": "已发送",
+      "classification": "CONTROL_FAILURE",
+      "reason": "发送发生在撤回同分钟或之后；演示按撤回已生效处理"
+    },
+    {
+      "case_id": "S08",
+      "customer_id": "C008",
+      "revoked_minute": "550",
+      "queued_minute": "545",
+      "sent_minute": "552",
+      "status": "已发送",
+      "classification": "CONTROL_FAILURE",
+      "reason": "发送发生在撤回同分钟或之后；演示按撤回已生效处理"
+    }
+  ]
+}

@@ -70,3 +70,18 @@ node alpha-v3.4/tests/review-runner.cjs
 将本包根目录的`README.md`与整个`consulting-case/`放到现有`gongyin-zhiyangcang-public-selftest`仓库根目录。原型页面和原仓库测试文件无需用包内快照替换；快照仅用于证据复演。
 
 `consulting-case/.gitignore`排除依赖、缓存和新执行结果。已有计划书、原始ZIP、逐条答卷及本机完整路径未加入展示包。历史检查记录与新执行输出分别管理，新结果不会自动加入版本记录。
+
+## 6. 运行许可控制数据核对
+
+需要Python 3，仅使用标准库，不需要安装pandas或数据校验框架。在仓库根目录执行：
+
+```powershell
+python consulting-case/scripts/audit-permission.py
+python -m unittest discover -s consulting-case/tests -v
+```
+
+第一条逐笔核对`data/synthetic/permission-cases.csv`的发送、排队和撤回时刻，将结果写入`reproduced/permission-audit/results.json`与`workpaper.csv`。第二条检查10个测试方法，包含撤回前排队但撤回后发送、同分钟边界、缺失时间、取消状态冲突、重复ID、无效时间和发送早于排队。
+
+预期汇总为8条记录：3条CONTROL_FAILURE、1条EVIDENCE_GAP、2条CANCELLED_NOT_SENT、2条NO_EXCEPTION_IN_DEMO。输出逐笔结果应与[evidence归档](evidence/permission-audit-results.json)一致。CSV来自既有模拟Excel，不是新增真实样本。
+
+可用`--input 路径 --output 目录`核对结构相同的教学CSV；脚本要求同日分钟数，不能直接分析跨日或不同时区的日志。真实记录需另行定义许可范围、并发顺序、时间精度、渠道提交边界和总体完整性。

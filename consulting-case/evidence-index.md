@@ -40,3 +40,9 @@
 ## 文件核对
 
 [SHA-256清单](manifest.sha256)覆盖展示包内材料，不包括清单自身和本地新执行结果。它用于发现文件变化，不能认证来源真实性。文件路径使用相对链接；两个Excel为已有底稿的原样副本，保留版本状态。公开副本仅将源码指纹JSON中的本机路径改为源码包文件名，并保留数值、版本与指纹。
+
+## GRCS许可核对模块
+
+[流程与测试](docs/GRCS许可控制流程与测试练习.md)、[虚构CSV](data/synthetic/permission-cases.csv)、[逐笔结果](evidence/permission-audit-results.json)、[CSV底稿](evidence/permission-audit-workpaper.csv)。
+
+10项边界测试通过，8条记录与既有Excel一致。结果仅反映人为植入缺陷的离线教学复算；前置许可、取消回执及银行生产控制未验证。

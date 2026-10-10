@@ -4,7 +4,7 @@
 
 作者：吕滢滢｜广东金融学院 · 金融科技｜案例整理日期：2026-10-10
 
-[体验公开原型](https://yumm-del.github.io/gongyin-zhiyangcang-public-selftest/demo2.html) · [阅读决策报告](consulting-case/docs/养老金咨询案例-咨询决策报告-v1.md) · [查看证据索引](consulting-case/evidence-index.md) · [复现说明](consulting-case/reproduce.md)
+[体验公开原型](https://yumm-del.github.io/gongyin-zhiyangcang-public-selftest/demo2.html) · [阅读决策报告](consulting-case/docs/养老金咨询案例-咨询决策报告-v1.md) · [GRCS流程与测试](consulting-case/docs/GRCS许可控制流程与测试练习.md) · [运行数据核对](consulting-case/reproduce.md#6-运行许可控制数据核对) · [查看证据索引](consulting-case/evidence-index.md)
 
 本案例由个人参赛方案延展而来，研究中的银行为假设客户。现有材料支持问题诊断、方案设计与本地测试；真实银行效果、成本和生产控制仍待验证。
 
@@ -52,6 +52,19 @@
 ![本地虚构案例：许可撤回后的任务卡](consulting-case/evidence/Alpha-v3.4-许可撤回-20261010.png)
 
 [查看该案例导出记录](consulting-case/evidence/Alpha-v3.4-许可撤回复演记录-20261010.json)。截图与记录中的输入来自固定虚构案例。
+
+## 可运行的GRCS许可数据核对
+
+将控制分析落实成“流程 → 访谈 → 测试程序 → 数据核对 → 发现与证据”的练习。新增[流程图与10项访谈问题](consulting-case/docs/GRCS许可控制流程与测试练习.md)、[标准库核对脚本](consulting-case/scripts/audit-permission.py)和[边界测试](consulting-case/tests/test_permission_audit.py)。
+
+```powershell
+python consulting-case/scripts/audit-permission.py
+python -m unittest discover -s consulting-case/tests -v
+```
+
+脚本读取与Excel底稿一致的8条虚构记录，导出逐笔CSV与JSON。归档结果为：3条撤回同分钟或之后发送、1条缺发送时间、2条记录显示取消、2条演示时间比较未见例外。缺证据不会判为通过；重复ID和时间冲突也有测试。[查看逐笔归档结果](consulting-case/evidence/permission-audit-results.json)。
+
+以上是人为植入缺陷的离线教学复算。取消回执、前置有效许可和真实事件时序仍需取证；14项银行生产控制状态不因此变化。[数据说明](consulting-case/data/synthetic/README.md)与[开源选型](consulting-case/docs/数据核对模块-开源选型.md)保留方法和边界。
 
 ## 阅读顺序
 

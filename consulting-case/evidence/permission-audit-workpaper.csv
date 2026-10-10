@@ -1,0 +1,9 @@
+﻿case_id,customer_id,revoked_minute,queued_minute,sent_minute,status,classification,reason
+S01,C001,550,545,552,已发送,CONTROL_FAILURE,发送发生在撤回同分钟或之后；演示按撤回已生效处理
+S02,C002,,545,551,已发送,NO_EXCEPTION_IN_DEMO,演示时间比较未见例外；前置有效许可尚未独立验证
+S03,C003,550,560,,已取消,CANCELLED_NOT_SENT,记录显示取消；取消回执仍需另取证
+S04,C004,550,545,548,已发送,NO_EXCEPTION_IN_DEMO,演示时间比较未见例外；前置有效许可尚未独立验证
+S05,C005,550,545,,已取消,CANCELLED_NOT_SENT,记录显示取消；取消回执仍需另取证
+S06,C006,550,545,,已发送,EVIDENCE_GAP,已发送但缺发送时刻，不能判定符合
+S07,C007,550,545,550,已发送,CONTROL_FAILURE,发送发生在撤回同分钟或之后；演示按撤回已生效处理
+S08,C008,550,545,552,已发送,CONTROL_FAILURE,发送发生在撤回同分钟或之后；演示按撤回已生效处理
